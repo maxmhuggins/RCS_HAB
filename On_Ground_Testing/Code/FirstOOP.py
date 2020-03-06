@@ -30,11 +30,15 @@ CLK = GD['GPIO16']
 DOUT = GD['GPIO21']
 DIN = GD['GPIO20']
 
+OE = GD['GPIO26']
+
+GPIO.setup(OE, OUT)
 GPIO.setup(CS, OUT)
 GPIO.setup(CLK, OUT)
 GPIO.setup(DOUT, IN)
 GPIO.setup(DIN, OUT)
 
+V_ref = 3.3
 
 def readMCP(C, CS, CLK, DOUT, DIN):
     d = ''
@@ -98,11 +102,14 @@ def readMCP(C, CS, CLK, DOUT, DIN):
 def calc_voltsMCP(d):
     d_int = int(d,2)
     volts = V_ref*d_int / 1023
-    volts = round(volts, 3)
+    volts = round(volts, 7)
     return volts
 
 try:
+     GPIO.output(OE, True)
      while True:
           voltage = calc_voltsMCP(readMCP(C, CS, CLK, DOUT, DIN))
           print(voltage)
           time.sleep(.1)
+finally:
+     GPIO.cleanup()
