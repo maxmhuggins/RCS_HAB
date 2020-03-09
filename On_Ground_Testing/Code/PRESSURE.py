@@ -1,15 +1,14 @@
 import numpy as np
 from scipy import stats
 
+def getPressure(voltage):
+     p = (voltage - PressureTransducer.CalibrationIntercept) / PressureTransducer.CalibrationSlope
+     return p
+
 class PressureTransducer:
      ReferenceVoltage = 5
      CalibrationSlope = 0
      CalibrationIntercept = 0
-     def __init__(self, voltage):
-          self.voltage = voltage
-     def getPressure(self):
-          p = (self.voltage - PressureTransducer.CalibrationIntercept) / PressureTransducer.CalibrationSlope
-          return p
 
      @classmethod
      def Calibrate(cls, CalibrationPressures, CalibrationVoltages):

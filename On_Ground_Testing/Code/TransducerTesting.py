@@ -4,12 +4,31 @@ import RPi.GPIO as GPIO
 import time
 import numpy as np
 import ADC
+from GPIOTranslator import GPIODictionary as GD
 #=============================================================================#
-ref = 5 #Measure this and add smoothing caps later
-act_p = range(40,501,20) #Use a larger range later
+ref = 5 
+act_p = range(40,101,20)
 avg_volts = []
 ask = 0
 PressureTransducerChannel = 0
+
+CLK = GD['GPIO16']
+CS = GD['GPIO12']
+MOSI = GD['GPIO21']
+MISO = GD['GPIO20']
+OE = GD['GPIO26']
+
+GPIO.setmode(GPIO.BOARD)
+
+GPIO.setup(CLK, GPIO.OUT)
+GPIO.setup(CS, GPIO.OUT)
+GPIO.setup(MOSI, GPIO.IN)
+GPIO.setup(MISO, GPIO.OUT)
+GPIO.setup(OE, GPIO.OUT)
+
+GPIO.output(OE, True)
+
+myADC =  ADC.MCP3008(CLK, CS, MOSI, MISO)
 #=============================================================================#
 try:
     #=====================================#
@@ -27,7 +46,7 @@ try:
         #========================================================#    
         start_time = time.time()
         while del_t < 10:
-            voltage = ADC.MCP3008.measure(PressureTransducerChannel)
+            voltage = myADC.measure(PressureTransducerChannel)
             measrd_volts.append(voltage)
             time.sleep(.05)
             del_t = time.time() - start_time
@@ -37,8 +56,8 @@ try:
     PRESSURE.PressureTransducer.Calibrate(act_p, avg_volts)
 #=============================================================================#
     while True:
-        voltage = ADC.MCP3008.measure(PressureTransducerChannel)
-        PressureMeasurement = PRESSURE.PressureTransducer.getPressure(voltage)
+        voltage = myADC.measure(PressureTransducerChannel)
+        PressureMeasurement = PRESSURE.getPressure(voltage)
         print('Pressure is ', PressureMeasurement)
         time.sleep(.1)
 #=============================================================================#
@@ -47,5 +66,5 @@ except KeyboardInterrupt:
 
 finally:
      GPIO.cleanup()
-     print('Isaac cleaned the oven.')
+     print('Isaack cleaned the oven.')
 #=============================================================================#
