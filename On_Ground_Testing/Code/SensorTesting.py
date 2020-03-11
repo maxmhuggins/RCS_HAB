@@ -116,22 +116,35 @@ hx.reset()
 hx.tare()
 
 try:
-    while True:
+    PressureData = []
+    TimeData = []
+    StartTime = time.time()
+    while ChangeInTime < 30:
+        ChangeInTime = time.time() - StartTime
         dig_read_0 = readMCP(0, CS, CLK, DOUT, DIN)
-        dig_read_1 = readMCP(1, CS, CLK, DOUT, DIN)
+        #dig_read_1 = readMCP(1, CS, CLK, DOUT, DIN)
         voltage_0 = calc_volts(dig_read_0, 'MCP', ref)
-        voltage_1 = calc_volts(dig_read_1, 'MCP', ref)
-        pressure = round(calc_pressure(voltage_0, ref), 4)
-        force = round(hx.get_weight(3), 4)
-        temperature = round(calc_temp(voltage_1), 4)
+        #voltage_1 = calc_volts(dig_read_1, 'MCP', ref)
+        pressure = calc_pressure(voltage_0, ref)
+        PressureData.append(pressure)
+        TimeData.append(ChangeInTime)
+        #force = hx.get_weight(3)
+        #temperature = round(calc_temp(voltage_1), 4)
+    file = open('../Data/PressureTesting.txt', 'w')
+    for n in range(len(PressureData)):
+       #Write the data as comma delimites
+        file.write(str(TimeData[n]) + ',' + str(PressureData[n]) + '\n')
+        #always close the file you are using
+
+    file.close()
         
-        print('Pressure transducer voltage {}V. \n'
-              'Temperature probe voltage {}V \n\n'.format(voltage_0, voltage_1, ))
-        
-        print('Load cell {}g \n'
-              'Pressure transducer {}psi. \n'
-              'Temperature {}C \n\n'.format(force, pressure, temperature))
-        time.sleep(.1)
+#        print('Pressure transducer voltage {}V. \n'
+#              'Temperature probe voltage {}V \n\n'.format(voltage_0, voltage_1, ))
+#        
+#        print('Load cell {}g \n'
+#              'Pressure transducer {}psi. \n'
+#              'Temperature {}C \n\n'.format(force, pressure, temperature))
+#        time.sleep(.1)
 
 except KeyboardInterrupt:
     print('great job... you made toast')
