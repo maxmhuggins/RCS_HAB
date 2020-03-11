@@ -1,5 +1,4 @@
 import numpy as np
-from scipy import stats
 
 def getPressure(voltage):
      p = (voltage - PressureTransducer.CalibrationIntercept) / PressureTransducer.CalibrationSlope
@@ -7,14 +6,15 @@ def getPressure(voltage):
 
 class PressureTransducer:
      ReferenceVoltage = 5
-     CalibrationSlope = 0
-     CalibrationIntercept = 0
+     CalibrationSlope = .004119548872180451
+     CalibrationIntercept = .4595037593984965
 
      @classmethod
      def Calibrate(cls, CalibrationPressures, CalibrationVoltages):
-          x = np.array(self.CalibrationPressures)
-          y = np.array(self.CalibrationVoltages)
-          m, b, r_value, p_value, std_err = stats.linregress(x,y)
+          x = CalibrationPressures
+          y = np.array(CalibrationVoltages)
+          A = np.vstack([x, np.ones(len(x))]).T
+          m, b = np.linalg.lstsq(A, y, rcond=-1.)[0]
           print('Your new calibration slope is', m)
           cls.CalibrationSlope = m
           cls.CalibrationIntercept = b
