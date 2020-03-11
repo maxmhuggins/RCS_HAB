@@ -8,14 +8,17 @@ Created on Tue Jan  7 18:35:25 2020
 import RPi.GPIO as GPIO
 import time
 import numpy as np
+from GPIOTranslator import GPIODictionary as GD
 #============================================================================#
 GPIO.setmode(GPIO.BOARD)
 
 C = 0
-CS = 32 #Pin 10 on MCP3008
-CLK = 36 #Pin 13 on MCP3008
-DOUT = 40 #Pin 12 on MCP3008
-DIN = 38 #Pin 11 on MCP3008
+CS = GD['GPIO12'] #Pin 10 on MCP3008
+CLK = GD['GPIO16'] #Pin 13 on MCP3008
+DOUT = GD['GPIO21'] #Pin 12 on MCP3008
+DIN = GD['GPIO20'] #Pin 11 on MCP3008
+
+OE = GD['GPIO26']
 
 PR_TRANS = 11
 atm = 14.6959 #psi per atm
@@ -25,6 +28,9 @@ GPIO.setup(CS, GPIO.OUT)
 GPIO.setup(CLK, GPIO.OUT)
 GPIO.setup(DOUT, GPIO.IN)
 GPIO.setup(DIN, GPIO.OUT)
+GPIO.setup(OE, GPIO.OUT)
+
+GPIO.output(OE, True)
 #============================================================================#
 def readMCP(C, CS, CLK, DOUT, DIN):
     d = ''
@@ -101,7 +107,6 @@ voltage_at_vac = .4595037593984965
 cal_slope = .004119548872180451
 
 def calc_pressure(voltage, ref): 
-    multiplier = 1000 / ref #psi per volt
     p = (voltage - voltage_at_vac) / cal_slope
     return p
 
@@ -113,8 +118,8 @@ try:
         dig_read = readMCP(0, CS, CLK, DOUT, DIN)
         voltage = calc_volts(dig_read, 'MCP', ref)
         pressure = calc_pressure(voltage, ref)
-        print('pressure and voltage ', pressure)
-        time.sleep(.05)
+        print('pressure', pressure)
+        time.sleep(.1)
 except KeyboardInterrupt:
     print('great job... you made toast')
 

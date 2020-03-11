@@ -44,7 +44,7 @@ try:
         q = input('Are you ready?')
         if q:  
             start_time = time.time()
-            while del_t < 10:
+            while del_t < 20:
                 val = hx.get_weight(5)
 ##                print(val)
                 cal.append(val)

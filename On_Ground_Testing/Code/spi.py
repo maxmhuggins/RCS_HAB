@@ -13,7 +13,7 @@ class SPI(object):
             self.verbose = True
         else:
             self.verbose = False
-        GPIO.setmode(GPIO.BCM)
+        GPIO.setmode(GPIO.BOARD)
         ### sometimes you don't need an input or an output, so they're optional
         if self.mosi:
             GPIO.setup(self.mosi, GPIO.OUT, initial=GPIO.LOW)
