@@ -87,6 +87,7 @@ def readMCP(C, CS, CLK, DOUT, DIN):
 
 def calc_volts(d, AoM, ref):
     d_int = int(d,2)
+    print(d_int)
     if AoM == 'ADC':
         volts = ref*d_int / 256
         volts = round(volts, 2)
@@ -116,26 +117,29 @@ hx.reset()
 hx.tare()
 
 try:
+    ChangeInTime = 0
     PressureData = []
     TimeData = []
     StartTime = time.time()
     while ChangeInTime < 30:
         ChangeInTime = time.time() - StartTime
         dig_read_0 = readMCP(0, CS, CLK, DOUT, DIN)
+        print(dig_read_0)
         #dig_read_1 = readMCP(1, CS, CLK, DOUT, DIN)
         voltage_0 = calc_volts(dig_read_0, 'MCP', ref)
         #voltage_1 = calc_volts(dig_read_1, 'MCP', ref)
         pressure = calc_pressure(voltage_0, ref)
         PressureData.append(pressure)
         TimeData.append(ChangeInTime)
+        #time.sleep(.1)
         #force = hx.get_weight(3)
         #temperature = round(calc_temp(voltage_1), 4)
-    file = open('../Data/PressureTesting.txt', 'w')
-    for n in range(len(PressureData)):
+#    file = open('../Data/PressureTesting.txt', 'w')
+ #   for n in range(len(PressureData)):
        #Write the data as comma delimites
-        file.write(str(TimeData[n]) + ',' + str(PressureData[n]) + '\n')
+  #      file.write(str(TimeData[n]) + ',' + str(PressureData[n]) + '\n')
         #always close the file you are using
-
+    
     file.close()
         
 #        print('Pressure transducer voltage {}V. \n'
