@@ -4,6 +4,7 @@ import numpy as np
 from GPIOTranslator import GPIODictionary as GD
 import SPI
 import mcp3008 as MCP
+import matplotlib.pyplot as plt
 #============================================================================#
 
 #============================================================================#
@@ -44,12 +45,43 @@ def calc_temp(voltage):
 #============================================================================#
 
 try:
-    while True:
-        d =  mcp.read_adc(0)
-        print(d)
-        voltage = calc_volts(d)
-        pressure = calc_pressure(voltage)
-        print(pressure)
+##    while True:
+##        d =  mcp.read_adc(0)
+##        voltage = calc_volts(d)
+##        pressure = calc_pressure(voltage)
+##        print(pressure)
+##        time.sleep(0.1)
+    SleepTimes = np.linspace(0.01,.1,10)
+    for i in SleepTimes:
+        ChangeInTime = 0
+        PressureData = []
+        TimeData = []
+        StartTime = time.time()
+        while ChangeInTime < 1:
+            ChangeInTime = time.time() - StartTime
+            PressureData.append(calc_pressure(calc_volts(mcp.read_adc(0))))
+            TimeData.append(ChangeInTime)
+            time.sleep(i)
+        plt.plot(TimeData, PressureData, linewidth=1, label='Delay of {}s, length of {}'.format(round(i, 2), len(TimeData)))
+        plt.legend(loc='best', fontsize=5)
+        plt.ylim(190,230)
+        plt.savefig('../Data/SleepTimeOf {}s.png'.format(round(i, 2)))
+        plt.close()
+        file = open('../Data/PressureTestingSleepOf{}.txt'.format(round(i, 2)), 'w')
+        for n in range(len(PressureData)):
+           #Write the data as comma delimites
+            file.write(str(TimeData[n]) + ',' + str(PressureData[n]) + '\n')
+            #always close the file you are using
+
+        file.close()
+##        plt.savefig('../Data/SleepTimes.png')
+        print('Time sleep of {}s done.'.format(i))
+        time.sleep(.1)
+
+"""
+Need to look into Nyquist's thm. Should be able to determine what sample rate is going to be
+best given the noise.
+"""
 
 except KeyboardInterrupt:
     print('great job... you made toast')
