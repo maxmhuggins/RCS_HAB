@@ -1,0 +1,80 @@
+As of Feb. 13, 2020:
+An on-ground rig has been built. It has problems, though. The biggest is the 
+load cell's mount. It is currently attached to a ring stand via a 3D printed 
+part. The current setup causes the load cell innapropriate stresses. I believe 
+this is the cause for the erroneous signals I am recieving from the load cell. 
+The next problem with the on-ground rig is that the pressure transducer is 
+noisy. Whether or not this is an issue of poor wiring I am unsure. Lastly, 
+the setup is lackluster in its reliability. Simple movements of the setup will 
+cause the sensors to be thrown off calibration. Primarily the load cell, but I 
+am sure that the pressure transducer's noisy signals are not satisfactory to 
+obtain the results I am interested in. 
+
+Additionally, the electronics are not up to satisfaction. All transducers 
+(force, pressure, and temp) are sending analog signals to a 10bit ADC. This 
+is a medium resolution device. Pressure changes of something like 1psi are 
+nearly undetectable because of the limited resolution. Temperature changes are 
+even worse. Changes of 2 degrees Celsius are also undetectable. Along with 
+this all of the wiring is done on a breadboard and the long cords leading from 
+each sensor to the breadboard are simply twisted inductively paired wires. 
+This was done such as to expedite the scripting process and allow development 
+to begin and was never meant to be a final solution. Nonetheless, this is also 
+unsatisfactory. 
+
+Lastly, the software is not completed. My goal for this is an object oriented 
+(OO) software with ease of use and readibility. There is no doubt I could 
+complete the software with my current understanding of python and exclude the 
+OO aspect and move on. However, as I would like this to be as much of a 
+learning experience as it can be along with the completed project being 
+rigorous I have chosen to develop the software with OO programming (OOP) in 
+mind. There are also limitations to non-OOP that I would like to avoid in this 
+project. 
+
+#=============================================================================#
+
+In conclusion,
+
+--> What is wrong?
+	* Possible solution(s)
+
+(Not in any particular order)
+
+On-Ground Testing Rig:
+
+--> Load cell mount causes poor data readings
+	* Design new mount that uses some sort of gimbaling
+
+--> Noisy pressure transducer
+	* Write script to determine statistical characteristics of the data
+		recieved from the transducer.
+	* Do a trial run to determine values for Nyquist's Theorem to 
+		determine minimum sample rate needed for the experiment.
+	* Determine whether or not the long wire lead is a reason for the poor 
+		data by using the other transducer.
+
+--> Poor reliability/repeatability
+	* This is largely an issue for the load cell. Any movements of the rig 
+		cause the load cell unusual strains. This is a complex issue 
+		and I do not currently have a good solution.
+
+Electronics for On-Ground Testing Rig:
+
+--> 10-bit ADC resolution is too low
+	* Upgrade to 24-bit ADC that uses I2C communication protocol
+		** This means developing a library for the device.
+
+--> Poor wiring
+	* Switch to a more reliable standard such as universal serial bus or 
+		some sort of shielded standard like ethernet. 
+
+--> Breadboard is a poor choice for sensitive data acquisition
+	* Switch to a soldered breadboard
+		** Possibly design one online and use squirk or an online
+			seller.
+
+Software:
+Not really any problems here other than being behind schedule, just a matter 
+of completing it in a timely manner. May ask for some help with understanding 
+concepts of OOP from someone who has a much better understanding of them.
+
+#=============================================================================#
