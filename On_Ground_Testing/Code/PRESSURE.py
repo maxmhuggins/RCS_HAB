@@ -5,7 +5,7 @@ def getPressure(voltage):
      return p
 
 class PressureTransducer:
-     ReferenceVoltage = 5
+
      CalibrationSlope = .004119548872180451
      CalibrationIntercept = .4595037593984965
 
