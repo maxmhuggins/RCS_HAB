@@ -44,7 +44,7 @@ On-Ground Testing Rig:
 --> Load cell mount causes poor data readings
 	* Design new mount that uses some sort of gimbaling
 
---> Noisy pressure transducer
+--> Noisy pressure transducer *SOLVED
 	* Write script to determine statistical characteristics of the data
 		recieved from the transducer.
 	* Do a trial run to determine values for Nyquist's Theorem to 
