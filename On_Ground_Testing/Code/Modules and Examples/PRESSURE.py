@@ -7,7 +7,7 @@ class PressureTransducer:
         import SPI
         import numpy as np
         self.ADCChannel = ADCChannel
-        self._device = ADC.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
+        self._device = ADC.MCP3008(spi=SPI.SpiDev())
         self.voltage = self._device.getVoltage(self._device.read_adc(self.ADCChannel)))
         self.CalibrationSlope = .004119548872180451
         self.CalibrationIntercept = .4595037593984965
