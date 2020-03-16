@@ -1,31 +1,13 @@
-# Copyright (c) 2016 Adafruit Industries
-# Author: Tony DiCola
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
-import Adafruit_GPIO as GPIO
-import Adafruit_GPIO.SPI as SPI
+import SPI
 
+def getVoltage(d):
+    V = (d * MCP3008.ReferenceVoltage) / 1023
+    return V
 
 class MCP3008(object):
     """Class to represent an Adafruit MCP3008 analog to digital converter.
     """
-
+    ReferenceVoltage = 5.12
     def __init__(self, clk=None, cs=None, miso=None, mosi=None, spi=None, gpio=None):
         """Initialize MAX31855 device with software SPI on the specified CLK,
         CS, and DO pins.  Alternatively can specify hardware SPI by sending an
@@ -35,11 +17,6 @@ class MCP3008(object):
         # Handle hardware SPI
         if spi is not None:
             self._spi = spi
-        elif clk is not None and cs is not None and miso is not None and mosi is not None:
-            # Default to platform GPIO if not provided.
-            if gpio is None:
-                gpio = GPIO.get_platform_gpio()
-            self._spi = SPI.BitBang(gpio, clk, mosi, miso, cs)
         else:
             raise ValueError('Must specify either spi for for hardware SPI or clk, cs, miso, and mosi for software SPI!')
         self._spi.set_clock_hz(1000000)

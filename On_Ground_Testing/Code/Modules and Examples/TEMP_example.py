@@ -21,7 +21,7 @@ mcp = ADC.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 ADC.ReferenceVoltage = 5.12
 
 while True:
-    d = mcp.read_adc(0)
+    d = mcp.read_adc(1)
     voltage = ADC.getVoltage(d)
     Temperature = TEMP.getTemperature(voltage)
     print(Temperature)

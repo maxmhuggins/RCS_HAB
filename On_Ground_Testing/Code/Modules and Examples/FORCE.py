@@ -251,7 +251,7 @@ class HX711:
 
     
     # Sets tare for channel A for compatibility purposes
-    def tare(self, times=15):
+    def tare(self, times=30):
         self.tare_A(times)
     
     
@@ -424,19 +424,22 @@ class HX711:
             del_t = 0
             cal = []
             while q != '1':
-                q = input('Are you ready?')
+                q = input('Is the {}g weight placed?'.format(i))
 
             start_time = time.time()
-            while del_t < 30:
-                val = HX711.get_weight(5)
+            while del_t < 10:
+                val = self.get_weight(5)
                 cal.append(val)
-                HX711.power_down()
-                HX711.power_up()
+                self.power_down()
+                self.power_up()
                 time.sleep(0.3)
                 del_t = time.time() - start_time
             avg = sum(cal)/len(cal)
             avgs.append(avg/i)
         total_average = sum(avgs)/len(avgs)
-        HX711.set_reference_unit(total_average)
+        self.set_reference_unit(total_average)
+        q = 0
+        while q != '1':
+                q = input('Press 1 when all weights are removed.')
 
 # EOF - hx711.py

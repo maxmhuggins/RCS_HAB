@@ -1,16 +1,16 @@
 from FORCE import HX711
+from GPIOTranslator import GPIODictionary as GD
 #============================================================================#
-EMULATE_HX711=False
 hx = HX711(GD['GPIO5'], GD['GPIO6'])
 hx.set_reading_format("MSB", "MSB")
 
 
-"""
-Reference Unit can be set manually:
+#Reference Unit can be set manually:
 
-referenceUnit = 954.5
-hx.set_reference_unit(referenceUnit)
-"""
+#referenceUnit = 954.5
+#hx.set_reference_unit(referenceUnit)
+
+
 hx.reset()
 
 hx.tare()

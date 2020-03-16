@@ -1,6 +1,7 @@
 import PRESSURE as PR
 import ADC
 import SPI
+import time
 import RPi.GPIO as RGPIO
 #=====================================================#
 """                                                   
@@ -30,5 +31,6 @@ while True:
     voltage = ADC.getVoltage(d)
     Pressure = PR.getPressure(voltage)
     print(Pressure)
+    time.sleep(.5)
         
 

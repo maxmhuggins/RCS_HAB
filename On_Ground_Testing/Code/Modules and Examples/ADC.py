@@ -1,7 +1,7 @@
 import SPI
 
 def getVoltage(d):
-    V = (d * ref) / 1023
+    V = (d * MCP3008.ReferenceVoltage) / 1023
     return V
 
 class MCP3008(object):
