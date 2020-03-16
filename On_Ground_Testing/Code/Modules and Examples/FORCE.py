@@ -251,7 +251,7 @@ class HX711:
 
     
     # Sets tare for channel A for compatibility purposes
-    def tare(self, times=15):
+    def tare(self, times=30):
         self.tare_A(times)
     
     
