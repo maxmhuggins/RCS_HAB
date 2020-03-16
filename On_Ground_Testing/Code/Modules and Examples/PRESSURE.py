@@ -1,88 +1,68 @@
-import numpy as np
-import ADC
-import SPI
 import time
-import RPi.GPIO as RGPIO
-from GPIOTranslator import GPIODictionary as GD
-#=====================================================#
-"""                                                   
-This section is only here to enable the output enable 
-(OE) pin on a level shifter.                          
-"""                                                   
-
-OE = GD['GPIO26']
-
-RGPIO.setmode(RGPIO.BOARD)
-RGPIO.setup(OE, RGPIO.OUT)
-RGPIO.output(OE, True)
-#=====================================================#
-"""
-This is simply setting up the SPI hardware for the 
-ADC I am using.
-"""
-SPI_PORT   = 0
-SPI_DEVICE = 0
-mcp = ADC.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
-ADC.ReferenceVoltage = 5.12
-#=====================================================#
-
-def mode(a, axis=0):
-    scores = np.unique(np.ravel(a))       # get ALL unique values
-    testshape = list(a.shape)
-    testshape[axis] = 1
-    oldmostfreq = np.zeros(testshape)
-    oldcounts = np.zeros(testshape)
-
-    for score in scores:
-        template = (a == score)
-        counts = np.expand_dims(np.sum(template, axis),axis)
-        mostfrequent = np.where(counts > oldcounts, score, oldmostfreq)
-        oldcounts = np.maximum(counts, oldcounts)
-        oldmostfreq = mostfrequent
-
-    return mostfrequent
-
-def getPressure(voltage):
-    p = (voltage - PressureTransducer.CalibrationIntercept) / PressureTransducer.CalibrationSlope
-    return p
 
 class PressureTransducer:
+    
+    def __init__(self, ADCChannel)
+        import ADC
+        import SPI
+        import numpy as np
+        self.ADCChannel = ADCChannel
+        self._device = ADC.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
+        self.voltage = self._device.getVoltage(self._device.read_adc(self.ADCChannel)))
+        self.CalibrationSlope = .004119548872180451
+        self.CalibrationIntercept = .4595037593984965
+        self.ADCChannel = ADCChannel
+        self.CalibrationVoltages = []
+        self.del_t = 0
+        self.set_reg = 0
+        self.ask = 0
+        self.CalibrationPressures = range(40,501,20)
 
-    CalibrationSlope = .004119548872180451
-    CalibrationIntercept = .4595037593984965
+    def mode(self, axis=0):
+        UniquePressures = np.unique(np.ravel(self.CalibrationVoltages))       
+        testshape = list(self.CalibrationVoltages.shape)
+        testshape[axis] = 1
+        oldmostfreq = np.zeros(testshape)
+        oldcounts = np.zeros(testshape)
 
-    @classmethod
-    def Calibrate(cls, ADCChannel):
-        ask = 0
-        CalibrationPressures = range(40,501,20)
+        for UniquePressure in UniquePressures:
+            template = (a == UniquePressure)
+            counts = np.expand_dims(np.sum(template, axis),axis)
+            mostfrequent = np.where(counts > oldcounts, UniquePressure, oldmostfreq)
+            oldcounts = np.maximum(counts, oldcounts)
+            oldmostfreq = mostfrequent
 
+        return mostfrequent
+
+    def Calibrate(self):
+        
         while ask != '1':
             ask = input('Are you ready? (1/0)')
         ModeVoltages = []
-        for i in CalibrationPressures:
-            del_t = 0
-            set_reg = 0
-            CalibrationVoltages = []
-
-            while set_reg != '1':
+        for i in self.CalibrationPressures:
+            while self.set_reg != '1':
                 print('Is regulator set to ', i, '?')
-                set_reg = input()
+                self.set_reg = input()
 
             start_time = time.time()
             while del_t < 100:
-                level = mcp.read_adc(ADCChannel)
+                level = mcp.read_adc(self.ADCChannel)
                 voltage = ADC.getVoltage(level)
-                CalibrationVoltages.append(voltage)
+                self.CalibrationVoltages.append(voltage)
                 del_t = time.time() - start_time
                 time.sleep(.3)
-            modes = mode(np.array(CalibrationVoltages))
+            modes = mode(np.array(self.CalibrationVoltages))
             ModeVoltages.append(modes)
 
-        x = CalibrationPressures
+        x = self.CalibrationPressures
         y = np.array(ModeVoltages)
         A = np.vstack([x, np.ones(len(x))]).T
         m, b = np.linalg.lstsq(A, y, rcond=-1.)[0]
         print('Your new calibration slope is', float(m))
-        cls.CalibrationSlope = float(m)
-        cls.CalibrationIntercept = float(b)
+        self.CalibrationSlope = float(m)
+        self.CalibrationIntercept = float(b)
         print('Your pressure transducer has been succefully calibrated.')
+
+    def getPressure(self):
+        p = (self.voltage - self.CalibrationIntercept) / self.CalibrationSlope
+        return p
