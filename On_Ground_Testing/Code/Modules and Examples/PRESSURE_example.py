@@ -1,6 +1,4 @@
 import PRESSURE as PR
-import ADC
-import SPI
 import time
 import RPi.GPIO as RGPIO
 #=====================================================#
@@ -15,21 +13,10 @@ RGPIO.setmode(RGPIO.BCM)
 RGPIO.setup(OE, RGPIO.OUT)
 RGPIO.output(OE, True)
 #=====================================================#
-"""
-This section sets up the SPI hardware for the ADC I
-am using.
-"""
-
-SPI_PORT   = 0
-SPI_DEVICE = 0
-mcp = ADC.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
-#=====================================================#
 
 PR.PressureTransducer.Calibrate(0)
 while True:
-    d = mcp.read_adc(0)
-    voltage = ADC.getVoltage(d)
-    Pressure = PR.getPressure(voltage)
+    Pressure = PR.getPressure()
     print(Pressure)
     time.sleep(.5)
         
