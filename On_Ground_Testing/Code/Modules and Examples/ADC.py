@@ -1,19 +1,16 @@
 import SPI
 
-def getVoltage(d):
-    V = (d * MCP3008.ReferenceVoltage) / 1023
-    return V
-
 class MCP3008(object):
     """Class to represent an Adafruit MCP3008 analog to digital converter.
     """
-    ReferenceVoltage = 5.12
-    def __init__(self, clk=None, cs=None, miso=None, mosi=None, spi=None, gpio=None):
+    
+    def __init__(self, clk=None, cs=None, miso=None, mosi=None, spi=SPI.SpiDev(), gpio=None, ReferenceVoltage=5.00):
         """Initialize MAX31855 device with software SPI on the specified CLK,
         CS, and DO pins.  Alternatively can specify hardware SPI by sending an
         Adafruit_GPIO.SPI.SpiDev device in the spi parameter.
         """
         self._spi = None
+        self.ReferenceVoltage = ReferenceVoltage
         # Handle hardware SPI
         if spi is not None:
             self._spi = spi
@@ -67,3 +64,6 @@ class MCP3008(object):
         result |= (resp[1] & 0xFF) << 1
         result |= (resp[2] & 0x80) >> 7
         return result & 0x3FF
+    def getVoltage(self, d):
+        V = (d * self.ReferenceVoltage) / 1023
+        return V
