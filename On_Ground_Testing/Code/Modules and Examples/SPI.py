@@ -10,7 +10,7 @@ LSBFIRST = 1
 class SpiDev(object):
     """Hardware-based SPI implementation using the spidev interface."""
 
-    def __init__(self, port, device, max_speed_hz=500000):
+    def __init__(self, port=0, device=0, max_speed_hz=500000):
         """Initialize an SPI device using the SPIdev interface.  Port and device
         identify the device, for example the device /dev/spidev1.0 would be port
         1 and device 0.
