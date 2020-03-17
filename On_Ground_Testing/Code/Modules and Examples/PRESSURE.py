@@ -1,22 +1,19 @@
-import time
+import __init__
 
 class PressureTransducer:
     
     def __init__(self, ADCChannel)
-        import ADC
-        import SPI
-        import numpy as np
         self.ADCChannel = ADCChannel
         self._device = ADC.MCP3008(spi=SPI.SpiDev())
         self.voltage = self._device.getVoltage(self._device.read_adc(self.ADCChannel)))
         self.CalibrationSlope = .004119548872180451
         self.CalibrationIntercept = .4595037593984965
-        self.ADCChannel = ADCChannel
-        self.CalibrationVoltages = []
         self.del_t = 0
         self.set_reg = 0
         self.ask = 0
         self.CalibrationPressures = range(40,501,20)
+        self.ModeVoltages = []
+        self.CalibrationVoltages = []
 
     def mode(self, axis=0):
         UniquePressures = np.unique(np.ravel(self.CalibrationVoltages))       
@@ -36,9 +33,8 @@ class PressureTransducer:
 
     def Calibrate(self):
         
-        while ask != '1':
-            ask = input('Are you ready? (1/0)')
-        ModeVoltages = []
+        while self.ask != '1':
+            self.ask = input('Are you ready? (1/0)')
         for i in self.CalibrationPressures:
             while self.set_reg != '1':
                 print('Is regulator set to ', i, '?')
@@ -52,10 +48,10 @@ class PressureTransducer:
                 del_t = time.time() - start_time
                 time.sleep(.3)
             modes = mode(np.array(self.CalibrationVoltages))
-            ModeVoltages.append(modes)
+            self.ModeVoltages.append(modes)
 
         x = self.CalibrationPressures
-        y = np.array(ModeVoltages)
+        y = np.array(self.ModeVoltages)
         A = np.vstack([x, np.ones(len(x))]).T
         m, b = np.linalg.lstsq(A, y, rcond=-1.)[0]
         print('Your new calibration slope is', float(m))

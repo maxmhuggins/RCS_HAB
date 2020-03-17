@@ -1,23 +1,12 @@
-import PRESSURE as PR
-import time
-import RPi.GPIO as RGPIO
-#=====================================================#
-"""                                                   
-This section is only here to enable the output enable 
-(OE) pin on a level shifter.                          
-"""                                                   
+import __init__
 
-OE = 26
+ADCChannel = 0
 
-RGPIO.setmode(RGPIO.BCM)
-RGPIO.setup(OE, RGPIO.OUT)
-RGPIO.output(OE, True)
-#=====================================================#
+PressureSensor = PR.PressureTransducer.Calibrate(ADCChannel)
 
-PR.PressureTransducer.Calibrate(0)
 while True:
-    Pressure = PR.getPressure()
+
+    Pressure = PressureSensor.getPressure()
     print(Pressure)
-    time.sleep(.5)
         
 
