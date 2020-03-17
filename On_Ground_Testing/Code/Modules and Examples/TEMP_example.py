@@ -1,8 +1,8 @@
-import __init__
+import __init__ as I
 
 ADCChannel = 1
 
-TemperatureSensor = TEMP.TemperatureTransducer(ADCChannel)
+TemperatureSensor = I.TEMP.TemperatureTransducer(ADCChannel)
 
 while True:
 

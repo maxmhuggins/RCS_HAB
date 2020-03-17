@@ -1,16 +1,14 @@
-import __init__
+import __init__ as I
 
-class PressureTransducer:
-    
-    def __init__(self, ADCChannel)
+class PressureTransducer(I.ADC.MCP3008):
+    ask = 0
+    def __init__(self, ADCChannel):
+        super().__init__(self)
         self.ADCChannel = ADCChannel
-        self._device = ADC.MCP3008(spi=SPI.SpiDev())
-        self.voltage = self._device.getVoltage(self._device.read_adc(self.ADCChannel)))
         self.CalibrationSlope = .004119548872180451
         self.CalibrationIntercept = .4595037593984965
         self.del_t = 0
         self.set_reg = 0
-        self.ask = 0
         self.CalibrationPressures = range(40,501,20)
         self.ModeVoltages = []
         self.CalibrationVoltages = []
@@ -32,13 +30,13 @@ class PressureTransducer:
         return mostfrequent
 
     def Calibrate(self):
+
+        while PressureTransducer.ask != 1:
+            self.ask = int(input('Are you ready? (1/0)'))
         
-        while self.ask != '1':
-            self.ask = input('Are you ready? (1/0)')
         for i in self.CalibrationPressures:
             while self.set_reg != '1':
-                print('Is regulator set to ', i, '?')
-                self.set_reg = input()
+                self.set_reg = input('Is regulator set to ', i, '?')
 
             start_time = time.time()
             while del_t < 100:
@@ -60,5 +58,5 @@ class PressureTransducer:
         print('Your pressure transducer has been succefully calibrated.')
 
     def getPressure(self):
-        p = (self.voltage - self.CalibrationIntercept) / self.CalibrationSlope
+        p = (self.getVoltage(self.ADCChannel) - self.CalibrationIntercept) / self.CalibrationSlope
         return p

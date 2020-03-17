@@ -1,8 +1,8 @@
-import __init__
+import __init__ as I
 
 ADCChannel = 0
 
-mcp = ADC.MCP3008()
+mcp = I.ADC.MCP3008()
 
 while True:
 
