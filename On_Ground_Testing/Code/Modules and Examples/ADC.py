@@ -9,6 +9,7 @@ class MCP3008(object):
         CS, and DO pins.  Alternatively can specify hardware SPI by sending an
         Adafruit_GPIO.SPI.SpiDev device in the spi parameter.
         """
+       
         self._spi = None
         self.ReferenceVoltage = ReferenceVoltage
         # Handle hardware SPI
@@ -64,6 +65,7 @@ class MCP3008(object):
         result |= (resp[1] & 0xFF) << 1
         result |= (resp[2] & 0x80) >> 7
         return result & 0x3FF
-    def getVoltage(self, d):
-        V = (d * self.ReferenceVoltage) / 1023
+
+    def getVoltage(self, ADCChannel):
+        V = (self.read_adc(ADCChannel) * self.ReferenceVoltage) / 1023
         return V
