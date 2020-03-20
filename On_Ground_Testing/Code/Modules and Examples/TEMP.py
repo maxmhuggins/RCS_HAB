@@ -6,6 +6,6 @@ class TemperatureTransducer(I.ADC.MCP3008):
         super().__init__(self)
         self.ADCChannel = ADCChannel
 
-    def getTemperature(self): #I don't think this is going to work because the object that gets instantiated given some ADCChannel is never updated for the object. It might though, idk.
+    def getTemperature(self):
         T = (self.getVoltage(self.ADCChannel) - 1.25) / 0.005
         return T

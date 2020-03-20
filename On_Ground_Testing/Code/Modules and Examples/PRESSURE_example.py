@@ -11,4 +11,4 @@ while True:
 
     Pressure = PressureSensor.getPressure()
     print(Pressure)        
-    I.time.sleep(.2)
+    #I.time.sleep(.2)

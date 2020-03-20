@@ -12,7 +12,7 @@ HX.set_reference_unit(ReferenceUnit)
 #HX.CalibrateHX711()
 
 HX.reset()
-HX.tare(60)
+HX.tare(200)
 
 while True:
 
