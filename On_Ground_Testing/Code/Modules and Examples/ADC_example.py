@@ -1,6 +1,6 @@
 import __init__ as I
 
-ADCChannel = 0
+ADCChannel = 1
 
 mcp = I.ADC.MCP3008()
 
