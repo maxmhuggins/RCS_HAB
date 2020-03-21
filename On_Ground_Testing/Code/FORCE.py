@@ -416,8 +416,10 @@ class HX711:
         self.power_up()
 
     def CalibrateHX711(self):
+        print('Settling...')
+        time.sleep(30)
         avgs = []
-        weights = [10,20,50,100,200,500]
+        weights = [10.013,19.841,50.109,100.142,199.648,499.32]
 
         for i in weights:
             q = 0
@@ -425,10 +427,11 @@ class HX711:
             cal = []
             while q != '1':
                 q = input('Is the {}g weight placed?'.format(i))
-
+            print('Settling...')
+            time.sleep(20)
             start_time = time.time()
             while del_t < 10:
-                val = self.get_weight(5)
+                val = self.get_weight(3)
                 cal.append(val)
                 self.power_down()
                 self.power_up()
@@ -437,6 +440,7 @@ class HX711:
             avg = sum(cal)/len(cal)
             avgs.append(avg/i)
         total_average = sum(avgs)/len(avgs)
+        print('Your new reference unit is: ', total_average)
         self.set_reference_unit(total_average)
         q = 0
         while q != '1':

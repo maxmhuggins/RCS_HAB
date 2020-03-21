@@ -15,6 +15,7 @@ DT = 20
 SCK = 21
 
 #===Instantiating=Sensors===#
+I.OutputEnable(OE)
 Solenoid = I.SND.Solenoid(SolenoidPin)
 PressureSensor = I.PR.PressureTransducer(PressureChannel)
 ForceSensor = I.HX(DT, SCK)
@@ -30,7 +31,7 @@ PipeTempData = []
 
 #===Beginning=the=Experiment===#
 try:
-    print("First, define the nozzle's geometry. This should be one of these:\nN \nU4 \nU3 \nU2 \nU1 \nO \nO1 \O2 \O3 \O4")
+    print("First, define the nozzle's geometry. This should be one of these:\nN \nU4 \nU3 \nU2 \nU1 \nO \nO1 \nO2 \nO3 \nO4")
     NozzleGeometry = input('Nozzle geometry\n >>> ')
     print("Now, define the trial number for that geometry\n >>> ")
     trial = input('Trial number\n >>> ')
@@ -52,6 +53,9 @@ try:
         start = int(input('Insert CO2, then press 1 to continue.\n >>>'))
 
     PressureSensor.Calibrate()
+    
+    ForceSensor.reset()
+    ForceSensor.tare(200)
     ForceSensor.CalibrateHX711()
     ForceSensor.reset()
     ForceSensor.tare(200)
@@ -84,8 +88,8 @@ try:
             pass
 
     file = open('../Data/ExperimentalData/{}_trial_{}.txt'.format(NozzleGeometry, trial), 'w')
-        for n in range(len(PressureData)):
-            file.write(str(TimeData[n]) + ',' + str(ForceData[n]) + ',' + str(PressureData[n]) + ',' + str(CO2TempData[n]) + ',' + str(PipeTempData[n])'\n')
+    for n in range(len(PressureData)):
+        file.write(str(TimeData[n]) + ',' + str(ForceData[n]) + ',' + str(PressureData[n]) + ',' + str(CO2TempData[n]) + ',' + str(PipeTempData[n]) + '\n')
     file.close()
 except KeyboardInterrupt:
     print('great job... you made toast')
