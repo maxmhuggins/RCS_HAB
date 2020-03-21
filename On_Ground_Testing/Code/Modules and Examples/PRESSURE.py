@@ -47,11 +47,11 @@ class PressureTransducer(I.ADC.MCP3008):
             self.CalibrationVoltages = []
             self.del_t = 0
             start_time = I.time.time()
-            while self.del_t <= 1:
+            while self.del_t <= 5:
                 voltage = self.getVoltage(self.ADCChannel)
                 self.CalibrationVoltages.append(voltage)
                 self.del_t = I.time.time() - start_time
-                #I.time.sleep(.3)
+                I.time.sleep(.05)
             
             self.ModeVoltages.append(self.mode())
 
@@ -60,6 +60,7 @@ class PressureTransducer(I.ADC.MCP3008):
         A = np.vstack([x, np.ones(len(x))]).T
         m, b = np.linalg.lstsq(A, y, rcond=-1.)[0]
         print('Your new calibration slope is', float(m))
+        print('Your new calibration intercept is', float(b))
         self.CalibrationSlope = float(m)
         self.CalibrationIntercept = float(b)
         print('Your pressure transducer has been succefully calibrated.')
