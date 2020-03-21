@@ -1,27 +1,32 @@
 import __init__ as I
+import numpy as np
 
 class PressureTransducer(I.ADC.MCP3008):
-    ask = 0
+    
     def __init__(self, ADCChannel):
         super().__init__(self)
         self.ADCChannel = ADCChannel
         self.CalibrationSlope = .004119548872180451
         self.CalibrationIntercept = .4595037593984965
+        self.ask = 0
         self.del_t = 0
         self.set_reg = 0
-        self.CalibrationPressures = range(40,501,20)
         self.ModeVoltages = []
         self.CalibrationVoltages = []
+        self.CalibrationPressures = range(40,501,20)
+
+                
 
     def mode(self, axis=0):
-        UniquePressures = np.unique(np.ravel(self.CalibrationVoltages))       
-        testshape = list(self.CalibrationVoltages.shape)
+        CalibrationArray = np.array(self.CalibrationVoltages)
+        UniquePressures = np.unique(np.ravel(CalibrationArray))       
+        testshape = list(CalibrationArray.shape)
         testshape[axis] = 1
         oldmostfreq = np.zeros(testshape)
         oldcounts = np.zeros(testshape)
 
         for UniquePressure in UniquePressures:
-            template = (a == UniquePressure)
+            template = (CalibrationArray == UniquePressure)
             counts = np.expand_dims(np.sum(template, axis),axis)
             mostfrequent = np.where(counts > oldcounts, UniquePressure, oldmostfreq)
             oldcounts = np.maximum(counts, oldcounts)
@@ -31,22 +36,24 @@ class PressureTransducer(I.ADC.MCP3008):
 
     def Calibrate(self):
 
-        while PressureTransducer.ask != 1:
+        while self.ask != 1:
             self.ask = int(input('Are you ready? (1/0)'))
-        
+            
         for i in self.CalibrationPressures:
+            self.set_reg = 0
             while self.set_reg != '1':
-                self.set_reg = input('Is regulator set to ', i, '?')
-
-            start_time = time.time()
-            while del_t < 100:
-                level = mcp.read_adc(self.ADCChannel)
-                voltage = ADC.getVoltage(level)
+                self.set_reg = input('Is regulator set to {}?'.format(i))
+            
+            self.CalibrationVoltages = []
+            self.del_t = 0
+            start_time = I.time.time()
+            while self.del_t <= 1:
+                voltage = self.getVoltage(self.ADCChannel)
                 self.CalibrationVoltages.append(voltage)
-                del_t = time.time() - start_time
-                time.sleep(.3)
-            modes = mode(np.array(self.CalibrationVoltages))
-            self.ModeVoltages.append(modes)
+                self.del_t = I.time.time() - start_time
+                #I.time.sleep(.3)
+            
+            self.ModeVoltages.append(self.mode())
 
         x = self.CalibrationPressures
         y = np.array(self.ModeVoltages)

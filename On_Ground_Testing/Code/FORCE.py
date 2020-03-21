@@ -13,7 +13,7 @@ class HX711:
         # software try to access get values from the class at the same time.
         self.readLock = threading.Lock()
         
-        GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.PD_SCK, GPIO.OUT)
         GPIO.setup(self.DOUT, GPIO.IN)
 
@@ -251,7 +251,7 @@ class HX711:
 
     
     # Sets tare for channel A for compatibility purposes
-    def tare(self, times=15):
+    def tare(self, times=30):
         self.tare_A(times)
     
     
@@ -427,7 +427,7 @@ class HX711:
                 q = input('Is the {}g weight placed?'.format(i))
 
             start_time = time.time()
-            while del_t < 20:
+            while del_t < 10:
                 val = self.get_weight(5)
                 cal.append(val)
                 self.power_down()
@@ -438,5 +438,8 @@ class HX711:
             avgs.append(avg/i)
         total_average = sum(avgs)/len(avgs)
         self.set_reference_unit(total_average)
+        q = 0
+        while q != '1':
+                q = input('Press 1 when all weights are removed.')
 
 # EOF - hx711.py

@@ -6,9 +6,10 @@ OE = 26
 I.OutputEnable(OE)
 
 PressureSensor = I.PR.PressureTransducer(ADCChannel)
+PressureSensor.Calibrate()
 
 while True:
 
     Pressure = PressureSensor.getPressure()
-    print(Pressure)        
-    #I.time.sleep(.2)
+    print(Pressure)
+    I.time.sleep(.2)

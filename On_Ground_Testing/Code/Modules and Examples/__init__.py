@@ -2,11 +2,11 @@ import time
 import ADC
 import SPI
 import TEMP
+import SOLENOID as SND
 import PRESSURE as PR
 import numpy as np
 import RPi.GPIO as RGPIO
 from FORCE import HX711 as HX
-from GPIOTranslator import GPIODictionary as GD
 
 def OutputEnable(OE):
     RGPIO.setmode(RGPIO.BCM)

@@ -1,12 +1,23 @@
 import __init__ as I
 
-Solenoid = 18
+SolenoidPin = 18
 
-I.RGPIO.setmode(I.RGPIO.BCM)
-I.RGPIO.setup(Solenoid, I.RGPIO.OUT)
+Solenoid = I.SND.Solenoid(SolenoidPin)
 
-while True:
-    I.RGPIO.output(Solenoid, True)
-    I.time.sleep(1)
-    I.RGPIO.output(Solenoid, False)
-    I.time.sleep(1)
+hold = 1
+
+try:
+    while True:
+        Solenoid.SolenoidOPEN()
+        I.time.sleep(hold)
+        Solenoid.SolenoidCLOSE()
+        I.time.sleep(hold)
+
+except KeyboardInterrupt:
+    print('great job... you made toast')
+
+finally:
+    I.RGPIO.cleanup()
+    print('Isaac cleaned the oven...')
+
+
