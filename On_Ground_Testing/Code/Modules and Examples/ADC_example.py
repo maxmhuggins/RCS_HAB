@@ -4,7 +4,7 @@ OE = 26
 
 I.OutputEnable(OE)
 
-ADCChannel = 1
+ADCChannel = 0
 
 mcp = I.ADC.MCP3008()
 

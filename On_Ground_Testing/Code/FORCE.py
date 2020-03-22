@@ -416,21 +416,23 @@ class HX711:
         self.power_up()
 
     def CalibrateHX711(self):
-        print('Settling...')
-        time.sleep(30)
         avgs = []
+        G = 9.80665 / 1000
         weights = [10.013,19.841,50.109,100.142,199.648,499.32]
-
-        for i in weights:
+        #forces = [10.013 * G, 19.841 * G, 50.109 * G, 100.142 * G, 199.648 * G, 499.32 * G]
+        forces = [10.013 * G, 19.841 * G] #Test forces
+        for i in forces:
             q = 0
             del_t = 0
             cal = []
             while q != '1':
-                q = input('Is the {}g weight placed?'.format(i))
+                q = input('Is the {}g weight placed?'.format(round(i / G,1)))
             print('Settling...')
-            time.sleep(20)
+            time.sleep(5)
+            self.reset()
+            self.tare(200)
             start_time = time.time()
-            while del_t < 10:
+            while del_t < 1:
                 val = self.get_weight(3)
                 cal.append(val)
                 self.power_down()

@@ -13,8 +13,12 @@ class PressureTransducer(I.ADC.MCP3008):
         self.set_reg = 0
         self.ModeVoltages = []
         self.CalibrationVoltages = []
-        self.CalibrationPressures = range(40,501,20)
-
+        self.PSItoPASCAL = 6894.757 #Pa/psi
+        self.CalibrationPressuresPSI = range(40,61,20)
+        self.CalibrationPressures = []
+        
+        for i in self.CalibrationPressuresPSI:
+            self.CalibrationPressures.append(i*self.PSItoPASCAL)
                 
 
     def mode(self, axis=0):
@@ -37,12 +41,12 @@ class PressureTransducer(I.ADC.MCP3008):
     def Calibrate(self):
 
         while self.ask != 1:
-            self.ask = int(input('Are you ready? (1/0)'))
+            self.ask = int(input('Are you ready to calibrate the pressure transducer? (1/0)'))
             
         for i in self.CalibrationPressures:
             self.set_reg = 0
             while self.set_reg != '1':
-                self.set_reg = input('Is regulator set to {}?'.format(i))
+                self.set_reg = input('Is regulator set to {}psi?'.format(round(i/self.PSItoPASCAL,2)))
             
             self.CalibrationVoltages = []
             self.del_t = 0

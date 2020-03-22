@@ -2,7 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+*.pyc
 # C extensions
 *.so
 
@@ -134,7 +134,4 @@ dmypy.json
 # pytype static type analyzer
 .pytype/
 
-# Photos
-*.png
-*.jpeg
-*.jpg
+

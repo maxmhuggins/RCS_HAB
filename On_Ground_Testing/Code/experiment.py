@@ -1,7 +1,7 @@
 import __init__ as I
 
 #===Constants===#
-ForceThreshold = 2
+ForceThreshold = 1
 
 #===ADC=Channels===#
 PressureChannel = 0
@@ -28,7 +28,7 @@ ForceData = []
 PressureData = []
 CO2TempData = []
 PipeTempData = []
-COUNTDOWN = range(0,11)
+COUNTDOWN = range(0,61)
 
 #===Beginning=the=Experiment===#
 try:
@@ -48,16 +48,20 @@ try:
         start = int(input('If the test was successful, then press 1 to continue.\n >>>  '))
 
     Solenoid.SolenoidCLOSE()
-
+    
+    start = 0
+    while start != 1:
+        InitialCO2Mass = float(input('Input the initial mass of the CO2 (g):\n >>>  '))
+        start = int(input('Press 1 to continue.\n >>>  '))
+    
     start = 0
     while start != 1:
         start = int(input('Insert CO2, then press 1 to continue.\n >>>  '))
 
-    #PressureSensor.Calibrate()
+    PressureSensor.Calibrate()
     
-    ForceSensor.reset()
-    ForceSensor.tare(200)
-    #ForceSensor.CalibrateHX711()
+    
+    ForceSensor.CalibrateHX711()
     ForceSensor.reset()
     ForceSensor.tare(200)
 
@@ -74,7 +78,7 @@ try:
         print(COUNTDOWN[len(COUNTDOWN)-i-1])
         I.time.sleep(1)
     ForceSensor.reset()
-    ForceSensor.tare(200)
+    ForceSensor.tare(50)
     ForceTester = 200
     StartTime = I.time.time()
     while ForceTester >= 0:
@@ -96,9 +100,25 @@ try:
     for n in range(len(PressureData)):
         file.write(str(TimeData[n]) + ',' + str(ForceData[n]) + ',' + str(PressureData[n]) + ',' + str(CO2TempData[n]) + ',' + str(PipeTempData[n]) + '\n')
     file.close()
+
+    I.time.sleep(5)
+    start = 0
+    while start != 1:
+        FinalCO2Mass = float(input('Input the final mass of the CO2 (g):\n >>>  '))
+        start = int(input('Press 1 to continue.\n >>>  '))
+
+    ChangeInMass = InitialCO2Mass - FinalCO2Mass
+    PressureSlope = PressureSensor.CalibrationSlope
+    PressureIntercept = PressureSensor.CalibrationIntercept
+    ForceReferenceUnit = ForceSensor.REFERENCE_UNIT
+
+    file = open('../Data/ExperimentalData/{}_trial_{}CalibrationValues.txt'.format(NozzleGeometry, trial), 'w')
+    file.write('Nozzle Geometry: {}, trial {}'.format(NozzleGeometry, trial) + '\n' + 'CO2 Initial Mass: {}kg'.format(InitialCO2Mass/1000) + '\n' + 'CO2 Final Mass: {}kg'.format(FinalCO2Mass/1000) + '\n' + 'Change in CO2 mass: {}'.format(ChangeInMass/1000) + '\n' + 'Pressure Calibration Slope: {}'.format(PressureSlope) + '\n' + 'Pressure Calibration Intercept: {}'.format(PressureIntercept) + '\n' + 'Force Reference Unit: {}'.format(ForceReferenceUnit))
+    file.close()
+        
 except KeyboardInterrupt:
     print('great job... you made toast')
 
 finally:
     I.RGPIO.cleanup()
-    print('Isaac cleaned the oven...')
+    print('Geometry {}, trial {} completed.'.format(NozzleGeometry, trial))

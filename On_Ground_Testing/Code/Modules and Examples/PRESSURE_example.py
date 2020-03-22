@@ -6,7 +6,7 @@ OE = 26
 I.OutputEnable(OE)
 
 PressureSensor = I.PR.PressureTransducer(ADCChannel)
-PressureSensor.Calibrate()
+#PressureSensor.Calibrate()
 
 while True:
 
