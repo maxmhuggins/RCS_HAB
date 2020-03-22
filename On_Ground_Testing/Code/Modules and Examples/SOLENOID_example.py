@@ -4,7 +4,7 @@ SolenoidPin = 18
 
 Solenoid = I.SND.Solenoid(SolenoidPin)
 
-hold = 1
+hold = 2
 
 try:
     while True:
