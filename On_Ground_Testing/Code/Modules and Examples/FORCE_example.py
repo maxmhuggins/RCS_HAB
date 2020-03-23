@@ -1,7 +1,7 @@
 import __init__ as I
 
 NumberOfReadings = 3
-ReferenceUnit = 3577.919388568496
+ReferenceUnit = 136881.76832391287
 
 OE = 22
 DT = 5

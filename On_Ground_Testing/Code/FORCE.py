@@ -430,7 +430,7 @@ class HX711:
             cal = []
             q = 0
             while q != '1':
-                q = input('Is the {}g weight placed?'.format(round(i / G,1)))
+                q = input('Is the {}g weight placed? If so, input 1: \n>>>  '.format(round(i / G,1)))
             print('Settling...')
             time.sleep(30)
             print('Recording...')
@@ -445,9 +445,9 @@ class HX711:
             avg = sum(cal)/len(cal)
             avgs.append(avg/i)
             q = 0
-            while q != '1':
-                q = int(input('Remove the weight to allow a new tare, then press 1'))
-            
+            while q != 1:
+                q = int(input('Remove the weight to allow a new tare, then press 1: \n>>>  '))
+                
         total_average = sum(avgs)/len(avgs)
         print('Your new reference unit is: ', total_average)
         self.set_reference_unit(total_average)

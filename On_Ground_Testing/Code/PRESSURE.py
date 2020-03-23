@@ -6,8 +6,8 @@ class PressureTransducer(I.ADC.MCP3008):
     def __init__(self, ADCChannel):
         super().__init__(self)
         self.ADCChannel = ADCChannel
-        self.CalibrationSlope = .004119548872180451
-        self.CalibrationIntercept = .4595037593984965
+        self.CalibrationSlope = 5.922266668762581e-7
+        self.CalibrationIntercept = .494945953220848
         self.ask = 0
         self.del_t = 0
         self.set_reg = 0
