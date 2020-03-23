@@ -14,7 +14,7 @@ class PressureTransducer(I.ADC.MCP3008):
         self.ModeVoltages = []
         self.CalibrationVoltages = []
         self.PSItoPASCAL = 6894.757 #Pa/psi
-        self.CalibrationPressuresPSI = range(40,61,20)
+        self.CalibrationPressuresPSI = range(40,501,20)
         self.CalibrationPressures = []
         
         for i in self.CalibrationPressuresPSI:

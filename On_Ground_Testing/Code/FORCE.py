@@ -419,21 +419,24 @@ class HX711:
         avgs = []
         G = 9.80665 / 1000
         weights = [10.013,19.841,50.109,100.142,199.648,499.32]
-        #forces = [10.013 * G, 19.841 * G, 50.109 * G, 100.142 * G, 199.648 * G, 499.32 * G]
-        forces = [10.013 * G, 19.841 * G] #Test forces
+        forces = [10.013 * G, 19.841 * G, 50.109 * G, 100.142 * G, 199.648 * G, 499.32 * G]
+
         for i in forces:
-            q = 0
+            print('Settling...')
+            time.sleep(30)
+            self.reset()
+            self.tare(10)
             del_t = 0
             cal = []
+            q = 0
             while q != '1':
                 q = input('Is the {}g weight placed?'.format(round(i / G,1)))
             print('Settling...')
-            time.sleep(5)
-            self.reset()
-            self.tare(200)
+            time.sleep(30)
+            print('Recording...')
             start_time = time.time()
-            while del_t < 1:
-                val = self.get_weight(3)
+            while del_t < 5:
+                val = self.get_weight(1)
                 cal.append(val)
                 self.power_down()
                 self.power_up()
@@ -441,6 +444,10 @@ class HX711:
                 del_t = time.time() - start_time
             avg = sum(cal)/len(cal)
             avgs.append(avg/i)
+            q = 0
+            while q != '1':
+                q = int(input('Remove the weight to allow a new tare, then press 1'))
+            
         total_average = sum(avgs)/len(avgs)
         print('Your new reference unit is: ', total_average)
         self.set_reference_unit(total_average)

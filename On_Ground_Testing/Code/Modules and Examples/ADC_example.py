@@ -1,10 +1,10 @@
 import __init__ as I
 
-OE = 26
+OE = 22
 
 I.OutputEnable(OE)
 
-ADCChannel = 0
+ADCChannel = 2
 
 mcp = I.ADC.MCP3008()
 

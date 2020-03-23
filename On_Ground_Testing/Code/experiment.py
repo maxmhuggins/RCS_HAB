@@ -1,7 +1,7 @@
 import __init__ as I
 
 #===Constants===#
-ForceThreshold = 1
+ForceThreshold = .1
 
 #===ADC=Channels===#
 PressureChannel = 0
@@ -9,10 +9,10 @@ CO2TempChannel = 1
 PipeTempChannel = 2
 
 #===BCM=Channels===#
-OutputEnable = 26
-SolenoidPin = 18
-DT = 20
-SCK = 21
+OutputEnable = 22
+SolenoidPin = 23
+DT = 5
+SCK = 6
 
 #===Instantiating=Sensors===#
 I.OutputEnable(OutputEnable)
@@ -63,7 +63,7 @@ try:
     
     ForceSensor.CalibrateHX711()
     ForceSensor.reset()
-    ForceSensor.tare(200)
+    ForceSensor.tare(20)
 
     start = 0
     while start != 1:
@@ -71,14 +71,14 @@ try:
         testpressure = round(PressureSensor.getPressure(), 2)
         testtempco2 = round(CO2TempSensor.getTemperature(), 2)
         testtemppipe = round(PipeTempSensor.getTemperature(), 2)
-        print('\n\nForce: {}\nCO2 Temp {}\nPipe Temp {}\nPressure {}\n'.format(testforce, testtempco2, testtemppipe, testpressure))
+        print('\n\nForce: {}N\nCO2 Temp {}C\nPipe Temp {}C\nPressure {}psi\n'.format(testforce, testtempco2, testtemppipe, round(testpressure / 6894.757,1)))
         start = int(input('If all sensors are functioning correctly, press 1 to continue.\n >>>'))
     print('Starting in...')
     for i in COUNTDOWN:
         print(COUNTDOWN[len(COUNTDOWN)-i-1])
         I.time.sleep(1)
     ForceSensor.reset()
-    ForceSensor.tare(50)
+    ForceSensor.tare(20)
     ForceTester = 200
     StartTime = I.time.time()
     while ForceTester >= 0:
@@ -113,12 +113,12 @@ try:
     ForceReferenceUnit = ForceSensor.REFERENCE_UNIT
 
     file = open('../Data/ExperimentalData/{}_trial_{}CalibrationValues.txt'.format(NozzleGeometry, trial), 'w')
-    file.write('Nozzle Geometry: {}, trial {}'.format(NozzleGeometry, trial) + '\n' + 'CO2 Initial Mass: {}kg'.format(InitialCO2Mass/1000) + '\n' + 'CO2 Final Mass: {}kg'.format(FinalCO2Mass/1000) + '\n' + 'Change in CO2 mass: {}'.format(ChangeInMass/1000) + '\n' + 'Pressure Calibration Slope: {}'.format(PressureSlope) + '\n' + 'Pressure Calibration Intercept: {}'.format(PressureIntercept) + '\n' + 'Force Reference Unit: {}'.format(ForceReferenceUnit))
+    file.write('Nozzle Geometry: {}, trial: {}'.format(NozzleGeometry, trial) + '\n' + 'CO2 Initial Mass: {}kg'.format(InitialCO2Mass/1000) + '\n' + 'CO2 Final Mass: {}kg'.format(FinalCO2Mass/1000) + '\n' + 'Change in CO2 mass: {}'.format(ChangeInMass/1000) + '\n' + 'Pressure Calibration Slope: {}'.format(PressureSlope) + '\n' + 'Pressure Calibration Intercept: {}'.format(PressureIntercept) + '\n' + 'Force Reference Unit: {}'.format(ForceReferenceUnit))
     file.close()
-        
+    print('Geometry {}, trial {} completed.'.format(NozzleGeometry, trial))
 except KeyboardInterrupt:
     print('great job... you made toast')
 
 finally:
     I.RGPIO.cleanup()
-    print('Geometry {}, trial {} completed.'.format(NozzleGeometry, trial))
+    
