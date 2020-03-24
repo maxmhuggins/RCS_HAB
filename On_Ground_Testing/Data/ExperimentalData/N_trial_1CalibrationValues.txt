@@ -1,0 +1,7 @@
+Nozzle Geometry: N, trial: 1
+CO2 Initial Mass: 0.05974kg
+CO2 Final Mass: 0.04461kg
+Change in CO2 mass: 0.015130000000000003
+Pressure Calibration Slope: 5.922266668762581e-07
+Pressure Calibration Intercept: 0.494945953220848
+Force Reference Unit: 141846.78588704733

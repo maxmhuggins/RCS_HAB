@@ -7,7 +7,7 @@ PressureData = []
 CO2TempData = []
 PipeTempData = []
 
-columns = np.loadtxt('../O4_trial_2.txt', delimiter=',')
+columns = np.loadtxt('../O3_trial_1.txt', delimiter=',')
 
 for column in columns:
     TimeData.append(column[0])
@@ -18,15 +18,15 @@ for column in columns:
 
 
 plt.scatter(TimeData, ForceData, label='Force', s=1)
-plt.savefig('../O4_trial_2Force.png')
+plt.savefig('../O3_trial_1Force.png')
 plt.close()
 plt.plot(TimeData, PressureData, label='Pressure')
-plt.savefig('../O4_trial_2Pressure.png')
+plt.savefig('../O3_trial_1Pressure.png')
 plt.close()
 plt.plot(TimeData, CO2TempData, label='CO2Temp')
-plt.savefig('../O4_trial_2CO2Temp.png')
+plt.savefig('../O3_trial_1CO2Temp.png')
 plt.close()
 plt.plot(TimeData, PipeTempData, label='PipeTemp')
-plt.savefig('../O4_trial_2PipeTemp.png')
+plt.savefig('../O3_trial_1PipeTemp.png')
 plt.close()
 
