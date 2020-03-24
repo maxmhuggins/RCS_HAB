@@ -4,7 +4,7 @@ class MCP3008(object):
     """Class to represent an Adafruit MCP3008 analog to digital converter.
     """
     
-    def __init__(self, clk=None, cs=None, miso=None, mosi=None, spi=SPI.SpiDev(), gpio=None, ReferenceVoltage=5.00):
+    def __init__(self, clk=None, cs=None, miso=None, mosi=None, spi=SPI.SpiDev(), gpio=None, ReferenceVoltage=4.990):
         """Initialize MAX31855 device with software SPI on the specified CLK,
         CS, and DO pins.  Alternatively can specify hardware SPI by sending an
         Adafruit_GPIO.SPI.SpiDev device in the spi parameter.

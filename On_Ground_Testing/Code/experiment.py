@@ -1,7 +1,7 @@
 import __init__ as I
 
 #===Constants===#
-ForceThreshold = .16
+ForceThreshold = .25
 
 #===ADC=Channels===#
 PressureChannel = 0
@@ -37,16 +37,16 @@ try:
     print("Now, define the trial number for that geometry\n >>>  ")
     trial = input('Trial number\n >>>  ')
     
-##    print('This is the start of the solenoid valve test. The valve should open for 1 second and then close for another second.')
-##    I.time.sleep(1)
-##    start = 0
-##    while start != 1:
-##        Solenoid.SolenoidOPEN()
-##        I.time.sleep(1)
-##        Solenoid.SolenoidCLOSE()
-##        I.time.sleep(1)
-##        start = int(input('If the test was successful, then press 1 to continue.\n >>>  '))
-##
+    print('This is the start of the solenoid valve test. The valve should open for 1 second and then close for another second.')
+    I.time.sleep(1)
+    start = 0
+    while start != 1:
+        Solenoid.SolenoidOPEN()
+        I.time.sleep(1)
+        Solenoid.SolenoidCLOSE()
+        I.time.sleep(1)
+        start = int(input('If the test was successful, then press 1 to continue.\n >>>  '))
+
     Solenoid.SolenoidCLOSE()
     
     start = 0
@@ -63,8 +63,8 @@ try:
     start = 0
     while start != 1:
         start = int(input('Open main flow valves and close N2 valve, then press 1 to continue.\n >>>  '))
-    ForceSensor.set_reference_unit(134138.83648352174)
-    #ForceSensor.CalibrateHX711()
+    ForceSensor.set_reference_unit(141846.78588704733)
+##    ForceSensor.CalibrateHX711()
     ForceSensor.reset()
     ForceSensor.tare(20)
 

@@ -1,11 +1,11 @@
 import __init__ as I
 
-SolenoidPin = 18
+SolenoidPin = 23
 
 Solenoid = I.SND.Solenoid(SolenoidPin)
 
-hold = 2
-
+hold = .5
+I.time.sleep(10)
 try:
     while True:
         Solenoid.SolenoidOPEN()
