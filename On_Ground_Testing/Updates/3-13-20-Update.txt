@@ -44,7 +44,7 @@ On-Ground Testing Rig:
 --> Load cell mount causes poor data readings
 	* Design new mount that uses some sort of gimbaling
 
---> Noisy pressure transducer *SOLVED
+--> Noisy pressure transducer (!) *SOLVED
 	* Write script to determine statistical characteristics of the data
 		recieved from the transducer.
 	* Do a trial run to determine values for Nyquist's Theorem to 
@@ -73,6 +73,7 @@ Electronics for On-Ground Testing Rig:
 			seller.
 
 Software:
+*SOLVED (mostly)
 Not really any problems here other than being behind schedule, just a matter 
 of completing it in a timely manner. May ask for some help with understanding 
 concepts of OOP from someone who has a much better understanding of them.

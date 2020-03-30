@@ -1,0 +1,92 @@
+As of March 29, 2020:
+I have taken data for 10 different nozzle geometries. I've taken two trials 
+for each one, using a total of 21 CO2 canisters. The extra one because I 
+ruined a trial.
+
+Admittidely, I did not read enough into the theory and have taken bad data. 
+These nozzle equations suggest several things. Of course, the force (F) 
+produced per unit mass of propellant is proportional to several things. I will 
+list them below:
+
+Variables:
+Chamber Pressure
+External Pressure
+Ambient Pressure
+Chamber Temperature
+Exit Temperature
+Area of the Nozzle Throat
+Exit Area of the Nozzle
+
+Constants*
+Ratio of heat capacities
+
+*I say constant, but this is variable with temperature. Which means it is 
+variable in my system because the temperature is transient.
+
+I have of course run into more problems.
+
+Theory:
+The theory, and intuition suggests that the temperature of the chamber should 
+be higher than the temperature of the gas exiting the nozzle. This makes sense 
+becauses as most gasses expand, they decrease in temperature.* If this is not 
+the case, there will be a negative under the square root. Causing imaginary 
+parts to the predicted force. Also, the equation for force is highly dependent 
+on the temperature of the gas exiting the nozzle. However, the temperatures I 
+have measured are not indicative of the chamber temperature and the exit 
+temperature. My probes have been placed in the CO2 adaptor (the chamber 
+temperature) and on the copper tube that the nozzle is attached to. This did 
+not provide good data. I need to somehow put a probe directly inside of the 3D 
+printed nozzle for the chamber temperature and either directly in the stream of 
+exhaust gas or inside the exit area of the nozzle. Lastly, these equations are 
+per unit of mass. My unit is kg and for each time unit, the mass of the 
+propellant used is unknown. Therefore, I do not think I can apply the equations 
+how I have been. Unless I were to take mass data of the CO2 canister throughout 
+each trial I will have to go about this differently.
+
+*As I'm writing this I'm unsure of whether or not the theory works out for 
+gasses with negative Joule-Thompson coefficients (meaning they heat when they 
+expand.) But I have confidence that the ratio of specific heats probably 
+handles this and does not allow for imaginary forces with these types of gasses.
+
+Setup:
+The main problem with the setup is actually not the force probe, as I was 
+previously worried about. It is the fact that the CO2 so quickly discharges 
+that a portion of it turns solid. This means a few things:
+
+- Condensation inside the piping that affects the force output
+- Some of the mass is lost between the end of the experiment and measuring the 
+	final mass. 
+- I'm unsure if this messes with the calibration on the pressure sensor due to 
+	the differences in temperature.
+
+#=============================================================================#
+
+In conclusion,
+
+--> What is wrong? (!: means cannot be ignored to continue)
+        * Possible solution(s)
+
+(Not in any particular order)
+
+Theory:
+
+--> Wrong temperature data (!)
+        * Place temperature sensors more appropriately
+	* Change data analysis to more general
+
+--> Temperature resolution is poor
+	* Use 24-bit ADC
+	* Change data analysis to more general
+
+--> Mass is unknown (!)
+	* Use another load cell to support CO2 and measure changes in mass with 
+		this
+	* Change data analysis to more general
+
+Rig:
+
+--> CO2 turns to dry ice
+	* Use a heater and feedback system to stop this from happening
+		* This would also require a slower release of gasses
+			meaning a smaller throat size.
+
