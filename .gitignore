@@ -137,3 +137,5 @@ dmypy.json
 
 *.aux
 *.synctex.gz
+*.swp
+*.dvi
