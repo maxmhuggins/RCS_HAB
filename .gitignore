@@ -139,7 +139,6 @@ dmypy.json
 *.synctex.gz
 *.swp
 *.dvi
-*.bib
 *.bbl
 *.blg
 *.nlo
