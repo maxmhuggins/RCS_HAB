@@ -4,11 +4,21 @@
 \usepackage[margin=1in,letterpaper]{geometry} % decreases margins
 \usepackage{cite} % takes care of citations
 \usepackage{listings}
-\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[stretch=10]{microtype}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
 \usepackage{nomencl}
 \makenomenclature
-
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,      
+    urlcolor=blue,
+    runcolor=red,
+    citecolor=green,
+}
 
 \begin{document}
 
@@ -26,7 +36,7 @@ A cold gas thruster (CGT) system was designed with pre-existing nozzle theory in
 \section{Introduction}
 \input{Introduction.tex}
 
-\section{The Data and Analysis}
+\section{Data Collection and Analysis}%
 \input{Data_and_Analysis}
 
 
@@ -41,8 +51,8 @@ A cold gas thruster (CGT) system was designed with pre-existing nozzle theory in
 
 
 
-\section{Nomenclature}\label{nomenclature}
-\printnomenclature
+
+\printnomenclature\label{nomenclature}
 
 \bibliographystyle{plain}
 \bibliography{References.bib}
