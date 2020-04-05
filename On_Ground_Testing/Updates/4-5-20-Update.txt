@@ -1,0 +1,20 @@
+As of April 5, 2020:
+Due to the global pandemic caused by the novel coronavirus, COVID-19 work in 
+the lab has effectively stopped. Because of this I wanted to include some 
+changes that need to be made to the setup and the software before I forgot.
+
+I won't go into much detail here, mainly just list the psuedo fix.
+
+- Record change in mass of gas
+- Either heat the gas or choose a gas with less expansive cooling
+- Change the formatting for the text files to be easily read into python
+	- Primarily the calibration files with the mass info.
+- Update the nomenclature for identifying the nozzle geometries and trials
+	- This should allow writing and analysis to be done simply
+	- Every individual trial should have a unique identifier
+	- O11, O12, O21, O22, etc is good, but the optimum and none should be 
+		updated.
+- Design PCB for data acquisition system
+- Develop library to interface with the 24-bit ADC because the 10-bit one is no
+	good for measuring the changes in temperature of the thermocouples.
+
