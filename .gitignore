@@ -144,3 +144,4 @@ dmypy.json
 *.nlo
 *.nls
 *.ilg
+*.out
