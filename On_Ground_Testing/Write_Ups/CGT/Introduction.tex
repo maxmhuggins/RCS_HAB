@@ -41,6 +41,11 @@ Where $C_F$ is defined by:
 \begin{equation}\label{eq:ThrustCoefficient}
 C_F=\frac{F}{A_tP_c}
 \end{equation}
+It is also helpful to define the nozzle's expansion ratio ($\epsilon$), given by equation \ref{eq:ExpansionRatio}.
+\begin{equation}\label{eq:ExpansionRatio}
+\epsilon=\frac{A_e}{A_t}
+\end{equation}%
+\nomenclature{$\epsilon$}{Area expansion ratio for nozzle}
 It can be seen $C_F$, ergo the thrust, is at maximum when $P_a=P_e=0$. It is also shown that $\frac{P_e}{P_c}$ is given by equation \ref{eq:PressureRatio}.
 \begin{equation}\label{eq:PressureRatio}
 \frac{P_e}{P_c}=\left(1+\frac{(\gamma-1)}{2}M^2\right)^{\frac{1}{\gamma-1}}
@@ -52,7 +57,7 @@ M^2=\frac{2}{\gamma-1}\left(\frac{T_c}{T_e}-1\right)
 \end{equation}
 allowing us to make a substitution for $\frac{P_e}{P_c}$ into equation \ref{eq:1.64}. With this substitution, we will eliminate $P_e$. The motivation for this is that measuring the exit plane pressure is more difficult than measuring the exit plane temperature. After the subtitutions, we retrieve equation \ref{eq:NozzleForce}.
 \begin{equation}\label{eq:NozzleForce}
-F = A_t P_c \left(\sqrt{\frac{2\gamma^2}{\gamma-1}\left(\frac{2}{\gamma+1}\right)^{\frac{\gamma+1}{\gamma-1}}\left(1-\frac{T_c}{T_e}\right)}+\left(\frac{T_c}{T_e}\right)^{-\frac{\gamma}{\gamma-1}}\frac{A_e}{A_t}\right)
+F = A_t P_c \left(\sqrt{\frac{2\gamma^2}{\gamma-1}\left(\frac{2}{\gamma+1}\right)^{\frac{\gamma+1}{\gamma-1}}\left(1-\frac{T_c}{T_e}\right)}+\left(\frac{T_c}{T_e}\right)^{-\frac{\gamma}{\gamma-1}}\epsilon\right)
 \end{equation}
 This equation was developed given some assumptions and in different systems some of the assumptions may have a more or less dominant effect. It can also be seen that since the thrust is highly dependent on the external pressure, the nozzle should be designed to maximize the thrust in the pressure it will spend the most time in. Because of this an experiment was developed to determine the reliability of equation \ref{eq:NozzleForce}.\\
 In measuring the thrust at several different area ratios and comparing it to the predicted thrust, the hope is to create an "effective" proportionality constant. This would then allow the nozzle design process to be maximized for pressures that cannot be tested on Earth's surface.
