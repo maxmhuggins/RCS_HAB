@@ -134,7 +134,7 @@ dmypy.json
 # pytype static type analyzer
 .pytype/
 
-
+#Latex Files
 *.aux
 *.synctex.gz
 *.swp
@@ -142,3 +142,5 @@ dmypy.json
 *.bbl
 *.blg
 *.nlo
+*.nls
+*.ilg
