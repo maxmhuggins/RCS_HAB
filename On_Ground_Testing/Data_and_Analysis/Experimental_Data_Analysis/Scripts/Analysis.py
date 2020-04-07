@@ -37,16 +37,25 @@ for l in range(0,len(Geometries)):
         ExitTempData.append(column[4] + 273.15)
     
     for i in range(0,len(TimeData)):
-        MSquared = (2 / k) * np.abs((ChamberTempData[i] / 
-                               ExitTempData[i]) - 1)
-        PressureRatio = (1 + (k / 2) * MSquared)**(gamma / k)
-        first = (2 * gamma**2) / k
-        second = (2 / (gamma + 1))**((gamma + 1) / k)
-        third = (1 - (1  / PressureRatio)**(k / gamma))
-        SQRTARG = first * second * third
-        PredictedForce.append((np.sqrt(SQRTARG) + ((1 / PressureRatio) - 
-                            (P_a / ChamberPressureData[i])) * 
-                               AreaRatio[l]) * A_t * ChamberPressureData[i])
+        # MSquared = (2 / k) * np.abs((ChamberTempData[i] / 
+        #                        ExitTempData[i]) - 1)
+        # PressureRatio = (1 + (k / 2) * MSquared)**(gamma / k)
+        # first = (2 * gamma**2) / k
+        # second = (2 / (gamma + 1))**((gamma + 1) / k)
+        # third = (1 - (1  / PressureRatio)**(k / gamma))
+        # SQRTARG = first * second * third
+        # PredictedForce.append((np.sqrt(SQRTARG) + ((1 / PressureRatio) - 
+        #                     (P_a / ChamberPressureData[i])) * 
+        #                        AreaRatio[l]) * A_t * ChamberPressureData[i])
+        
+        BIG = np.sqrt(((2*gamma**2)/(k))*(2/(gamma+1))**((gamma+1)/k)*np.abs(1-(
+            ExitTempData[i]/ChamberTempData[i])))+ ((
+                ExitTempData[i]/ChamberTempData[i])**(gamma/k)-(P_a/ChamberPressureData[i]))*AreaRatio[l]
+        NewForce = A_t*ChamberPressureData[i]*BIG
+        PredictedForce.append(NewForce)
+        
+        
+        
 
     plt.plot(TimeData, ForceData, label='Experimental {}'.format(Geometry))
     plt.plot(TimeData, PredictedForce, label = 'Predicted')
