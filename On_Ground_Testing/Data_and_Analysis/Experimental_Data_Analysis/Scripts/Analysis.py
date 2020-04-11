@@ -48,7 +48,7 @@ for l in range(0,len(Geometries)):
         #                     (P_a / ChamberPressureData[i])) * 
         #                        AreaRatio[l]) * A_t * ChamberPressureData[i])
         
-        BIG = np.sqrt(((2*gamma**2)/(k))*(2/(gamma+1))**((gamma+1)/k)*np.abs(1-(
+        BIG = np.sqrt(((2*gamma**2)/(k))*(2/(gamma+1))**((gamma+1)/k)*(1-(
             ExitTempData[i]/ChamberTempData[i])))+ ((
                 ExitTempData[i]/ChamberTempData[i])**(gamma/k)-(P_a/ChamberPressureData[i]))*AreaRatio[l]
         NewForce = A_t*ChamberPressureData[i]*BIG
