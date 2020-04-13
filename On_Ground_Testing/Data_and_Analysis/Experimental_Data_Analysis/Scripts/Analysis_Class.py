@@ -36,7 +36,7 @@ class Analyzer:
         self.gamma = 1.305
         self.P_a = 101354.62277
         self.ThroatRadius = .625e-3
-        self.THRESH = .0001
+        self.THRESH = .01
         self.UNIT = 1e-1
         self.N = 10
         self.k = self.gamma - 1
@@ -95,7 +95,7 @@ class Analyzer:
         self.PredictedForce = self.PredictedThrust()
         self.ExperimentalIsp = self.ActualIsp()
         self.PredictedIsp = self.PredictIsp()
-        self.PlotThrust()
+        # self.PlotThrust()
         
     def TrapezoidalSum(self):
         summer = 0
@@ -239,56 +239,57 @@ class Analyzer:
 
     
 O1 = Analyzer('O',1)
-O2 = Analyzer('O',2)
-O11 = Analyzer('O1',1)
-O12 = Analyzer('O1',2)
-O21 = Analyzer('O2',1)
-O22 = Analyzer('O2',2)
-O31 = Analyzer('O3',1)
-O32 = Analyzer('O3',2)
+# O2 = Analyzer('O',2)
+# O11 = Analyzer('O1',1)
+# O12 = Analyzer('O1',2)
+# O21 = Analyzer('O2',1)
+# O22 = Analyzer('O2',2)
+# O31 = Analyzer('O3',1)
+# O32 = Analyzer('O3',2)
 O41 = Analyzer('O4',1)
-O42 = Analyzer('O4',2)
-U11 = Analyzer('U1',1)
-U12 = Analyzer('U1',2)
-U21 = Analyzer('U2',1)
-U22 = Analyzer('U2',2)
-U31 = Analyzer('U3',1)
-U32 = Analyzer('U3',2)
+# O42 = Analyzer('O4',2)
+# U11 = Analyzer('U1',1)
+# U12 = Analyzer('U1',2)
+# U21 = Analyzer('U2',1)
+# U22 = Analyzer('U2',2)
+# U31 = Analyzer('U3',1)
+# U32 = Analyzer('U3',2)
 U41 = Analyzer('U4',1)
-U42 = Analyzer('U4',2)
-N1 = Analyzer('N',1)
-N2 = Analyzer('N',2)
+# U42 = Analyzer('U4',2)
+# N1 = Analyzer('N',1)
+# N2 = Analyzer('N',2)
 
+size = 20
+size_config = .8
+legendfont = 10
+fig = plt.figure(1, figsize=(11,4))
 
-# SpecificImpulses = [
-#     N1.Isp, N2.Isp, U41.Isp, U42.Isp, U31.Isp, U32.Isp, 
-#     U21.Isp, U22.Isp, U11.Isp, U12.Isp, O1.Isp, O2.Isp, 
-#     O11.Isp, O12.Isp, O21.Isp, O22.Isp, O31.Isp, O32.Isp, 
-#     O41.Isp, O42.Isp
-#     ]
-# x = range(0,20)
+fig.suptitle('$Thrust\ Curves$', fontsize=size)
+ymax = 20
 
-# plt.title('temp')
-# plt.plot(N1.TimeData, N1.ExitTempData, label='predicted')
-# plt.plot(N1.TimeData, N1.ChamberTempData, label='data')
-# plt.legend()
-# plt.show()
-# plt.close()
+plt.subplot(131)
+plt.ylim(-round(.05*ymax, 2), round(1.05 * ymax, 2))
+plt.xlim(-1,12)
+plt.ylabel('$Force\ (N)$', fontsize=size_config*size)
+plt.plot(O1.TimeData, O1.PredictedForce, label='$Theoretical$', 
+          linestyle='dotted', color='black')
+plt.plot(O1.TimeData, O1.ForceData, label='$Optimum\ Expansion$', color='blue')
+plt.legend(loc='best', fontsize=legendfont)
 
-# plt.title('Isp')
-# plt.plot(O1.TimeData, O1.PredictedIsp, label='predicted')
-# plt.plot(O1.TimeData, O1.ExperimentalIsp, label='data')
-# plt.legend()
-# plt.show()
-# plt.close()
-# plt.scatter(x, SpecificImpulses)
+plt.subplot(132)
+plt.ylim(-round(.05*ymax, 2), round(1.05 * ymax, 2))
+plt.xlim(-1,12)
+plt.xlabel('$Time\ (s)$', fontsize=size_config*size)
+plt.plot(O41.TimeData, O41.PredictedForce, label='$Theoretical$', 
+          linestyle='dotted', color='black')
+plt.plot(O41.TimeData, O41.ForceData, label='$Over\ Expanded$', color='blue')
+plt.legend(loc='best', fontsize=legendfont)
 
-# plt.title('O1')
-# plt.plot(O1.TimeData, O1.PredictedForce, label='predicted')
-# plt.plot(O1.TimeData, O1.ForceData, label='data')
-# plt.legend()
-# plt.show()
-
-# plt.plot(O2.TimeData, O2.PredictedForce, label='predicted')
-# plt.plot(O2.TimeData, O2.ForceData, label='data')
-
+plt.subplot(133)
+plt.ylim(-round(.05*ymax, 2), round(1.05 * ymax, 2))
+plt.xlim(-1,12)
+plt.plot(U41.TimeData, U41.PredictedForce, label='$Theoretical$', 
+          linestyle='dotted', color='black')
+plt.plot(U41.TimeData, U41.ForceData, label='$Under\ Expanded$', color='blue')
+plt.legend(loc='best', fontsize=legendfont)
+plt.savefig('../Plots/Force/ThreeCurvesWithTheoretical.eps', bbox_inches = "tight")
