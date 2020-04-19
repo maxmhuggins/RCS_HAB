@@ -54,7 +54,7 @@ for j in [1,2]:
         size = 20
         size_config = .8
         legendfont = 10
-        fig = plt.figure(1, figsize=(11,4))
+        fig = plt.figure(1, figsize=(7,5))
         
         fig.suptitle('${}{}\ Chamber\ and\ Exit\ Temperature$'.format(Geometry, Trial), fontsize=size)
         plt.xlim(-1,12)
@@ -63,7 +63,7 @@ for j in [1,2]:
         plt.plot(SmoothedTimeData1, SmoothedChamberTemp, label='$Chamber\ Temp$', color='black')
         plt.plot(SmoothedTimeData2, SmoothedExitTemp, label='$Exit\ Temp$', color='blue')
         plt.legend(loc='best', fontsize=legendfont)
-        plt.savefig('../Plots/Temperature/Temps{}{}.eps'.format(Geometry, Trial), bbox_inches = "tight")
+        plt.savefig('../Plots/Temperature/Temps{}{}.png'.format(Geometry, Trial), bbox_inches = "tight")
 
         plt.close()
 
