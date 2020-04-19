@@ -8,6 +8,7 @@ Created on Thu Apr  2 14:01:21 2020
 
 import numpy as np
 import mpmath as mp
+import pandas as pd
 import matplotlib.pyplot as plt
 plt.style.use('classic')
 from CoolProp.CoolProp import PropsSI
@@ -27,6 +28,7 @@ class Analyzer:
         self.ForceData = []
         self.TimeData = []
         self.ChamberTempData = []
+        self.ActualExitTempData = []
         self.ChamberPressureData = []
         self.Masses = []
         self.Identifiers = []
@@ -44,7 +46,8 @@ class Analyzer:
         self.ThroatArea = np.pi * self.ThroatRadius**2
         self.ExitRadii = list(reversed(ExitRadii))
         self.Identity = self.Geometry + str(self.Trial)
-
+        self.color_value = '#6b8ba4'
+        self.thickness = 1.5
         
         for i in self.ExitRadii:
             self.AreaRatios.append((i*10**(-3))**2 / self.ThroatRadius**2)
@@ -71,6 +74,7 @@ class Analyzer:
             self.ForceData.append(column[1])
             self.ChamberPressureData.append(column[2])
             self.ChamberTempData.append(column[3] + 273.15)
+            self.ActualExitTempData.append(column[4] + 273.15)
             
         counter = 0
         while counter < self.N:
@@ -151,10 +155,43 @@ class Analyzer:
         
         return ExitTemp
     
-    def PredictedThrust(self):
+    def PredictedThrust(self, T=None):
+        
         PredictedForce = []
         for i in range(0,len(self.TimeData)):
-            T_e = self.ExitTempData[i]
+            if T is None:
+                T_e = self.ExitTempData[i]
+            else:
+                T_e = self.ActualExitTempData[i]
+            T_c = self.ChamberTempData[i]
+            P_c = self.ChamberPressureData[i]
+            P_a = self.P_a
+            A_t = self.ThroatArea
+            Y = self.gamma
+            k = self.k
+            m = self.m
+            Q = ((2*Y**2) / k) * (2 / m)**(m/k)
+            TR = T_e / T_c
+            E = self.AreaRatio
+            if T is None:
+                NewForce = A_t * P_c *  (
+                    mp.root((Q - Q*TR), 2, k=0) +   (
+                                                mp.root(TR, k/Y, k=0) - (P_a/P_c)
+                                                    ) * E
+                                        )
+            else:
+                NewForce = A_t * P_c *  (
+                np.sqrt(Q - Q*TR) +   (
+                                            mp.root(TR, k/Y, k=0) - (P_a/P_c)
+                                                ) * E
+                                    )
+            PredictedForce.append(self.UNIT*NewForce)
+        return PredictedForce
+    
+    def FirstThrustFix(self):
+        PredictedForce = []
+        for i in range(0,len(self.TimeData)):
+            T_e = self.ActualExitTempData[i]
             T_c = self.ChamberTempData[i]
             P_c = self.ChamberPressureData[i]
             P_a = self.P_a
@@ -167,7 +204,7 @@ class Analyzer:
             E = self.AreaRatio
             
             NewForce = A_t * P_c *  (
-                mp.root((Q - Q*TR), 2, k=0) +   (
+                mp.root((np.abs(Q - Q*TR)), 2, k=0) +   (
                                             mp.root(TR, k/Y, k=0) - (P_a/P_c)
                                                 ) * E
                                     )
@@ -219,11 +256,84 @@ class Analyzer:
         plt.ylim(-round(.05*ymax, 2), round(1.05 * ymax, 2))
         plt.xlabel('$Time\ (s)$', fontsize=size_config*size)
         plt.ylabel('$Force\ (N)$', fontsize=size_config*size)
-        plt.plot(self.TimeData, self.PredictedForce, label='$Theoretical$', 
+        plt.plot(self.TimeData, self.PredictedForce, label='$Theoretical$', lw=self.thickness,
                  linestyle='dotted', color='black')
-        plt.plot(self.TimeData, self.ForceData, label='$Emperical$', color='blue')
+        plt.plot(self.TimeData, self.ForceData, label='$Emperical$', color=self.color_value)
         plt.legend()
         plt.show()
+        
+    def Smoother(self, DataSet, N):      
+        return pd.Series(DataSet).rolling(window=N).mean().iloc[N-1:].values
+
+    def PlotAnyDataSet(self, DataSet1, Variable1, Unit, path, DataSet2=None, Variable2=None, x_data=None):
+        if x_data is None:
+            x_data = self.TimeData
+        else:
+            x_data = np.linspace(-1, 12, len(DataSet1))
+            
+        size = 20
+        size_config = .8
+        fig = plt.figure(1, figsize=(11,4))
+        plt.xlim(-1,12)
+        plt.xlabel('$Time\ (s)$', fontsize=size_config*size)
+        
+        if Variable1 == 'Temperature':
+            plt.ylabel('$Temperature\ ({})$'.format(Unit), fontsize=size_config*size)
+        else:
+            plt.ylabel('${}\ ({})$'.format(Variable1, Unit), fontsize=size_config*size)
+
+        if DataSet2 is not None:
+            fig.suptitle('${}\ {}\ and\ {}\ Data$'.format(self.Identity, Variable1, Variable2), fontsize=size)
+            
+            plt.plot(x_data, DataSet2, color='black', lw=self.thickness,
+                    label='${}\ {}\ Data$'.format(self.Identity, Variable1))
+            plt.plot(x_data, DataSet1, color=self.color_value,lw=self.thickness,
+                    label='${}\ {}\ Data$'.format(self.Identity, Variable2))
+        else:
+            fig.suptitle('${}\ {}\ Data$'.format(self.Identity, Variable1), fontsize=size)
+    
+            plt.plot(x_data, DataSet1, color=self.color_value,lw=self.thickness,
+                        label='${}\ {}\ Data$'.format(self.Identity, Variable1))
+        plt.legend()
+        plt.savefig('{}'.format(path), bbox_inches = "tight")
+        plt.close()
+    
+    # def Subplotter(self, DataSets, Variable, Unit, path, NofPlots, x_data=None):
+    #     if x_data is None:
+    #         x_data = self.TimeData
+    #     else:
+    #         x_data = np.linspace(-1, 12, len(DataSets[0]))
+            
+    #     size = 20
+    #     size_config = .8
+    #     fig = plt.figure(1, figsize=(11,4))
+    #     plt.xlim(-1,12)
+    #     plt.xlabel('$Time\ (s)$', fontsize=size_config*size)
+        
+    #     if Variable == 'Temperature':
+    #         plt.ylabel('$Temperature\ ({})$'.format(Unit), fontsize=size_config*size)
+    #     else:
+    #         plt.ylabel('${}\ ({})$'.format(Variable, Unit), fontsize=size_config*size)
+    #     fig.suptitle('${}\ {}\ Data$'.format(self.Identity, Variable), fontsize=size)
+        
+    #     plt.subplot(131)
+    #     plt.plot(x_data, DataSets[0], color='blue', 
+    #                     label='${}\ {}\ Data$'.format(self.Identity, Variable))
+    #     plt.legend(loc='best')
+        
+    #     plt.subplot(132)
+    #     plt.plot(x_data, DataSets[1], color='blue', 
+    #                     label='${}\ {}\ Data$'.format(self.Identity, Variable))
+    #     plt.legend(loc='best')
+
+    #     plt.subplot(133)
+    #     plt.plot(x_data, DataSets[3], color='blue', 
+    #                     label='${}\ {}\ Data$'.format(self.Identity, Variable))
+    #     plt.legend(loc='best')
+        
+    #     plt.savefig('{}'.format(path), bbox_inches = "tight")
+    #     plt.close()
+
     
 # Identifiers =   {
 #     'N1': N1, 'N2': N2, 'U41': U41, 'U42': U42, 'U31': U31, 'U32': U32, 
@@ -238,7 +348,7 @@ class Analyzer:
                     # ]
 
     
-O1 = Analyzer('O',1)
+# O1 = Analyzer('O',1)
 # O2 = Analyzer('O',2)
 # O11 = Analyzer('O1',1)
 # O12 = Analyzer('O1',2)
@@ -246,7 +356,7 @@ O1 = Analyzer('O',1)
 # O22 = Analyzer('O2',2)
 # O31 = Analyzer('O3',1)
 # O32 = Analyzer('O3',2)
-O41 = Analyzer('O4',1)
+# O41 = Analyzer('O4',1)
 # O42 = Analyzer('O4',2)
 # U11 = Analyzer('U1',1)
 # U12 = Analyzer('U1',2)
@@ -254,42 +364,47 @@ O41 = Analyzer('O4',1)
 # U22 = Analyzer('U2',2)
 # U31 = Analyzer('U3',1)
 # U32 = Analyzer('U3',2)
-U41 = Analyzer('U4',1)
+# U41 = Analyzer('U4',1)
 # U42 = Analyzer('U4',2)
 # N1 = Analyzer('N',1)
 # N2 = Analyzer('N',2)
 
-size = 20
-size_config = .8
-legendfont = 10
-fig = plt.figure(1, figsize=(11,4))
+# size = 20
+# size_config = .8
+# legendfont = 10
+# fig = plt.figure(1, figsize=(11,4))
 
-fig.suptitle('$Thrust\ Curves$', fontsize=size)
-ymax = 20
+# fig.suptitle('$Thrust\ Curves$', fontsize=size)
+# ymax = 20
 
-plt.subplot(131)
-plt.ylim(-round(.05*ymax, 2), round(1.05 * ymax, 2))
-plt.xlim(-1,12)
-plt.ylabel('$Force\ (N)$', fontsize=size_config*size)
-plt.plot(O1.TimeData, O1.PredictedForce, label='$Theoretical$', 
-          linestyle='dotted', color='black')
-plt.plot(O1.TimeData, O1.ForceData, label='$Optimum\ Expansion$', color='blue')
-plt.legend(loc='best', fontsize=legendfont)
+# plt.subplot(131)
+# plt.ylim(-round(.05*ymax, 2), round(1.05 * ymax, 2))
+# plt.xlim(-1,12)
+# plt.ylabel('$Force\ (N)$', fontsize=size_config*size)
+# plt.plot(O1.TimeData, O1.PredictedForce, label='$Theoretical$', 
+#           linestyle='dotted', color='black')
+# plt.plot(O1.TimeData, O1.ForceData, label='$Optimum\ Expansion$', color='blue')
+# plt.legend(loc='best', fontsize=legendfont)
 
-plt.subplot(132)
-plt.ylim(-round(.05*ymax, 2), round(1.05 * ymax, 2))
-plt.xlim(-1,12)
-plt.xlabel('$Time\ (s)$', fontsize=size_config*size)
-plt.plot(O41.TimeData, O41.PredictedForce, label='$Theoretical$', 
-          linestyle='dotted', color='black')
-plt.plot(O41.TimeData, O41.ForceData, label='$Over\ Expanded$', color='blue')
-plt.legend(loc='best', fontsize=legendfont)
+# plt.subplot(132)
+# plt.ylim(-round(.05*ymax, 2), round(1.05 * ymax, 2))
+# plt.xlim(-1,12)
+# plt.xlabel('$Time\ (s)$', fontsize=size_config*size)
+# plt.plot(O41.TimeData, O41.PredictedForce, label='$Theoretical$', 
+#           linestyle='dotted', color='black')
+# plt.plot(O41.TimeData, O41.ForceData, label='$Over\ Expanded$', color='blue')
+# plt.legend(loc='best', fontsize=legendfont)
 
-plt.subplot(133)
-plt.ylim(-round(.05*ymax, 2), round(1.05 * ymax, 2))
-plt.xlim(-1,12)
-plt.plot(U41.TimeData, U41.PredictedForce, label='$Theoretical$', 
-          linestyle='dotted', color='black')
-plt.plot(U41.TimeData, U41.ForceData, label='$Under\ Expanded$', color='blue')
-plt.legend(loc='best', fontsize=legendfont)
-plt.savefig('../Plots/Force/ThreeCurvesWithTheoretical.eps', bbox_inches = "tight")
+# plt.subplot(133)
+# plt.ylim(-round(.05*ymax, 2), round(1.05 * ymax, 2))
+# plt.xlim(-1,12)
+# plt.plot(U41.TimeData, U41.PredictedForce, label='$Theoretical$', 
+#           linestyle='dotted', color='black')
+# plt.plot(U41.TimeData, U41.ForceData, label='$Under\ Expanded$', color='blue')
+# plt.legend(loc='best', fontsize=legendfont)
+# plt.savefig('../Plots/Force/ThreeCurvesWithTheoretical.eps', bbox_inches = "tight")
+# plt.close()
+
+# U41.PlotAnyDataSet(U41.ChamberTempData, 'Temperature', 'K')
+# plt.show()
+# plt.savefig('../Plots/Temperature/ExampleTemp.png', bbox_inches = "tight")
