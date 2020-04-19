@@ -145,3 +145,8 @@ dmypy.json
 *.nls
 *.ilg
 *.out
+
+#Pics
+*.eps
+*.png
+*.svg
