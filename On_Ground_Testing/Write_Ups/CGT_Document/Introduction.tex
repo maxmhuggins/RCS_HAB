@@ -13,7 +13,25 @@ where $\Delta m$ is mass and g is acceleration due to gravity. More precisely, s
 \begin{equation}\label{eq:DefineSpecificImpulse}
 I_{sp}=\frac{F}{dm/dt}
 \end{equation}
-You may notice the descrepency in units between equations \ref{eq:ExperimentalIsp} and \ref{eq:DefineSpecificImpulse}. Often times the $I_{sp}$ is given with units of s, but in reality it is defined with units of $Ns/kg$.\\
+You may notice the descrepency in units between equations \ref{eq:ExperimentalIsp} and \ref{eq:DefineSpecificImpulse}. Often times the $I_{sp}$ is given with units of s, but in reality it is defined with units of $Ns/kg$. Additionally, the theoretical value is given by reference \cite{RocketPropulsion} by equation \ref{eq:TheoreticalSpecificImpulse}.
+\begin{equation}\label{eq:TheoreticalSpecificImpulse}
+I_{sp}=\left[\frac{2\gamma R T_c}{(\gamma-1)W}\left(1-\left(\frac{P_e}{P_c}\right)^{\frac{\gamma-1}{\gamma}}\right)\right]^{\frac{1}{2}}+\frac{(P_e-P_a)}{P_c}\frac{A_e}{A_t}\frac{1}{C_D}
+\end{equation}
+where $C_D$ is the discharge coefficient and is defined by equation \ref{eq:DischargeCoefficient}.
+\begin{equation}\label{eq:DischargeCoefficient}
+C_D=\sqrt{\frac{\gamma \rho_c}{P_c}}\left(\frac{2}{\gamma+1}\right)^{\frac{\gamma+1}{2(\gamma-1)}}
+\end{equation}
+The same dependencies seen here, are also seen in the force equation.%
+\nomenclature{$\gamma$}{Ratio of specific heats}%
+\nomenclature{$R$}{Universal gas constant}%
+\nomenclature{$W$}{Molecular weight of the gas}%
+\nomenclature{$P_c$}{Chamber pressure}%
+\nomenclature{$T_c$}{Chamber temperature}%
+\nomenclature{$A_e$}{Exit area of nozzle}%
+\nomenclature{$A_t$}{Throat area of nozzle}%
+\nomenclature{$P_a$}{Ambient pressure}%
+\nomenclature{$rho_c$}{Density at chamber temperature and pressure}%
+\nomenclature{$P_e$}{Exit pressure}
 This is an excellent start to creating a standard for comparing gases, but there is much more that should be considered. Factors such as safety, availability, cost, energy storage density, and so on all contribute to the choice of gas. Additionally, each one of these factors has a different weight per say depending on the scenario in which they are being applied. After consideration, the choice of gas for this system is $CO_2$.\\
 The other component is the nozzle. These are used to set the mass flow rate for the system and to accelerate the propellant to supersonic speeds. They consist of a converging section that leads into a throat of minimum radius and a diverging section. Figure \ref{fig:Nozzle} shows a simple 2D section of a typical nozzle. 
 \begin{figure}[h!]
@@ -32,19 +50,12 @@ The thrust produced by a nozzle can be written in terms of the variables listed 
 \item Exit Area of Nozzle ($A_e$)
 \item Throat Area of Nozzle ($A_t$)
 \end{itemize}%
-\nomenclature{$P_c$}{Chamber pressure}%
-\nomenclature{$T_e$}{Exit temperature}%
-\nomenclature{$T_c$}{Chamber temperature}%
-\nomenclature{$A_e$}{Exit area of nozzle}%
-\nomenclature{$A_t$}{Throat area of nozzle}%
 The derivation will not be shown here, but reference \cite{RocketPropulsion} discusses it in detail. The text derives equation \ref{eq:1.64} from the laws of thermodynamics and some general assumptions.
 \begin{equation}\label{eq:1.64}
 C_F= \sqrt{\frac{2\gamma^2}{\gamma-1}\left(\frac{2}{\gamma+1}\right)^{\frac{\gamma+1}{\gamma-1}}\left(1-\left(\frac{P_e}{P_c}\right)^{\frac{\gamma-1}{\gamma}}\right)}+\frac{\left(P_e-P_a\right)}{P_c}\frac{A_e}{A_t}
 \end{equation}%
 \nomenclature{$C_F$}{Thrust coefficient}%
-\nomenclature{$P_a$}{Ambient pressure}%
-\nomenclature{$P_e$}{Exit pressure}%
-\nomenclature{$\gamma$}{Ratio of specific heats}%
+\nomenclature{$T_e$}{Exit temperature}
 Where $C_F$ is defined by:
 \begin{equation}\label{eq:ThrustCoefficient}
 C_F=\frac{F}{A_tP_c}
@@ -67,5 +78,8 @@ allowing us to make a substitution for $\frac{P_e}{P_c}$ into equation \ref{eq:1
 \begin{equation}\label{eq:NozzleForce}
 F = A_t P_c \left(\sqrt{\frac{2\gamma^2}{\gamma-1}\left(\frac{2}{\gamma+1}\right)^{\frac{\gamma+1}{\gamma-1}}\left(1-\frac{T_e}{T_c}\right)}+\left(\left(\frac{T_e}{T_c}\right)^{\frac{\gamma}{\gamma-1}}-\frac{P_a}{P_c}\right)\epsilon\right)
 \end{equation}
-This equation was developed given some assumptions and in different systems some of the assumptions may have a more or less dominant effect. It can also be seen that since the thrust is highly dependent on the external pressure, the nozzle should be designed to maximize the thrust in the pressure it will spend the most time in. Because of this an experiment was developed to determine the reliability of equation \ref{eq:NozzleForce}.\\
-In measuring the thrust at several different area ratios and comparing it to the predicted thrust, the hope is to create an "effective" proportionality constant. This would then allow the nozzle design process to be maximized for pressures that cannot be tested on Earth's surface.
+This equation was developed given some assumptions and in different systems some of the assumptions may have a more or less dominant effect. It can also be seen that since the thrust is highly dependent on the external pressure, the nozzle should be designed to maximize the thrust in the pressure it will spend the most time in. Because of this an experiment was developed to determine the reliability of equation \ref{eq:NozzleForce}. Using similar methods, equation \ref{eq:TheoreticalSpecificImpulse} can be expressed in terms of relevant variables as shown in equation \ref{eq:NewIsp}.
+\begin{equation}\label{eq:NewIsp}
+I_{sp}=\left[\frac{2\gamma R T_c}{W(\gamma-1)}\left(1-\frac{T_e}{T_c}\right)\right]^{\frac{1}{2}}+\left[\left(\frac{T_e}{T_c}\right)^{\frac{\gamma}{\gamma-1}}-\frac{P_a}{P_c}\right]\frac{A_e}{A_t}\sqrt{\frac{P_c}{\gamma\rho_c}}\left(\frac{\gamma+1}{2}\right)^{\frac{\gamma+1}{2(\gamma-1)}}
+\end{equation} 
+In measuring the thrust at several different area ratios and comparing it to the predicted thrust, the hope is to create an "effective" proportionality constant for the specific impulse. This would then allow the nozzle design process to be maximized for pressures that cannot be tested on Earth's surface.
