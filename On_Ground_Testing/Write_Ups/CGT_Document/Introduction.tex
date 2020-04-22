@@ -5,6 +5,7 @@ The first consideration to make is the type of gas to be used. The primary quest
 I_{sp}=\frac{\sum\limits_{t=0}^{\tau} F(t)t}{\Delta mg}
 \end{equation}%
 \nomenclature{$I_{sp}$}{Specific impulse}%
+\nomenclature{$\tau$}{Time of full trial}%
 \nomenclature{$t$}{Time}%
 \nomenclature{$m$}{Mass}%
 \nomenclature{$g$}{Acceleration due to gravity}%
@@ -13,7 +14,7 @@ where $\Delta m$ is mass and g is acceleration due to gravity. More precisely, s
 \begin{equation}\label{eq:DefineSpecificImpulse}
 I_{sp}=\frac{F}{dm/dt}
 \end{equation}
-You may notice the descrepency in units between equations \ref{eq:ExperimentalIsp} and \ref{eq:DefineSpecificImpulse}. Often times the $I_{sp}$ is given with units of s, but in reality it is defined with units of $Ns/kg$. Additionally, the theoretical value is given by reference \cite{RocketPropulsion} by equation \ref{eq:TheoreticalSpecificImpulse}.
+You may notice the descrepency in units between equations \ref{eq:ExperimentalIsp} and \ref{eq:DefineSpecificImpulse}. Often times the $I_{sp}$ is given with units of s, but in reality it is defined with units of $Ns/kg$. Additionally, the theoretical value is given by reference \cite{RocketPropulsion} and is shown in equation \ref{eq:TheoreticalSpecificImpulse}.
 \begin{equation}\label{eq:TheoreticalSpecificImpulse}
 I_{sp}=\left[\frac{2\gamma R T_c}{(\gamma-1)W}\left(1-\left(\frac{P_e}{P_c}\right)^{\frac{\gamma-1}{\gamma}}\right)\right]^{\frac{1}{2}}+\frac{(P_e-P_a)}{P_c}\frac{A_e}{A_t}\frac{1}{C_D}
 \end{equation}
@@ -30,7 +31,7 @@ The same dependencies seen here, are also seen in the force equation.%
 \nomenclature{$A_e$}{Exit area of nozzle}%
 \nomenclature{$A_t$}{Throat area of nozzle}%
 \nomenclature{$P_a$}{Ambient pressure}%
-\nomenclature{$rho_c$}{Density at chamber temperature and pressure}%
+\nomenclature{$\rho_c$}{Density at chamber temperature and pressure}%
 \nomenclature{$P_e$}{Exit pressure}
 This is an excellent start to creating a standard for comparing gases, but there is much more that should be considered. Factors such as safety, availability, cost, energy storage density, and so on all contribute to the choice of gas. Additionally, each one of these factors has a different weight per say depending on the scenario in which they are being applied. After consideration, the choice of gas for this system is $CO_2$.\\
 The other component is the nozzle. These are used to set the mass flow rate for the system and to accelerate the propellant to supersonic speeds. They consist of a converging section that leads into a throat of minimum radius and a diverging section. Figure \ref{fig:Nozzle} shows a simple 2D section of a typical nozzle. 
