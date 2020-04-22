@@ -4,6 +4,7 @@
 \usepackage[margin=1in,letterpaper]{geometry} % decreases margins
 \usepackage{cite} % takes care of citations
 \usepackage{listings}
+\usepackage[table,xcdraw]{xcolor}
 \usepackage[utf8]{inputenc}
 \usepackage[stretch=10]{microtype}
 \usepackage[outdir=./]{epstopdf}
@@ -24,30 +25,23 @@
 
 \begin{document}
 
-\title{Characterizing a Cold Gas Thruster System}
-\author{Max Huggins – UCA Department of Physics and Astronomy}
-\date{\today}
-\maketitle
+\input{Title}
+\input{Abstract}
 
 
-\begin{abstract}
-A cold gas thruster (CGT) system was designed with pre-existing nozzle theory in mind. This paper deals with characterizing the system and provides an analysis of the force production for it. It was found that the CGT performed similarly to the predicted theory, but the data collected was not sufficient to characterize the system as was previously expected. This required the use of a more general analysis scheme.
-\end{abstract}
-
+\printnomenclature[0.5in]
 
 \section{Introduction}
-\input{Introduction.tex}
+\input{Introduction}
 
 \section{Data Collection and Analysis}%
 \input{Data_and_Analysis}
 
 \section{Results of Analysis}
-
+\input{Results_of_Analysis}
 
 \section{Conclusion}
-
-
-\printnomenclature\label{nomenclature}
+\input{Conclusion}
 
 \bibliographystyle{plain}
 \bibliography{References.bib}
