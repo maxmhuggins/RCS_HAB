@@ -5,16 +5,16 @@ Created on Thu Apr  2 14:01:21 2020
 
 @author: max
 """
-
+#===================Importing Modules========================================#
 import numpy as np
 import mpmath as mp
 import pandas as pd
 import matplotlib.pyplot as plt
 plt.style.use('classic')
 from CoolProp.CoolProp import PropsSI
-
+#==================Analyzer Class============================================#
 class Analyzer:
-    
+    #==============This initializes class objects============================#
     def __init__(self, Geometry, Trial):
         
         ExitRadii =     [
@@ -32,7 +32,8 @@ class Analyzer:
         self.ChamberPressureData = []
         self.Masses = []
         self.Identifiers = []
-        self.G = 9.80665
+        self.ActualTime = []
+        self.g = 9.80665
         self.R = 8.31446261815324
         self.W = 0.1178664
         self.gamma = 1.305
@@ -48,10 +49,9 @@ class Analyzer:
         self.Identity = self.Geometry + str(self.Trial)
         self.color_value = '#6b8ba4'
         self.thickness = 1.5
-        
         for i in self.ExitRadii:
             self.AreaRatios.append((i*10**(-3))**2 / self.ThroatRadius**2)
-        
+        #=====Extracting intrinsic data===================#
         columns = np.loadtxt(
             '../Refined_Data_Files/Calibration_Files/Mass.txt'
             , delimiter=',', dtype='str')
@@ -75,10 +75,12 @@ class Analyzer:
             self.ChamberPressureData.append(column[2])
             self.ChamberTempData.append(column[3] + 273.15)
             self.ActualExitTempData.append(column[4] + 273.15)
-            
+        #=================================================#
+        #==Giving each geometry its calculated properties=#
         counter = 0
         while counter < self.N:
             for i in range(1, len(self.ChamberPressureData)):
+                self.ActualTime.append(self.TimeData[i])
                 if 0 <= self.ChamberPressureData[i] <= self.THRESH:
                     pass
                 else:
@@ -97,22 +99,22 @@ class Analyzer:
         self.MassFlowRate = self.Mass / self.TotalTime
         self.ExitTempData = self.SolveExitTemp()
         self.PredictedForce = self.PredictedThrust()
-        self.ExperimentalIsp = self.ActualIsp()
+        self.ExperimentalIsp = self.SpecificImpulse()
         self.PredictedIsp = self.PredictIsp()
-        # self.PlotThrust()
-        
+        #=================================================#
+    #=======Function for performing a trapezoidal sum========================#
     def TrapezoidalSum(self):
         summer = 0
-        for i in range(0,len(self.TimeData)-1):
+        for i in range(0,len(self.ActualTime)-1):
             AreaSection = .5 * (self.ForceData[i] + self.ForceData[i+1]) * (
-                self.TimeData[i+1] - self.TimeData[i])
+                self.ActualTime[i+1] - self.ActualTime[i])
             summer = summer + AreaSection
         return summer
-    
+    #=======Function to calculate the experimental Isp=======================#
     def SpecificImpulse(self):
-        Isp = self.TrapezoidalSum() / (self.Mass * self.G)
+        Isp = self.TrapezoidalSum() / (self.Mass * self.g)
         return Isp
-    
+    #======Computational analysis to solve for T_e===========================#
     def SolveExitTemp(self):
         ExitTemp = []
         for j in range(0,len(self.ChamberTempData)):
@@ -154,7 +156,7 @@ class Analyzer:
             ExitTemp.append(T_e)
         
         return ExitTemp
-    
+    #==========Function to predict the thrust given geometry's properties====#
     def PredictedThrust(self, T=None):
         
         PredictedForce = []
@@ -176,7 +178,8 @@ class Analyzer:
             if T is None:
                 NewForce = A_t * P_c *  (
                     mp.root((Q - Q*TR), 2, k=0) +   (
-                                                mp.root(TR, k/Y, k=0) - (P_a/P_c)
+                                                mp.root(TR, k/Y, k=0) - (
+                                                                    P_a/P_c)
                                                     ) * E
                                         )
             else:
@@ -187,7 +190,7 @@ class Analyzer:
                                     )
             PredictedForce.append(self.UNIT*NewForce)
         return PredictedForce
-    
+    #========First attempt to fix the thrust=================================#
     def FirstThrustFix(self):
         PredictedForce = []
         for i in range(0,len(self.TimeData)):
@@ -211,7 +214,7 @@ class Analyzer:
             
             PredictedForce.append(self.UNIT*NewForce)
         return PredictedForce
-    
+    #========Function to determine theoretical Isp===========================#
     def PredictIsp(self):
         PredictedIsp = []
         for i in range(0,len(self.TimeData)):
@@ -234,20 +237,21 @@ class Analyzer:
             
             PredictedIsp.append(NewIsp)
         return PredictedIsp
-    
+    #=========An attempt to resolve poor data to calculate Isp===============#
     def ActualIsp(self):
         PointIsp = []
         for i in range(0,len(self.TimeData)):
             PointIsp.append(self.ForceData[i] / self.MassFlowRate)
         
         return PointIsp
-    
+    #=========Thrust curve plotter===========================================#
     def PlotThrust(self):
         
         size = 20
         size_config = .8
         fig = plt.figure(1, figsize=(10,7))
-        fig.suptitle('${}\ Thrust\ Curves$'.format(self.Identity), fontsize=size)
+        fig.suptitle('${}\ Thrust\ Curves$'.format(self.Identity), 
+                     fontsize=size)
         plt.xlim(-1,12)
         if max(self.PredictedForce) > max(self.ForceData):
             ymax = (max(self.PredictedForce))
@@ -256,16 +260,19 @@ class Analyzer:
         plt.ylim(-round(.05*ymax, 2), round(1.05 * ymax, 2))
         plt.xlabel('$Time\ (s)$', fontsize=size_config*size)
         plt.ylabel('$Force\ (N)$', fontsize=size_config*size)
-        plt.plot(self.TimeData, self.PredictedForce, label='$Theoretical$', lw=self.thickness,
+        plt.plot(self.TimeData, self.PredictedForce, 
+                 label='$Theoretical$', lw=self.thickness,
                  linestyle='dotted', color='black')
-        plt.plot(self.TimeData, self.ForceData, label='$Emperical$', color=self.color_value)
+        plt.plot(self.TimeData, self.ForceData, label='$Emperical$', 
+                 color=self.color_value)
         plt.legend()
         plt.show()
-        
+    #=========Smoothing function for noisy datasets==========================#
     def Smoother(self, DataSet, N):      
         return pd.Series(DataSet).rolling(window=N).mean().iloc[N-1:].values
-
-    def PlotAnyDataSet(self, DataSet1, Variable1, Unit, path, DataSet2=None, Variable2=None, x_data=None):
+    #=========Generic plotter that makes them somewhat pretty================#
+    def PlotAnyDataSet(self, DataSet1, Variable1, Unit, path, 
+                       DataSet2=None, Variable2=None, x_data=None):
         if x_data is None:
             x_data = self.TimeData
         else:
@@ -278,22 +285,32 @@ class Analyzer:
         plt.xlabel('$Time\ (s)$', fontsize=size_config*size)
         
         if Variable1 == 'Temperature':
-            plt.ylabel('$Temperature\ ({})$'.format(Unit), fontsize=size_config*size)
+            plt.ylabel('$Temperature\ ({})$'.format(Unit), 
+                       fontsize=size_config*size)
         else:
-            plt.ylabel('${}\ ({})$'.format(Variable1, Unit), fontsize=size_config*size)
+            plt.ylabel('${}\ ({})$'.format(Variable1, Unit), 
+                       fontsize=size_config*size)
 
         if DataSet2 is not None:
-            fig.suptitle('${}\ {}\ and\ {}\ Data$'.format(self.Identity, Variable1, Variable2), fontsize=size)
+            fig.suptitle('${}\ {}\ and\ {}\ Data$'.format(
+                self.Identity, Variable1, Variable2), fontsize=size)
             
-            plt.plot(x_data, DataSet2, color='black', lw=self.thickness,
-                    label='${}\ {}\ Data$'.format(self.Identity, Variable1))
-            plt.plot(x_data, DataSet1, color=self.color_value,lw=self.thickness,
-                    label='${}\ {}\ Data$'.format(self.Identity, Variable2))
+            plt.plot(x_data, DataSet1, color='black', lw=self.thickness,
+                    label='${}\ {}\ Data$'.format(
+                        self.Identity, Variable1))
+            plt.plot(x_data, DataSet2, color=self.color_value,
+                     lw=self.thickness, label='${}\ {}\ Data$'.format(
+                         self.Identity, Variable2))
         else:
-            fig.suptitle('${}\ {}\ Data$'.format(self.Identity, Variable1), fontsize=size)
+            fig.suptitle('${}\ {}\ Data$'.format(
+                self.Identity, Variable1), fontsize=size)
     
-            plt.plot(x_data, DataSet1, color=self.color_value,lw=self.thickness,
-                        label='${}\ {}\ Data$'.format(self.Identity, Variable1))
+            plt.plot(x_data, DataSet1, color=self.color_value,
+                     lw=self.thickness, label='${}\ {}\ Data$'.format(
+                         self.Identity, Variable1))
         plt.legend()
         plt.savefig('{}'.format(path), bbox_inches = "tight")
         plt.close()
+    #========================================================================#
+
+#============================================================================#
