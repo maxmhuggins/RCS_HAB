@@ -17,4 +17,4 @@ I won't go into much detail here, mainly just list the psuedo fix.
 - Design PCB for data acquisition system
 - Develop library to interface with the 24-bit ADC because the 10-bit one is no
 	good for measuring the changes in temperature of the thermocouples.
-
+- Use nitrogen or use smaller nozzle throat hole. Rate of mass change is too high
