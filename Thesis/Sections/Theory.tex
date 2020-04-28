@@ -1,0 +1,203 @@
+The objective of this section is to derive the relationships used for the analysis of the data collection. First, the general thermodynamic relationships will be established, then they will be applied to converging-diverging nozzle. At this point, the relevant relationships for the data will be established and the experimental design can be discussed in detail.
+\section{General Thermodynamic Relationships}
+The theory used here is mostly taken from pre-existing nozzle theory. The source for this project is reference \cite{langton}. Much of the derivation for the equations to be used are based on the following assumptions and rely on Classical Thermodynamics:
+\begin{enumerate}
+\item The propellant is homogeneous throughout the nozzle.
+\item The propellant behaves like a perfect gas.
+\item There is no friction between the propellant and the nozzle walls
+\item The system is adiabatic
+\item The propellant flow is one-dimensional
+\item The propellant flow is stagnate in the nozzle chamber
+\item The propellant velocity is uniform accros any cross-section normal to the nozzle axis
+\end{enumerate}
+Reference \cite{langton} refers to three other assumptions, but they either do not apply or are redundant for the CGTS. Additionally, all of the variables are clearly defined in the nomenclature section but will not be defined along the discussion here.\\
+Starting with the first law of thermodynamics (FLT),
+\begin{equation}\label{eq:FLT}
+dQ=dU+PdV
+\end{equation}%
+\nomenclature{$Q$}{Heat put into a system}%
+\nomenclature{$U$}{Internal energy}%
+\nomenclature{$V$}{Volume}%
+\nomenclature{$P$}{Pressure}%
+\nomenclature{$X_x$}{Represents some variable, X, at some point x}%
+\nomenclature{$X_i$}{Represents some variable, X, at some initial state}%
+\nomenclature{$X_f$}{Represents some variable, X, at some final state}
+\nomenclature{$X_s$}{Represents some variable, X, at stagnation}%
+\nomenclature{$X_c$}{Represents some variable, X, in the nozzle chamber}%
+\nomenclature{$X_t$}{Represents some variable, X, in the nozzle throat}%
+\nomenclature{$X_e$}{Represents some variable, X, in exit plane of the nozzle}%
+and according to the second law,
+\begin{equation}\label{SLT}
+dQ=TdS
+\end{equation}%
+\nomenclature{$T$}{Temperature}%
+\nomenclature{$S$}{Entropy}
+defining the specific heats at constant volume and pressure respectively,
+\begin{equation}\label{eq:SHV}
+c_V=\left(\frac{\partial Q}{\partial T}\right)_V
+\end{equation}
+\begin{equation}\label{eq:SHP}
+c_P=\left(\frac{\partial Q}{\partial T}\right)_P
+\end{equation}
+and using Joule's equation to define a perfect gas
+\begin{equation}\label{eq:Joule}
+\left(\frac{\partial U}{\partial V}\right)_T=0
+\end{equation}
+substitutting \ref{eq:FLT} into $\partial Q$ in \ref{eq:SHV}
+\begin{equation}
+c_V=\left(\frac{\partial U}{\partial T}\right)_V
+\end{equation}
+Also, substitutting \ref{eq:SLT} into $\partial Q$ in \ref{eq:SHV}
+\begin{equation}
+c_V=T\left(\frac{\partial S}{\partial T}\right)_V
+\end{equation}
+so
+\begin{equation}\label{eq:cV}
+c_V=\left(\frac{\partial U}{\partial T}\right)_V=T\left(\frac{\partial S}{\partial T}\right)_V
+\end{equation}
+similarly with $c_P$
+\begin{equation}\label{cP}
+c_P=\left(\frac{\partial U}{\partial T}\right)_P=P\left(\frac{\partial V}{\partial T}\right)_P
+\end{equation}
+this means \ref{eq:SLT} can be written as
+\begin{equation}\label{eq:NewSLT}
+dQ=c_VdT+PdV
+\end{equation}
+Considering a perfect gas, the equation of state is
+\begin{equation}\label{eq:IGL}
+PV=nRT
+\end{equation}%
+\nomenclature{$R$}{Universal gas constant}%
+\nomenclature{$n$}{Number of moles}
+substitutting $n=m/W$ provides%
+\nomenclature{$W$}{Molecular weight of the gas}
+\begin{equation}
+PV=\frac{mRT}{W}
+\end{equation}
+so the equation for 1 unit of mass is
+\begin{equation}\label{IGL1}
+PV=\frac{RT}{W}
+\end{equation}
+differentiating $PV$ gives
+\begin{align}
+d(PV)&=VdP+PdV\\
+&=\frac{R}{W}dT
+\end{align}
+so
+\begin{equation}
+PdV=\frac{R}{W}dT-VdP
+\end{equation}
+Defining a new constant, $\gamma$
+\begin{equation}\label{eq:Gamma}
+\gamma=\frac{c_P}{c_V}
+\end{equation}%
+\nomenclature{$\gamma$}{Ratio of specific heats}
+from this \ref{eq:NewSLTinIGL}, \ref{eq:NewSLT}, and \ref{eq:SHP}
+\begin{equation}\label{eq:GammaincV}
+c_V=\frac{R}{W(\gamma-1)}
+\end{equation}
+similarly,
+\begin{equation}\label{eq:GammaincP}
+c_P=\frac{\gamma R}{W(\gamma-1)}
+\end{equation}
+It can also be determined for an adiabat, $dQ=0$, that
+\begin{equation}\label{eq:adiabat}
+P_iV_i^{\gamma}=P_fV_f^{\gamma}
+\end{equation}
+From the previous relations and the definition of enthalpy,
+\begin{equation}\label{eq:Enthalpy}
+H=U+pV
+\end{equation}%
+\nomenclature{$H$}{Enthalpy}
+the enthalpy per unit mass can now be expressed as
+\begin{equation}\label{eq:Enthalpypermass}
+H=\frac{\gamma RT}{W(\gamma-1)}
+\end{equation}
+\section{The Nozzle}
+Until this point, all of these relations are quite general. Figure \ref{fig:Nozzle} displays a typical converging diverging nozzle. It consists of three important regions. The furthest left is the chamber, it is here that we assume the variables to be stagnate. Stagnate meaning the velocity of the gas is zero. The next section going in the $+x$ direction is the nozzle throat. This is the smallest cross-sectional area of the system. Next is not a particularly important point, but represents the variables at any point, x, in the nozzle. Lastly is the exit plane of the nozzle. 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1]{Figures/Nozzle}
+\caption{Simplified nozzle, with axis and some variables defined.}
+\label{fig:Nozzle}
+\end{figure}
+To apply the previous definitions to a nozzle, the kinetic energy of 1 unit of mass will be considered along with the enthalpy. If the flow of the gas is considered, the enthalpy will increase by the amount equal to the kinetic energy of the gas per 1 unit of mass, given the gas exchanges no heat with the environment
+\begin{align}
+KE&=\frac{v^2}{2}\\
+H_x&=\frac{\gamma RT_x}{W(\gamma-1)}\\
+H_f&=H_x + KE
+\end{align}%
+\nomenclature{$KE$}{Kinetic energy}
+A region where the gas is stagnant ($v=0$) can be considered, here the enthalpy is a constant. Substitutting \ref{eq:IGL1} and the specific volume ($V=1/\rho$) as well,
+\begin{align}\label{eq:CasH}
+H_s=C&=\frac{\gamma P_s}{W\rho_s(\gamma-1)}\\
+&=\frac{\gamma}{(\gamma-1)}\frac{P_x}{W\rho_x}+\frac{v_x^2}{2}
+\end{align}%
+\nomenclature{$C$}{A constant relevant to the enthalpy at stagnation}
+Now, considering an adiabatic system
+\begin{equation}\label{eq:Adiabat}
+\frac{V_s}{V_x}=\left(\frac{P_x}{P_s}\right)^{\frac{1}{\gamma}}
+\end{equation}
+From \ref{eq:CasH} and \ref{eq:Adiabat} it can be found that
+\begin{equation}\label{eq:1.20}
+\frac{P_x}{P_s}=\left(1-\frac{v^2}{2C}\right)^{\frac{\gamma}{\gamma-1}}
+\end{equation}
+\subsection{Mach Number}
+An important parameter is the mach number, which is defined as the ratio of the gas velocity at some point to the velocity of sound in the gas. Here, this will be manipulated to determine the parameter in terms of temperature variables.
+\begin{align}\label{eq:DefineMach}
+M_x&=\frac{v_x}{v_{sound}}\\
+&=\frac{v_x}{\sqrt{\gamma R T_x}}\\
+\end{align}%
+\nomenclature{$M$}{Mach number}
+This can be substitutted into the previously defined relationships to find
+\begin{equation}\label{eq:1.25}
+\frac{T_s}{T_x}=1+M_x^2\frac{\gamma-1}{2}
+\end{equation}
+From \ref{eq:SHP} and the fact that the net heat change is equal to the change in kinetic energy per unit mass, the
+\begin{align}
+dQ&=c_PdT\\
+&=c_P(T_x-T_{x+dx})\\
+&=\frac{(v_{x+dx}^2-v_x^2)}{2J}
+\end{align}
+Where $J$ is defined as
+\begin{equation}
+J=\frac{W}{Q}
+\end{equation}%
+\nomenclature{$W$}{Work}
+\nomenclature{$J$}{The mechanical equivalent of heat}
+Substitutting \ref{eq:GammaincP}, using the stagnation conditions for the initial values, and solving for $v_x$,
+\begin{equation}\label{eq:GasVelocity}
+v_x=\sqrt{\frac{2\gamma RT_s}{(\gamma-1)W}\left(1-\left(\frac{P_x}{P_s}\right)^{\frac{\gamma-1}{\gamma}}\right)}
+\end{equation}
+Now, the velocity of the gas at any point x is in terms of variables in regions where flow is stagnated. The temperature can be found similarly,
+\begin{equation}\label{eq:GasTemp}
+T_x=T_s-\frac{v_x^2}{2Jc_P}
+\end{equation}
+substitutting \ref{eq:GasVelocity} and \ref{eq:GasTemp} into the mach number
+\begin{equation}\label{eq:MachInTermsofT}
+M^2=\frac{2}{(\gamma-1)}\left(\frac{T_s}{T_x}-1\right)
+\end{equation}
+Lastly,
+\begin{equation}\label{eq:MRatio}
+\frac{M_{x+dx}}{M_x}=\frac{v_{x+dx}}{v_x}\sqrt{\frac{T_x}{T_{x+dx}}}
+\end{equation}
+\subsection{Area Ratio}
+The area ratio is the single most important parameter when designing an efficient nozzle. This is the ratio of the exit plane area to the throat plane area. To introduce the variable, the mass flow rate will be defined.
+\begin{equation}\label{eq:MassFlow}
+w=\frac{dm}{dt}
+\end{equation}
+In terms of the geometry of the nozzle, the velocity of the gas, and the density
+\begin{equation}
+w=A_xv_x\rho_x
+\end{equation}
+The mass flow rate must be constant throughout any given time in the system. This is the equation of continuity for the flow. The ratio of any two points for a unit mass can now be analyzed,
+\begin{equation}
+\frac{A_{x+x}}{A_x}=\frac{V_{x+dx}v_x}{V_xv_{x+dx}}
+\end{equation}
+Using \ref{eq:Adiabat} for the general case, \ref{eq:MachInTermsofT}, and \ref{eq:MRatio}
+\begin{equation}
+\frac{A_{x+dx}}{A_x}=\frac{M_x}{M_{x+dx}}\left(\frac{T_x}{T_{x+dx}}\right)^\frac{1}{2}\left(\frac{1+\frac{(\gamma-1)}{2}M_{x+dx}^2}{1+\frac{(\gamma-1)}{2}M_x^2}\right)^{\frac{1}{\gamma-1}}
+\end{equation}
+
+\section{Relationships}
+*explain about the redefining of equations for use of better variablesthe nozzles used for the syste

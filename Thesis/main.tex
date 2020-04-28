@@ -1,0 +1,89 @@
+\documentclass[letterpaper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in,letterpaper]{geometry}
+\usepackage[stretch=10]{microtype}
+\renewcommand{\baselinestretch}{1.5}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{listings}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[final]{pdfpages}
+\definecolor{navy}{rgb}{245,156,74}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+\usepackage[outdir=./]{epstopdf}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{nomencl}
+\makenomenclature
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=-navy,
+    filecolor=blue,      
+    urlcolor=blue,
+    runcolor=red,
+    citecolor=green,
+}
+
+\begin{document}
+\input{Sections/Title}
+\input{Sections/Abstract}
+\clearpage
+\section{Some Context}
+This was a two semester project, performed in last year of a Bachelor's of Science Degree. The first semester was spent working to develop the background knowledge and experiment. The second was spent actually setting up the experimental apparatus and data acquisition system; as well as collecting data. However, the University of Central Arkansas began online instruction March 13, 2020 and access to the research labs was limited due to COVID-19. Because of this, some necessary data collection was not completed and progress on the project was halted. The analysis and results that could be completed are discussed here. \\
+In hopes of future work being completed, an outline will be presented for later work to be done.
+
+\tableofcontents
+\printnomenclature
+
+\chapter{Introduction}\label{chap:Introduction}
+\input{Sections/Introduction}
+
+\chapter{Theory}\label{chap:Theory}
+\input{Sections/Theory}
+
+\chapter{Analysis}\label{chap:Analysis}
+\input{Sections/Analysis}
+
+\chapter{Discussion}\label{chap:Discussion}
+\input{Sections/Discussion}
+
+\chapter{Conclusion}\label{chap:Conclusion}
+\input{Sections/Conclusion}
+
+\bibliographystyle{plain}
+\bibliography{References}
+
+\appendix
+\chapter{Appendix Title}\label{chap:Appendix}
+\input{Sections/Appendix}
+
+\end{document}
+

@@ -1,0 +1,82 @@
+\section{Background}
+High altitude balloons (HABs) are large balloons to which one or several payloads are attached that can reach high altitudes. These payloads are insulated packages typically holding scientific equipment for data collection. Here, high altitude balloon payloads will be referred to as HABPs. Some examples of sensors that may be on board the HABPs are: temperature, altitude, pressure, wind, radiation, and so on. These can provide information for meteorologists and researchers about conditions in high levels of the atmosphere with prolonged data collection. This is unlike other methods of atmospheric data collection like rockets which can also reach these altitudes but do it over a much shorter time-span. HABs can also provide safer, more cost effective options for data collection. However, there are some downfalls of using balloons as a means of data collection. They can be subject to high winds and any on board sensors will be affected by this. For example, during the 2017 total solar eclipse any payloads sent up to observe this would have been subject to winds throughout their flight. This means that camera footage observing the sun's corona would never be stable and set on the subject it is observing. The cameras would be passive observers controlled by the wind rather than the scientist. Another example is Geiger counters observing radiation in the atmosphere. These may have inconsistent data depending on what part of the payload is in its path from the sun. Wind speed sensors will also be subject to the forces of the winds. Keeping up with the inconsistent direction of the payload is a difficult task and the sensor is provided wind speed that is not in any particular direction. This is not ideal to determine the direction of the winds and would require much post-processing to match up the direction the payload was facing at a given wind speed data point. These are only three specific examples, but winds will affect many other data collection systems. The goal of this project is to develop a system that stabilizes the payload against wind speeds.
+\section{Outline}
+The ultimate objective here is to fly a reaction control system on board a HABP. Getting to this point requires several steps. A high-level overview is listed:
+\begin{enumerate}
+\item Determining viability of different RCSs
+\item Choosing a RCS
+\item Characterizing the chosen RCS
+\item Implementing the RCS
+\item Ultimate objective
+\end{enumerate}
+\subsection{Options}
+The relevant options that were considered for the RCS can be divided into two categories. The first is of the gyroscopic type. These can offer both passive an active stabalization. Reaction wheels (RWs) are commonly used in satellites and telescopes in order to change the attitude of a craft with extreme accuracy. There are also control moment gyroscopes (CMGs) which are essentially reaction wheels mounted on a gimbal controlled by a motor. These produce much higher torques than RWs and more typically provide active stabilization. Both CMGs and RWs rely on electricity as their energy source; while crafts like the International Space Station along with others can utilize solar panels for the longevity of missions, HABs cannot. They would rely on a battery to store all of the energy used to move the craft. Another drawback to these gyroscopic systems is their slow reaction time. These are typically not used for stabilizing a craft throughout a flight. Rather they provide reactions to torques from solar radiation pressure, gravity gradient, magnetic fields, micrometeorite impact, and internal effects like gas leakage and moving parts \cite{electricvthruster}. In the case of these scenarious it is not a matter of time and unpredictability. Additionally, they rely on motors spinning up to change the direction of the craft which takes considerable time. The other type of option consdiered here is the thruster type. This takes the form of both combustion and cold gas thrusters. These cannot offer the same amount of accuracy as the former, but can provide extremely fast changes in momentum. They are more commonly used for stabalizing crafts utilizing rockets and rely on compressed air energy storage (CAES) or chemical energy storage rather than electricity.\\
+Of the two, the thruster types have more desireable properties. Primarily in their ability to provide faster changes in the attitude of the craft. Now, the consideration to be made is between the combustion or cold gas thruster. Obviously, sticking combustible fuel on board a HAB is not considered safe so the CGT is more desireable. Also, the design of a CGT system (CGTS) has a lower level of complexity. The choice of system for this project is the CGT.
+\subsection{Fuel Options}
+An in-depth analysis was not necessarily done regarding the choice of the CGT for stabalization in the previous section. So it is important to determine the viability of several types of common fuels. To determine the viability of a CGT, a variable called the specific impulse ($I_{sp}$) must be defined. Equation \ref{eq:SpecificImpulse} provides the definition of the specific impulse.
+\begin{equation}\label{eq:SpecificImpulse}
+I_{sp}=\frac{F}{dm_p/dt}
+\end{equation}%
+\nomenclature{$I_{sp}$}{The specific impulse}%
+\nomenclature{$F$}{Force or thrust}%
+\nomenclature{$m_p$}{Mass of propellant}%
+\nomenclature{$t$}{Time}\\
+Where $F$ is the force and $dm_p/dt$ is the change in mass of propellant with respect to time. This value provides a \textit{standard} so to speak for characterizing fuels as it describes the force production per some amount of mass of a fuel. Different fuels have different $I_{sp}s$ and generally speaking the higher the value the better the fuel. \footnote{It is worth noting the units for $I_{sp}$ are $Ns/kg$, but most sources will record the value in units of $s$. While this is not necessarily true to the definition, all that they are doing is multiplying $m_p$ by the acceleration due to gravity and this makes no difference for the purpose the $I_{sp}$ is serving here.} Additionally, given an impulse, the amount of fuel required to counteract an impulse can be determined. This describes stabalization well. Looking at some sample data from \cite{titan1hab}, the amount of fuel required to stabilize a flight can be estimated. The raw flight data was not given in form of a .txt or .csv, but plots of the raw data are shown. From this, a digitizer tool was used to extract numbers from the gyroscopic plots. Specifically, the angular velocity about the axial direction ($\omega_z$). Multiplying this by the radius of rotation ($r$) and then taking the derivative with respect to time gives the accerlation ($a_w$) due to the forces ($F_w$) of the wind. Multiplying this by the mass of the payload ($m_{pd}$) then determines the force in the relevant direction due to the wind. Using the theoretical values for the specific impulse of different gases, the mass of fuel needed for a flight could be determined. In other words,
+\begin{equation}\label{eq:alpha}
+a_w = \frac{d(\omega_z r)}{dt}
+\end{equation}%
+\nomenclature{$a_w$}{Acceleration caused by wind}%
+\nomenclature{$r$}{Radius}%
+\nomenclature{$\omega_z$}{Angular velocity about z axis}
+\begin{equation}\label{eq:windforce}
+F_w = m_{pd}a_w
+\end{equation}%
+\nomenclature{$F_w$}{Force caused by wind}%
+\nomenclature{$m_{pd}$}{Mass of the payload}
+The integration of all these values would provide the total impulse caused by the wind ($I_w$).
+\begin{equation}\label{eq:windimpulse}
+I_w=\int |F_w| dt
+\end{equation}%
+\nomenclature{$I_w$}{Impulse caused by wind}
+\begin{equation}\label{eq:propmass}
+m_p=\frac{I_w}{I_{sp}}
+\end{equation}
+In reality equations \ref{eq:alpha}, \ref{eq:windforce}, and \ref{eq:windimpulse} are performed for each data point throughout the data set. The derivative is the difference in two points next to each other and the integral is a trapezoidal sum throughout the flight. Also, since the force would take both positive and negative values, the absolute value of each force term was taken.
+\subsubsection{Fuels}
+The most commonly used gas in a CGT is by far nitrogen; the reason for this is reasonable  propellant storage density, performance and lack of contamination concerns \cite{thrusteroptions}. Some other options are $CO_2,\ H_2,\ and\ He$; $H_2$ having the highest specific impulse. Obviously, the specific impulse is not the only important variable when considered what makes the best fuel for a system. Factors such as safety, availability, cost, energy storage density, and so on all contribute to the choice of gas. The theoretical specific impulse values of the gases listed above are shown in table \ref{tab:GasIsps}. Along with the specific impulse, the mass required for each gas to stabilize the payload for the total trip is recorded. 
+\begin{table}[!h]
+\centering
+\begin{tabular}{
+>{\columncolor[HTML]{C0C0C0}}c 
+>{\columncolor[HTML]{EFEFEF}}c 
+>{\columncolor[HTML]{EFEFEF}}c 
+>{\columncolor[HTML]{EFEFEF}}c }
+$Gas$  & \cellcolor[HTML]{C0C0C0}$I_{sp}\ (s)$ & \cellcolor[HTML]{C0C0C0}$Mass\ (g)$ & \cellcolor[HTML]{C0C0C0}$Mass\ Ozone\ (g)$ \\
+$H_2$  & 296                                   & 172                                 & 5                                          \\
+$He$   & 179                                   & 284                                 & 8                                          \\
+$N_2$  & 80                                    & 636                                 & 18                                         \\
+$CO_2$ & 67                                    & 760                                 & 21                                        
+\end{tabular}
+\label{tab:GasIsps}
+\end{table}
+In the third column, the mass of fuel needed for the time the payload spends in the ozone layer is also recorded. It is not always necessary to stabilize the payload throughout the entirety of the flight. In fact, the target may be a specific altitude region so in this case stabilization in other regions is irrelevant. To put these numbers into perspective, the $CO_2$ cannisters that mountain bikers use to refill their tires are typically 16g cartridges. The $CO_2$ and the cartridge together weigh approximately 60g. The maximum mass allowed by the FDA for the type of HABP dealt with here is 2721.554g; meaning one of these 16g cartridges is only approximately 2\% the total mass of the payload. A 25g cartride is still only approximately 3.8\% the total mass and well within the volume constraints as well. So, at a high-level view, the CGTS is a seemingly viable option.\\
+Since several trials will be recorded availability of the gas is largely important to this project. Out of these gases the availability of $CO_2$ is by far the highest. Even with the lowest $I_{sp}$, it is still an attractive option. Additionally, the actual implementation of the CGT is a distance away from this point in the project. As each gas should behave similarly in the system, it would not be a difficult task to switch the type of gas at any given point during the project. If further analysis finds the specific impulse to be of more importance then $N_2$ would be the most likely option for the aforementioned reasons. 
+\section{Characterizing}
+The characterization of the RCS is referring to fitting the actual results of the system to the pre-exisisting theory's results. This is reffering to the theory discussed in chapter \ref{chap:Theory}. From a high-level, it is likely the assumptions made to generate the mathematical equations do not fit the actual behaviour of the system. In fact, the book, reference \cite{langton}, from which the actual nozzle theory is taken states the theory produces an error of approximately 12\% for actual rocket engines. [*****CHECKTHISS] The goal in characterizing the system is to create a proportionality between the predicted and actual results in order to specify the predicted results for the system developed here. To accomplish this, an on-ground testing rig is built consisting of the same parts to be integrated into the actual payload. The on-ground rig measures variables of interest in the system that will allow the comparison between the predicted and actual results. This will be discussed in more detail in chapter \ref{Methods}, section \ref{Characterizing}. In the high-level outline provided, this is the section where progress was halted due to the COVID-19 crisis. From this point further in the project is considered an outline for future work.
+\section{Integration}
+After characterization of the system, the actual integration into a HABP must be made. This is a straightforward task and involves adding another thruster and solenoid to the on-ground testing rig and removing some sensors that are no longer necessary. Then fitting the plumbing into the HABP. Additionally, the scripting for stabilization must be developed further and specified for the characteristics determined. A CAD rendering of the plumbing system is shown in figure \ref{fig:CAD}.
+%\begin{figure}[h!]
+%\centering
+%\includegraphics[scale=.5]{Figures/CAD}
+%\caption{CAD rendering of the plumbing system to be used in the actual payload}
+%\label{fig:CAD}
+%\end{figure}
+This integration would include simulating windy conditions and determining impulse data from accelerometer sensors to see how the system would work for actual flights. As well as determining the type of feedback system to be used for the RCS script. Examples of these are all negative feedback systems using some type of sensor such as a magnetometer, photoresistor, accelerometer, etc to provide the controller a reference for the pointing direction. This is the point where the amount of fuel needed for a flight objective could be well defined and the necessary changes could be implemented.
+\section{Flight}
+After confidence in the system has been established from the on-ground testing and simulations, the goal and best test is a flight of the RCS. Here, it is important that the sytem is integrated with a data acquisition system and acts as an aid in the data acquisition. The flight objective has not been well-defined yet. Some vague examples are listed:
+\begin{itemize}
+\item "Look" at a ground target for a duration of the flight
+\item Take footage of only the sun for a duration of flight
+\item Record radioactivity with the sensor unobstructed towards the sun through the ozone layer
+\end{itemize}
+The system should be robust enough such that completion of these tasks is not a matter of altering the CGTS in any way, but rather altering the scripting and feedback system. 
