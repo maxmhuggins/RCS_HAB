@@ -17,7 +17,45 @@ Several options were considered for the manufacturing of nozzles. These included
 \item Machining by hand
 \item Modeling and casting by hand
 \end{itemize}
-However, in dealing with such small parts modeling and casting by hand was immediately discarded. Modeling differences of expansion ratios on the scale of parts of a millimeter was out of the question. Machining by hand is both costly in terms of money and time. Also, such small nozzles would present difficulties in the machining process. FDM 3D printing was by far the most accesible out of these, but there are problems related to both accuracy and actual function of the nozzles. FDM 3D printers typically use a .4mm nozzle. This limitation on accuracy is relatively large considering the nozzle throat is designed to by no larger than .625mm in diamter. Also, the .4mm nozzle refers to the actual size of the hole in the nozzle, \textit{not} the size of the filament extruded from the nozzle. FDM printers typically produce layer heights no smaller than .1mm. In addition to the problem of accuracy, the parts are relatively porous. The method of FDM printing calls for the extrusion of a hot filament onto a cooled layer of filament to produce a 3D model. This does well creating structural parts not dependent on high tolerances and do not need to be air-tight, but for a CGT nozzle it will not work well. Much of the fuel would be lost in the layers of the nozzle and the friction between the layers and exhaust gases would be moreso than any of the other methods. This leaves resin printing, often referred to as stereolithography (SLA) printing. This method has been out of reach for many in years past, but recent manufacturers have developed robust, inexpensive resin printers. These printers can provide layer heights of .01mm and do not rely on laying lines of hot filament on top of other layers. Rather, they use two main methods of creating the part. The cheaper versions use a 5.5x3.5in UV LCD screen with resolutions of approximately 2560x1400 pixels. These resolutions are much finer than the FDM printer's capabilities. Additionally, these layers are formed by a chemical curing of one layer of resin to the previous. Given no impurities in the resin, this will provide an air-tight seal in the part.
+However, in dealing with such small parts modeling and casting by hand was immediately discarded. Modeling differences of expansion ratios on the scale of parts of a millimeter was out of the question. Machining by hand is both costly in terms of money and time. Also, such small nozzles would present difficulties in the machining process. FDM 3D printing was by far the most accesible out of these, but there are problems related to both accuracy and actual function of the nozzles. FDM 3D printers typically use a .4mm nozzle. This limitation on accuracy is relatively large considering the nozzle throat is designed to by no larger than .625mm in diamter. Also, the .4mm nozzle refers to the actual size of the hole in the nozzle, \textit{not} the size of the filament extruded from the nozzle. FDM printers typically produce layer heights no smaller than .1mm. In addition to the problem of accuracy, the parts are relatively porous. The method of FDM printing calls for the extrusion of a hot filament onto a cooled layer of filament to produce a 3D model. This does well creating structural parts not dependent on high tolerances and do not need to be air-tight, but for a CGT nozzle it will not work well. Much of the fuel would be lost in the layers of the nozzle and the friction between the layers and exhaust gases would be moreso than any of the other methods. This leaves resin printing, often referred to as stereolithography (SLA) printing. This method has been out of reach for many in years past, but recent manufacturers have developed robust, inexpensive resin printers. These printers can provide layer heights of .01mm and do not rely on laying lines of hot filament on top of other layers. Rather, they use two main methods of creating the part. The cheaper versions use a 5.5x3.5in UV LCD screen with resolutions of approximately 2560x1400 pixels. These resolutions are much finer than the FDM printer's capabilities. Additionally, these layers are formed by a chemical curing of one layer of resin to the previous. Given no impurities in the resin, this will provide an air-tight seal in the part. Figure \ref{fig:PressurePrint} shows a pressure test that was performed on a printed part, similar to the designed nozzles.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=10cm]{Figures/PressurePrint}
+\caption{Pressure test of resin print from the ELEGOO MARS 3D printer}
+\label{fig:PressurePrint}
+\end{figure}
+The part was essentially an end cap, filled in increments of 20psi up to 400psi. It was held at 400psi for 6 hours and it held that pressure with no noticeable change in the needle on the guage throughout that time. Similar tests with FDM printed parts held no pressure, even after being treated with an epoxy coating. For comparing the accuracy of the parts, several prints were done. Figure \ref{fig:Rooks} displays an example of the difference in detail and figure \ref{fig:RooksCompared} shows a closeup of the two at the same scale.\clearpage
+\begin{figure}[h!]
+\centering
+\includegraphics[width=10cm]{Figures/RooksMarked}
+\caption{Two 3D printed rooks for detail comparison. On left, resin and on right, FDM}
+\label{fig:Rooks}
+\end{figure}
+\begin{figure*}[t!]
+    \centering
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=7cm]{Figures/RookClose}
+        \caption{Resin printed rook closeup}
+    \end{subfigure}%
+    ~ 
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=7cm]{Figures/FDMRookClose}
+        \caption{FDM printed rook closeup}
+    \end{subfigure}
+    \caption{Rook closeups}
+\label{fig:RooksCompared}
+\end{figure*}
+The layer height for the resin printed part was set to .05mm and the FDM is .25mm. The difference is easily noticed.\\
+Nozzle design was done in two programs. First, the nozzle geometry was made in OpenSCAD. An open source program was used to set the parameters for the nozzle geometry. A .stl file was generated from OpenSCAD and imported into Blender. From here, the actual functional parts were added to the model like the hex flatends, NPT fitting, exterior walls, and labelling. Figure \ref{fig:BathingNozzles} shows several nozzles begin cleaned in isopropyl alcohol (IPA). The actual nozzle geometry can be seen while the part is covered in IPA.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=10cm]{Figures/BathingNozzles}
+\caption{Several 3D printed nozzles bathing in IPA}
+\label{fig:BathingNozzles}
+\end{figure}
+
 \subsection{Data Acquisition System}
 RASPBERRY PI STUFF
 \subsection{Anything else??}
