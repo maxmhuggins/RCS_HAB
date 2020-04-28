@@ -182,7 +182,7 @@ Lastly,
 \frac{M_{x+dx}}{M_x}=\frac{v_{x+dx}}{v_x}\sqrt{\frac{T_x}{T_{x+dx}}}
 \end{equation}
 \subsection{Area Ratio}
-The area ratio is the single most important parameter when designing an efficient nozzle. This is the ratio of the exit plane area to the throat plane area. To introduce the variable, the mass flow rate will be defined.
+The expansion ratio is the single most important parameter when designing an efficient nozzle. This is the ratio of the exit plane area to the throat plane area. To introduce the variable, the mass flow rate will be defined.
 \begin{equation}\label{eq:MassFlow}
 w=\frac{dm}{dt}
 \end{equation}
@@ -191,13 +191,73 @@ In terms of the geometry of the nozzle, the velocity of the gas, and the density
 w=A_xv_x\rho_x
 \end{equation}
 The mass flow rate must be constant throughout any given time in the system. This is the equation of continuity for the flow. The ratio of any two points for a unit mass can now be analyzed,
-\begin{equation}
+\begin{equation}\label{eq:MassFlowwDensity}
 \frac{A_{x+x}}{A_x}=\frac{V_{x+dx}v_x}{V_xv_{x+dx}}
 \end{equation}
 Using \ref{eq:Adiabat} for the general case, \ref{eq:MachInTermsofT}, and \ref{eq:MRatio}
 \begin{equation}
 \frac{A_{x+dx}}{A_x}=\frac{M_x}{M_{x+dx}}\left(\frac{T_x}{T_{x+dx}}\right)^\frac{1}{2}\left(\frac{1+\frac{(\gamma-1)}{2}M_{x+dx}^2}{1+\frac{(\gamma-1)}{2}M_x^2}\right)^{\frac{1}{\gamma-1}}
 \end{equation}
+The expansion ratio then can be expressed as
+\begin{align}
+\epsilon=\frac{A_e}{A_t}=\frac{M_t}{M_e}\left(\frac{T_t}{T_e}\right)^\frac{1}{2}\left(\frac{1+\frac{(\gamma-1)}{2}M_e^2}{1+\frac{(\gamma-1)}{2}M_t^2}\right)^{\frac{1}{\gamma-1}}
+\end{align}%
+\nomenclature{$\epsilon$}{Expansion ratio}
+To determine the best value for the expansion ratio, the mass flow rate will be maximized and using previously found relationships the value for the expansion ratio will be found. Starting with substitutting \ref{eq:GasVelocity} into \ref{eq:MassFlowwDensity}.
+\begin{equation}\label{eq:WforAll}
+w=\frac{A_x}{V_x}\sqrt{\frac{2\gamma RT_s}{(\gamma-1)W}\left(1-\left(\frac{P_x}{P_s}\right)^{\frac{\gamma-1}{\gamma}}\right)}
+\end{equation}
+and
+\begin{equation}\label{eq:TtoP}
+\left(\frac{T_x}{T_s}\right)^{\frac{1}{\gamma-1}}=\left(\frac{P_x}{P_s}\right)^{\frac{1}{\gamma}}
+\end{equation}
+Also,
+\begin{equation}\label{eq:VtoT}
+\frac{1}{V_x}=\frac{1}{V_s}\left(\frac{T_x}{T_s}\right)^{\frac{1}{\gamma-1}}
+\end{equation}
+substitutting \ref{eq:VtoT} and \ref{eq:TtoP} into \ref{eq:WforAll} and rearranging
+\begin{equation}\label{eq:diffW}
+w=\frac{A_x}{V_s}\sqrt{\frac{2\gamma KT_s}{(\gamma-1)}\left(\left(\frac{P_x}{P_s}\right)^{\frac{2}{\gamma}}-\left(\frac{P_x}{P_s}\right)^{\frac{\gamma+1}{\gamma}}\right)}
+\end{equation}
+This can now be maximized by differentiating with respect to $P_x$ and set equal to zero. This gives
+\begin{equation}
+\frac{dw}{dP_x}=\frac{A_x}{2V_s}\left[\frac{2\gamma KT_s}{(\gamma-1)}\left(\left(\frac{P_x}{P_s}\right)^{\frac{2}{\gamma}}-\left(\frac{P_x}{P_s}\right)^{\frac{\gamma+1}{\gamma}}\right)\right]^{-\frac{1}{2}}*\frac{d}{dP_x}\left(\left(\frac{P_x}{P_s}\right)^{\frac{2}{\gamma}}-\left(\frac{P_x}{P_s}\right)^{\frac{\gamma+1}{\gamma}}\right)=0
+\end{equation}
+Obviously, 
+\begin{equation}
+\left(\left(\frac{P_x}{P_s}\right)^{\frac{2}{\gamma}}-\left(\frac{P_x}{P_s}\right)^{\frac{\gamma+1}{\gamma}}\right)\neq0
+\end{equation}
+so
+\begin{equation}
+\frac{d}{dP_x}\left(\left(\frac{P_x}{P_s}\right)^{\frac{2}{\gamma}}-\left(\frac{P_x}{P_s}\right)^{\frac{\gamma+1}{\gamma}}\right)=0
+\end{equation}
+differentiating and solving for $P_x/P_s$
+\begin{equation}
+\frac{P_x}{P_s}=\left(\frac{2}{\gamma+1}\right)^{\frac{\gamma}{\gamma-1}}
+\end{equation}
+Now, substitutting \ref{eq:eq:TtoP} it can be seen that
+\begin{equation}
+\frac{T_x}{T_s}=\frac{2}{\gamma+1}
+\end{equation}
+which when compared to \ref{eq:1.25} it is seen that they are equal when 
+if $M=1$, and if $x=t$, then the optimum value for $P_t$ can be determined. When $M=1$ at the throat is not necessarily the only condition which maximizes $w$ but it is also a condition which satisfies maximum force production of the nozzle.
+
+This will be finished at a later date. IT IS BED TIME!!!!
+Determine maximum value for w and find best expansion ratio
+use that to find values for expansion ratio (in methods section)
+determine force equation
+determine the Isp equation
+
 
 \section{Relationships}
 *explain about the redefining of equations for use of better variablesthe nozzles used for the syste
+
+
+RELEVANT EQUATIONS:
+\begin{equation}\label{eq:RelevantNozzleForce}
+F = A_t P_c \left(\sqrt{\frac{2\gamma^2}{\gamma-1}\left(\frac{2}{\gamma+1}\right)^{\frac{\gamma+1}{\gamma-1}}\left(1-\frac{T_e}{T_c}\right)}+\left(\left(\frac{T_e}{T_c}\right)^{\frac{\gamma}{\gamma-1}}-\frac{P_a}{P_c}\right)\epsilon\right)
+\end{equation}
+
+\begin{equation}\label{eq:RelevantIsp}
+I_{sp}=\left[\frac{2\gamma R T_c}{W(\gamma-1)}\left(1-\frac{T_e}{T_c}\right)\right]^{\frac{1}{2}}+\left[\left(\frac{T_e}{T_c}\right)^{\frac{\gamma}{\gamma-1}}-\frac{P_a}{P_c}\right]\frac{A_e}{A_t}\sqrt{\frac{P_c}{\gamma\rho_c}}\left(\frac{\gamma+1}{2}\right)^{\frac{\gamma+1}{2(\gamma-1)}}
+\end{equation} 

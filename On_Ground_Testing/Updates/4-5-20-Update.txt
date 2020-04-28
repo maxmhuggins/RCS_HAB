@@ -18,3 +18,5 @@ I won't go into much detail here, mainly just list the psuedo fix.
 - Develop library to interface with the 24-bit ADC because the 10-bit one is no
 	good for measuring the changes in temperature of the thermocouples.
 - Use nitrogen or use smaller nozzle throat hole. Rate of mass change is too high
+- Regulator should be used! The maximum thrust equation for the mass flow rate relies on the chamber pressure being constant. In other words, a nozzle cannot be designed to maximum efficiency if no regulator is used. There are two flow controllers, run a test with pressure transducer to determine whether or not this also regulates output pressure!
+    - If a regulator is used, smaller, faster solenoid valves can also most likely be used. This is not necessary, however

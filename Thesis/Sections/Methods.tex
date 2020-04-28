@@ -1,0 +1,26 @@
+The objective is to determine the difference between the measured specific impulse and the theoretical values. To determine the experimental value for the specific impulse is a matter of measuring the force production of the nozzle and the change in mass of the system. This is done with the use of two force sensors. One measuring the change in mass of the $CO_2$ cylinder and the other measuring the force production of the nozzle. To determine the theoretical values for the same system requires measuring $T_c,\ T_e,\ P_c,\ and\ P_a$ where the ambient pressure is a constant and can be determined from the forecast that day. The same variables are needed for the predicted force equation. This information is coming from equations \ref{eq:RelevantNozzleForce} and \ref{eq:RelevantIsp}. It is important that these variables are represented well by the data collected, however the experimental setup used in the data collection presented here does a poor job of this. The setup and methods will be presented here along with solutions to the problems faced. 
+\section{On-Ground Testing Rig}
+A simplified schematic of the experimental apparatus is shown in figure \ref{fig:ApparatusSchem}.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=.5]{Figures/Apparatus}
+\caption{Simplified on-ground testing rig}
+\label{fig:ApparatusSchem}
+\end{figure}
+\subsection{Hardware}
+All of the parts, except the $CO_2$ adaptor and pressure transducer were ordered from McMaster-Carr. The adaptor was custom machined and the transducer was purchased from a third party seller with no datasheet provided. However, the voltage output from it varied linearly with pressure and could be calibrated with a simple linear regression function. The solenoid is a 24V DC 1000PSI solenoid valve, it was controlled by a simple digital signal run through a push pull (NPN-PNP pair) amplifier. Each temperature sensor was a type k thermocouple, interfacing with a XXXXXXX* breakout baord made by Adafruit. The force sensor used was a 1kg load cell interfacing with an HX711 (24-bit analog to digital converter) breakout board. The plumbing system used is 1/4" OD copper tubing with compression fittings that allowed adaptations between the copper pipe and the 1/8" National Pipe Threading (NPT) that was used for the non-pipe fittings. The choice of this plumbing system is the high pressure rating and relatively low weight. The most massive part of the system was the solenoid valve budgeting approximately 10\% ****CHECK THIS the maximum allowed weight of the HABP. On final thought, a choice was made to omit the flow controller because the mass flow rate should be limited by the nozzle throat.\footnote{This, however, was not necessarily the best decision. This will be discussed further in \ref{chap:Discussion}}
+\subsection{Nozzle Manufacturing}
+Several options were considered for the manufacturing of nozzles. These included the processes listed below:
+\begin{itemize}
+\item Fused deposition modeling (FDM) 3D printing
+\item Resin 3D printing
+\item Machining by hand
+\item Modeling and casting by hand
+\end{itemize}
+However, in dealing with such small parts modeling and casting by hand was immediately discarded. Modeling differences of expansion ratios on the scale of parts of a millimeter was out of the question. Machining by hand is both costly in terms of money and time. Also, such small nozzles would present difficulties in the machining process. FDM 3D printing was by far the most accesible out of these, but there are problems related to both accuracy and actual function of the nozzles. FDM 3D printers typically use a .4mm nozzle. This limitation on accuracy is relatively large considering the nozzle throat is designed to by no larger than .625mm in diamter. Also, the .4mm nozzle refers to the actual size of the hole in the nozzle, \textit{not} the size of the filament extruded from the nozzle. FDM printers typically produce layer heights no smaller than .1mm. In addition to the problem of accuracy, the parts are relatively porous. The method of FDM printing calls for the extrusion of a hot filament onto a cooled layer of filament to produce a 3D model. This does well creating structural parts not dependent on high tolerances and do not need to be air-tight, but for a CGT nozzle it will not work well. Much of the fuel would be lost in the layers of the nozzle and the friction between the layers and exhaust gases would be moreso than any of the other methods. This leaves resin printing, often referred to as stereolithography (SLA) printing. This method has been out of reach for many in years past, but recent manufacturers have developed robust, inexpensive resin printers. These printers can provide layer heights of .01mm and do not rely on laying lines of hot filament on top of other layers. Rather, they use two main methods of creating the part. The cheaper versions use a 5.5x3.5in UV LCD screen with resolutions of approximately 2560x1400 pixels. These resolutions are much finer than the FDM printer's capabilities. Additionally, these layers are formed by a chemical curing of one layer of resin to the previous. Given no impurities in the resin, this will provide an air-tight seal in the part.
+\subsection{Data Acquisition System}
+RASPBERRY PI STUFF
+\subsection{Anything else??}
+
+\section{What tf is wrong here?}
+Most of it...
