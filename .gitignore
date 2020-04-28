@@ -148,6 +148,7 @@ dmypy.json
 *.ps
 *-eps-converted-to.pdf
 *.nlg
+*.toc
 
 #Pics
 *.eps
