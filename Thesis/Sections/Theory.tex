@@ -27,7 +27,7 @@ dQ=dU+PdV
 \nomenclature{$X_t$}{Represents some variable, X, in the nozzle throat}%
 \nomenclature{$X_e$}{Represents some variable, X, in exit plane of the nozzle}%
 and according to the second law,
-\begin{equation}\label{SLT}
+\begin{equation}\label{eq:SLT}
 dQ=TdS
 \end{equation}%
 \nomenclature{$T$}{Temperature}%
@@ -75,7 +75,7 @@ substitutting $n=m/W$ provides%
 PV=\frac{mRT}{W}
 \end{equation}
 so the equation for 1 unit of mass is
-\begin{equation}\label{IGL1}
+\begin{equation}\label{eq:IGL1}
 PV=\frac{RT}{W}
 \end{equation}
 differentiating $PV$ gives
@@ -84,7 +84,7 @@ d(PV)&=VdP+PdV\\
 &=\frac{R}{W}dT
 \end{align}
 so
-\begin{equation}
+\begin{equation}\label{eq:NewSLTinIGL}
 PdV=\frac{R}{W}dT-VdP
 \end{equation}
 Defining a new constant, $\gamma$
@@ -92,7 +92,7 @@ Defining a new constant, $\gamma$
 \gamma=\frac{c_P}{c_V}
 \end{equation}%
 \nomenclature{$\gamma$}{Ratio of specific heats}
-from this \ref{eq:NewSLTinIGL}, \ref{eq:NewSLT}, and \ref{eq:SHP}
+from this, \ref{eq:NewSLTinIGL}, \ref{eq:NewSLT}, and \ref{eq:SHP}
 \begin{equation}\label{eq:GammaincV}
 c_V=\frac{R}{W(\gamma-1)}
 \end{equation}
@@ -189,7 +189,8 @@ w=\frac{dm}{dt}
 In terms of the geometry of the nozzle, the velocity of the gas, and the density
 \begin{equation}
 w=A_xv_x\rho_x
-\end{equation}
+\end{equation}%
+\nomenclature{$\rho$}{Density}
 The mass flow rate must be constant throughout any given time in the system. This is the equation of continuity for the flow. The ratio of any two points for a unit mass can now be analyzed,
 \begin{equation}\label{eq:MassFlowwDensity}
 \frac{A_{x+x}}{A_x}=\frac{V_{x+dx}v_x}{V_xv_{x+dx}}
@@ -235,29 +236,52 @@ differentiating and solving for $P_x/P_s$
 \begin{equation}
 \frac{P_x}{P_s}=\left(\frac{2}{\gamma+1}\right)^{\frac{\gamma}{\gamma-1}}
 \end{equation}
-Now, substitutting \ref{eq:eq:TtoP} it can be seen that
+Now, substitutting \ref{eq:TtoP} it can be seen that
 \begin{equation}
 \frac{T_x}{T_s}=\frac{2}{\gamma+1}
 \end{equation}
 which when compared to \ref{eq:1.25} it is seen that they are equal when 
-if $M=1$, and if $x=t$, then the optimum value for $P_t$ can be determined. When $M=1$ at the throat is not necessarily the only condition which maximizes $w$ but it is also a condition which satisfies maximum force production of the nozzle.
-
-This will be finished at a later date. IT IS BED TIME!!!!
-Determine maximum value for w and find best expansion ratio
-use that to find values for expansion ratio (in methods section)
-determine force equation
-determine the Isp equation
-
-
-\section{Relationships}
-*explain about the redefining of equations for use of better variablesthe nozzles used for the syste
-
-
-RELEVANT EQUATIONS:
+if $M=1$, and if $x=t$, then the optimum value for $P_t$ can be determined. When $M=1$ at the throat is not necessarily the only condition which maximizes $w$ but it is also a condition which satisfies maximum force production of the nozzle. This can be seen quite easily. If the assumption is made that the conglomorate of particles exiting the nozzle act as a rigid body with some collective velocity and momentum, then it can be said the force generatd by that body is
+\begin{equation}
+F_{gas}=\frac{d(mv_e)}{dt}
+\end{equation}
+Also, the exhaust velocity is considered to be constant with time, so
+\begin{align}
+F_{gas}&=\frac{dm}{dt}v_e\\
+&=wv_e
+\end{align}
+Other forces acting on the nozzle are due to the pressure differences of the exit plane and ambient pressures, where $P=F/A$,
+\begin{equation}
+F=wv_e + (P_e-P_a)A_e
+\end{equation}
+Here it can be seen that maximizing $w$, maximizes the force produced by the nozzle. Substitutting \ref{eq:WforAll} and \ref{eq:GasVelocity}
+\begin{equation}\label{eq:TheoreticalForce}
+F= A_tP_s\sqrt{\frac{2\gamma^2}{\gamma-1}\left(\frac{2}{\gamma+1}\right)^{\frac{\gamma+1}{\gamma-1}}\left(1-\left(\frac{P_e}{P_s}\right)^{\frac{\gamma-1}{\gamma}}\right)}+\left(P_e-P_a\right)A_e
+\end{equation}
+From this, the $I_{sp}$ can also be determined because according to \ref{eq:SpecificImpulse}. In a similar method, the following expression can be determined
+\begin{equation}\label{eq:TheoreticalSpecificImpulse}
+I_{sp}=\left[\frac{2\gamma R T_s}{(\gamma-1)W}\left(1-\left(\frac{P_e}{P_s}\right)^{\frac{\gamma-1}{\gamma}}\right)\right]^{\frac{1}{2}}+\frac{(P_e-P_a)}{P_s}\frac{A_e}{A_t}\frac{1}{C_D}
+\end{equation}
+where $C_D$ is the discharge coefficient and is defined by equation \ref{eq:DischargeCoefficient}.
+\begin{equation}\label{eq:DischargeCoefficient}
+C_D=\sqrt{\frac{\gamma \rho_c}{P_s}}\left(\frac{2}{\gamma+1}\right)^{\frac{\gamma+1}{2(\gamma-1)}}
+\end{equation}%
+\nomenclature{$C_D$}{Discharge coefficient}
+\section{Relationships}\label{sec:Relationships}
+Looking at equations \ref{eq:TheoreticalSpecificImpulse} and \ref{eq:TheoreticalForce} it can be seen that the variables are not easily measured. It would be simpler to measure the temperature values instead. A change of variables can be performed plugging \ref{eq:adiabat} and \ref{eq:MachInTermsofT} into them. The following expressions are obtained:
 \begin{equation}\label{eq:RelevantNozzleForce}
 F = A_t P_c \left(\sqrt{\frac{2\gamma^2}{\gamma-1}\left(\frac{2}{\gamma+1}\right)^{\frac{\gamma+1}{\gamma-1}}\left(1-\frac{T_e}{T_c}\right)}+\left(\left(\frac{T_e}{T_c}\right)^{\frac{\gamma}{\gamma-1}}-\frac{P_a}{P_c}\right)\epsilon\right)
 \end{equation}
-
 \begin{equation}\label{eq:RelevantIsp}
 I_{sp}=\left[\frac{2\gamma R T_c}{W(\gamma-1)}\left(1-\frac{T_e}{T_c}\right)\right]^{\frac{1}{2}}+\left[\left(\frac{T_e}{T_c}\right)^{\frac{\gamma}{\gamma-1}}-\frac{P_a}{P_c}\right]\frac{A_e}{A_t}\sqrt{\frac{P_c}{\gamma\rho_c}}\left(\frac{\gamma+1}{2}\right)^{\frac{\gamma+1}{2(\gamma-1)}}
-\end{equation} 
+\end{equation}
+These equations are the basis for this experiment. In determining values for these variables the theoretical and experimental values can be compared. Let $I_{sp}^*$ denote the theoretical specific impulse and $I_{sp,m}$ denote the measured specific impulse. As these are functions of $\epsilon$ ($I_{sp}*(\epsilon^*)$) it could be found a proportionality between $I_{sp}^*$ and $I_{sp,m}$ such that
+\begin{equation}
+I_{sp}^*(\epsilon^*)=I_{sp,m}(\epsilon_m*e_{ff})
+\end{equation}%
+\nomenclature{$I_{sp,m}$}{Measured specific impulse}%
+\nomenclature{$\epsilon_m$}{Area ratio yielding maximum force for the measured value}%
+\nomenclature{$I_{sp}^*$}{Theoretical specific impulse}%
+\nomenclature{$\epsilon^*$}{Area ratio yielding maximum force for the theoretical value}%
+\nomenclature{$I_{sp}^*$}{Theoretical specific impulse}%
+where $e_{ff}$ denotes some efficiency factor. The same procedure can be done for the force equations. Determining this would allow for the specify the optimum expansion ratio for this system at various ambient pressures.
