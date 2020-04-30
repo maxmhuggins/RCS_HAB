@@ -7,6 +7,9 @@
 \setlength{\headheight}{15pt}
 \pagestyle{fancy}
 \usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{url}
+\urlstyle{same}
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -59,8 +62,8 @@
 \input{Sections/Title}
 \input{Sections/Abstract}
 \clearpage
-\section{Some Context}
-This was a two semester project, performed in last year of a Bachelor's of Science Degree. The first semester was spent working to develop the background knowledge and experiment. The second was spent actually setting up the experimental apparatus and data acquisition system; as well as collecting data. However, the University of Central Arkansas began online instruction March 13, 2020 and access to the research labs was limited due to COVID-19. Because of this, some necessary data collection was not completed and progress on the project was halted. The analysis and results that could be completed are discussed here. \\
+\section*{COVID-19}
+This was a two semester project, performed in last year of a Bachelor's of Science Degree. The first semester was spent working to develop the background knowledge and the experiment. The second was spent actually setting up the experimental apparatus and data acquisition system; as well as collecting data. However, the University of Central Arkansas began online instruction March 13, 2020 and access to the research labs was limited due to COVID-19. Because of this, some necessary data collection was not completed and progress on the project was halted. The analysis and results that could be completed are discussed here. \\
 In hopes of future work being completed, an outline will be presented for later work to be done.
 
 \tableofcontents
@@ -84,6 +87,7 @@ In hopes of future work being completed, an outline will be presented for later 
 \chapter{Conclusion}\label{chap:Conclusion}
 \input{Sections/Conclusion}
 
+\nocite{*}
 \bibliographystyle{plain}
 \bibliography{References}
 

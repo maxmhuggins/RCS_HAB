@@ -1,1 +1,54 @@
-Some appendix stuff here
+\section{Scripting}\label{sec:Scripting}
+Here, two primary files are included. The first is the file that runs the experiment for data collection. To see all of the necessary class files for this, see reference \cite{github}. This is shown below:
+\lstinputlisting[language=Python]{Scripts/experiment.py}\clearpage
+The second scripting file shown is the analysis class. This holds all of the necessary code for analyzing the data collected from experiment.py. Again, see reference \cite{github} to see all the additional files.
+\lstinputlisting[language=Python]{Scripts/Analysis_Class.py}\clearpage
+\section{Schematics}\label{sec:Schematics}
+Here, the most relevant circuit schematics are provided. Shown below is the entire circuit schematic used for interfacing the Raspberry Pi with the sensors, the power supply handling, and the push pull amplifier for the solenoid respectively.
+\includepdf[pages=-]{Figures/DataCollection.pdf}
+\includepdf[pages=-]{Figures/PowerSupply.pdf}
+\includepdf[pages=-]{Figures/Solenoid.pdf}
+\section{Parts List}\label{sec:PartsList}
+Here a parts list is included of the purchased equipment for the project.
+\begin{table}[!h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{cllccc}
+\rowcolor[HTML]{C0C0C0} 
+Seller        & \multicolumn{1}{c}{\cellcolor[HTML]{C0C0C0}Item} & \multicolumn{1}{c}{\cellcolor[HTML]{C0C0C0}Description} & Price per Unit (USD) & Quantity                          & Subtotals (USD)                  \\
+\rowcolor[HTML]{EFEFEF} 
+McMaster-Carr & 7833K73                                          & High‐Pressure Precision Flow‐Adjustment Valve           & 28.73               & 2                                 & 57.46                           \\
+\rowcolor[HTML]{EFEFEF} 
+McMaster-Carr & 5220K158                                         & Inline Tee for 1/4" Copper Tube OD x 1/8 NPTF Male      & 10.00               & 1                                 & 10.00                           \\
+\rowcolor[HTML]{EFEFEF} 
+McMaster-Carr & 8955K112                                         & General Purpose Copper Tubing                           & 28.29               & 1                                 & 57.72                           \\
+\rowcolor[HTML]{EFEFEF} 
+McMaster-Carr & 5272K299                                         & Straight Adapter for 1/4" Tube OD x 1/8 NPT Male        & 4.81                & 12                                & 28.29                           \\
+\rowcolor[HTML]{EFEFEF} 
+McMaster-Carr & 5485K21                                          & Straight Connector, 1/8 NPT Male                        & 1.40                & 1                                 & 1.40                            \\
+\rowcolor[HTML]{EFEFEF} 
+McMaster-Carr & 50785K26                                         & Reducing Adapter, 1/4 NPT Female x 1/8 NPT Male         & 1.58                & 1                                 & 1.58                            \\
+\rowcolor[HTML]{EFEFEF} 
+McMaster-Carr & 50785K75                                         & Tee Connector, 1/8 NPT Female                           & 3.73                & 1                                 & 3.73                            \\
+\rowcolor[HTML]{EFEFEF} 
+McMaster-Carr & 1190N21                                          & Stainless Steel, 24V DC, 1/8 NPT Female, 3000 Max PSI   & 138.97              & 3                                 & 416.91                          \\
+\rowcolor[HTML]{EFEFEF} 
+Amazon        & B07K2JQ6CG                                       & 30 Packs x 16g Threaded CO2 Cartridges                  & 25.90               & 1                                 & 25.90                           \\
+\rowcolor[HTML]{EFEFEF} 
+Amazon        & B07PFY54TV                                       & 25g Threaded CO2 Cartridges, 6 Pack                     & 24.99               & 1                                 & 24.99                           \\
+\rowcolor[HTML]{EFEFEF} 
+Amazon        & B07DN3L9N2                                       & G 1/4" Male Thread x 1/4" NPT Female                    & 14.99               & 1                                 & 14.99                           \\
+\rowcolor[HTML]{EFEFEF} 
+Amazon        & B07GJGTWQT                                       & G1/4" Pressure Transducer Sensor (0‐1000psi)            & 23.19               & 1                                 & 23.19                           \\
+\rowcolor[HTML]{EFEFEF} 
+Amazon        & B07YGN2QGL                                       & UV Resin Curing Light for SLA/DLP 3D Printer            & 25.99               & 1                                 & 25.99                           \\
+\rowcolor[HTML]{EFEFEF} 
+Amazon        & B07KSYRW34                                       & Strong and Precise High Resolution 3D Printing Resin    & 49.95               & 2                                 & 49.95                           \\
+\rowcolor[HTML]{EFEFEF} 
+Amazon        & B06XWVZHZJ                                       & 8 Channel Logic Level Converter Bi‐Directional High     & 7.99                & 1                                 & 7.99                            \\
+\rowcolor[HTML]{EFEFEF} 
+Amazon        & B07K2ZHMRF                                       & ELEGOO Mars UV Photocuring LCD 3D Printer               & 229.99              & 1                                 & 229.99                          \\
+              & \multicolumn{1}{c}{}                             & \multicolumn{1}{c}{}                                    &                     & \cellcolor[HTML]{C0C0C0}Subtotal: & \cellcolor[HTML]{C0C0C0}1030.03
+\end{tabular}%
+}
+\end{table}
