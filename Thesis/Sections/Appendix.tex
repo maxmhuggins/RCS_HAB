@@ -1,19 +1,34 @@
 \section{Scripting}\label{sec:Scripting}
-Here, two primary files are included. The first is the file that runs the experiment for data collection. To see all of the necessary class files for this, see reference \cite{github}. This is shown below:
-\lstinputlisting[language=Python]{Scripts/experiment.py}\clearpage
-The second scripting file shown is the analysis class. This holds all of the necessary code for analyzing the data collected from experiment.py. Again, see reference \cite{github} to see all the additional files.
-\lstinputlisting[language=Python]{Scripts/Analysis_Class.py}\clearpage
+Here, two primary files are included. The first is the file that runs the experiment for data collection and the second is the analysis class for data analysis. The file, experiment.py, is shown below and is hosted at this \href{https://github.com/maxmhuggins/RCS_HAB/blob/master/On_Ground_Testing/Code/experiment.py}{URL}\footnote{Physical URL: \url{https://github.com/maxmhuggins/RCS_HAB/blob/master/On_Ground_Testing/Code/experiment.py}}.
+\lstinputlisting[language=Python]{Scripts/experiment.py}
+The next file, Analysis\_Class.py, is hosted at this \href{https://github.com/maxmhuggins/RCS_HAB/blob/master/On_Ground_Testing/Data_and_Analysis/Experimental_Data_Analysis/Scripts/Analysis_Class.py}{URL.}\footnote{Physical URL: \url{https://github.com/maxmhuggins/RCS_HAB/blob/master/On_Ground_Testing/Data_and_Analysis/Experimental_Data_Analysis/Scripts/Analysis_Class.py}} This file takes in all of the data recorded from experiment.py and is also shown below:
+\lstinputlisting[language=Python]{Scripts/Analysis_Class.py}
 \section{Schematics}\label{sec:Schematics}
 Here, the most relevant circuit schematics are provided. Shown below is the entire circuit schematic used for interfacing the Raspberry Pi with the sensors, the power supply handling, and the push pull amplifier for the solenoid respectively.
-\includepdf[pages=-]{Figures/DataCollection.pdf}
-\includepdf[pages=-]{Figures/PowerSupply.pdf}
-\includepdf[pages=-]{Figures/Solenoid.pdf}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=6.5in]{Figures/DataCollection}
+\caption{Circuit diagram including the MCP3008 ADC, HX711 breakout board, AD8495 breakout boards, TXS0108E 8 Channel Logic Level Converter, and a representation fo the pressure transducer. Pin 13 of the level shifter goes to the solenoid amplifier circuit in Figure \ref{fig:SolenoidSchem}}
+\label{fig:DataCollectionSchem}
+\end{figure}\clearpage
+\begin{figure}[h!]
+\centering
+\includegraphics[width=6.5in]{Figures/PowerSupply}
+\caption{LM317 linear voltage regulators being used for 3 separate supply voltages, 12V, 5V, and 3.3V.}
+\label{fig:PowerSupplySchem}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=4in]{Figures/Solenoid}
+\caption{Solenoid amplifier circuit used for ensuring the solenoid switches on/off completely and the digital logic pin from the RPi is not damaged in an attempt to source too much current.}
+\label{fig:SolenoidSchem}
+\end{figure}\clearpage
 \section{Parts List}\label{sec:PartsList}
-Here a parts list is included of the purchased equipment for the project.
+Here a parts list is included of the purchased equipment for the project. Parts not shown here were available in the research lab at the university.
 \begin{table}[!h]
 \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{cllccc}
+\begin{tabular}{cclccc}
 \rowcolor[HTML]{C0C0C0} 
 Seller        & \multicolumn{1}{c}{\cellcolor[HTML]{C0C0C0}Item} & \multicolumn{1}{c}{\cellcolor[HTML]{C0C0C0}Description} & Price per Unit (USD) & Quantity                          & Subtotals (USD)                  \\
 \rowcolor[HTML]{EFEFEF} 
@@ -51,4 +66,6 @@ Amazon        & B07K2ZHMRF                                       & ELEGOO Mars U
               & \multicolumn{1}{c}{}                             & \multicolumn{1}{c}{}                                    &                     & \cellcolor[HTML]{C0C0C0}Subtotal: & \cellcolor[HTML]{C0C0C0}1030.03
 \end{tabular}%
 }
+\caption{Some components purchased for use in this project, everything purchased from either McMaster-Carr or Amazon.}
+\label{tab:PartsList}
 \end{table}

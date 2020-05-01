@@ -8,7 +8,7 @@ The theory used here is mostly taken from pre-existing nozzle theory. The source
 \item The system is adiabatic
 \item The propellant flow is one-dimensional
 \item The propellant flow is stagnate in the nozzle chamber
-\item The propellant velocity is uniform accros any cross-section normal to the nozzle axis
+\item The propellant velocity is uniform arccos any cross-section normal to the nozzle axis
 \end{enumerate}
 Reference \cite{langton} refers to three other assumptions, but they either do not apply or are redundant for the CGTS. Additionally, all of the variables are clearly defined in the nomenclature section but will not be defined along the discussion here.\\
 Starting with the first law of thermodynamics (FLT),
@@ -39,15 +39,15 @@ c_V=\left(\frac{\partial Q}{\partial T}\right)_V
 \begin{equation}\label{eq:SHP}
 c_P=\left(\frac{\partial Q}{\partial T}\right)_P
 \end{equation}
-and using Joule's equation to define a perfect gas
+and using Joule's Equation to define a perfect gas
 \begin{equation}\label{eq:Joule}
 \left(\frac{\partial U}{\partial V}\right)_T=0
 \end{equation}
-substitutting \ref{eq:FLT} into $\partial Q$ in \ref{eq:SHV}
+substituting \ref{eq:FLT} into $\partial Q$ in \ref{eq:SHV}
 \begin{equation}
 c_V=\left(\frac{\partial U}{\partial T}\right)_V
 \end{equation}
-Also, substitutting \ref{eq:SLT} into $\partial Q$ in \ref{eq:SHV}
+Also, substituting \ref{eq:SLT} into $\partial Q$ in \ref{eq:SHV}
 \begin{equation}
 c_V=T\left(\frac{\partial S}{\partial T}\right)_V
 \end{equation}
@@ -100,7 +100,7 @@ similarly,
 \begin{equation}\label{eq:GammaincP}
 c_P=\frac{\gamma R}{W(\gamma-1)}
 \end{equation}
-It can also be determined for an adiabat, $dQ=0$, that
+It can also be determined for an adiabatic system, $dQ=0$, that
 \begin{equation}\label{eq:adiabat}
 P_iV_i^{\gamma}=P_fV_f^{\gamma}
 \end{equation}
@@ -113,7 +113,7 @@ the enthalpy per unit mass can now be expressed as
 \begin{equation}\label{eq:Enthalpypermass}
 H=\frac{\gamma RT}{W(\gamma-1)}
 \end{equation}
-\section{The Nozzle}
+\section{The Nozzle}\label{sec:TheNozzle}
 Until this point, all of these relations are quite general. Figure \ref{fig:Nozzle} displays a typical converging diverging nozzle. It consists of three important regions. The furthest left is the chamber, it is here that we assume the variables to be stagnate. Stagnate meaning the velocity of the gas is zero. The next section going in the $+x$ direction is the nozzle throat. This is the smallest cross-sectional area of the system. Next is not a particularly important point, but represents the variables at any point, x, in the nozzle. Lastly is the exit plane of the nozzle. 
 \begin{figure}[h!]
 \centering
@@ -143,7 +143,7 @@ From \ref{eq:CasH} and \ref{eq:Adiabat} it can be found that
 \frac{P_x}{P_s}=\left(1-\frac{v^2}{2C}\right)^{\frac{\gamma}{\gamma-1}}
 \end{equation}
 \subsection{Mach Number}
-An important parameter is the mach number, which is defined as the ratio of the gas velocity at some point to the velocity of sound in the gas. Here, this will be manipulated to determine the parameter in terms of temperature variables.
+An important parameter is the Mach number, which is defined as the ratio of the gas velocity at some point to the velocity of sound in the gas. Here, this will be manipulated to determine the parameter in terms of temperature variables.
 \begin{align}\label{eq:DefineMach}
 M_x&=\frac{v_x}{v_{sound}}\\
 &=\frac{v_x}{\sqrt{\gamma R T_x}}\\
@@ -161,9 +161,9 @@ dQ&=c_PdT\\
 \end{align}
 Where $J$ is defined as
 \begin{equation}
-J=\frac{W}{Q}
+J=\frac{W_k}{Q}
 \end{equation}%
-\nomenclature{$W$}{Work}
+\nomenclature{$W_k$}{Work}
 \nomenclature{$J$}{The mechanical equivalent of heat}
 Substitutting \ref{eq:GammaincP}, using the stagnation conditions for the initial values, and solving for $v_x$,
 \begin{equation}\label{eq:GasVelocity}
@@ -173,7 +173,7 @@ Now, the velocity of the gas at any point x is in terms of variables in regions 
 \begin{equation}\label{eq:GasTemp}
 T_x=T_s-\frac{v_x^2}{2Jc_P}
 \end{equation}
-substitutting \ref{eq:GasVelocity} and \ref{eq:GasTemp} into the mach number
+substituting \ref{eq:GasVelocity} and \ref{eq:GasTemp} into the mach number
 \begin{equation}\label{eq:MachInTermsofT}
 M^2=\frac{2}{(\gamma-1)}\left(\frac{T_s}{T_x}-1\right)
 \end{equation}
@@ -191,7 +191,7 @@ In terms of the geometry of the nozzle, the velocity of the gas, and the density
 w=A_xv_x\rho_x
 \end{equation}%
 \nomenclature{$\rho$}{Density}
-The mass flow rate must be constant throughout any given time in the system. This is the equation of continuity for the flow. The ratio of any two points for a unit mass can now be analyzed,
+The mass flow rate must be constant throughout any given time in the system. This is the equation of continuity for the flow. The ratio of any two points for a unit mass can now be analysed,
 \begin{equation}\label{eq:MassFlowwDensity}
 \frac{A_{x+x}}{A_x}=\frac{V_{x+dx}v_x}{V_xv_{x+dx}}
 \end{equation}
@@ -204,7 +204,7 @@ The expansion ratio then can be expressed as
 \epsilon=\frac{A_e}{A_t}=\frac{M_t}{M_e}\left(\frac{T_t}{T_e}\right)^\frac{1}{2}\left(\frac{1+\frac{(\gamma-1)}{2}M_e^2}{1+\frac{(\gamma-1)}{2}M_t^2}\right)^{\frac{1}{\gamma-1}}
 \end{align}%
 \nomenclature{$\epsilon$}{Expansion ratio}
-To determine the best value for the expansion ratio, the mass flow rate will be maximized and using previously found relationships the value for the expansion ratio will be found. Starting with substitutting \ref{eq:GasVelocity} into \ref{eq:MassFlowwDensity}.
+To determine the best value for the expansion ratio, the mass flow rate will be maximized and using previously found relationships the value for the expansion ratio will be found. Starting with substituting \ref{eq:GasVelocity} into \ref{eq:MassFlowwDensity}.
 \begin{equation}\label{eq:WforAll}
 w=\frac{A_x}{V_x}\sqrt{\frac{2\gamma RT_s}{(\gamma-1)W}\left(1-\left(\frac{P_x}{P_s}\right)^{\frac{\gamma-1}{\gamma}}\right)}
 \end{equation}
@@ -216,7 +216,7 @@ Also,
 \begin{equation}\label{eq:VtoT}
 \frac{1}{V_x}=\frac{1}{V_s}\left(\frac{T_x}{T_s}\right)^{\frac{1}{\gamma-1}}
 \end{equation}
-substitutting \ref{eq:VtoT} and \ref{eq:TtoP} into \ref{eq:WforAll} and rearranging
+substituting \ref{eq:VtoT} and \ref{eq:TtoP} into \ref{eq:WforAll} and rearranging
 \begin{equation}\label{eq:diffW}
 w=\frac{A_x}{V_s}\sqrt{\frac{2\gamma KT_s}{(\gamma-1)}\left(\left(\frac{P_x}{P_s}\right)^{\frac{2}{\gamma}}-\left(\frac{P_x}{P_s}\right)^{\frac{\gamma+1}{\gamma}}\right)}
 \end{equation}
@@ -236,12 +236,14 @@ differentiating and solving for $P_x/P_s$
 \begin{equation}
 \frac{P_x}{P_s}=\left(\frac{2}{\gamma+1}\right)^{\frac{\gamma}{\gamma-1}}
 \end{equation}
-Now, substitutting \ref{eq:TtoP} it can be seen that
+Now, substituting \ref{eq:TtoP} it can be seen that
 \begin{equation}
 \frac{T_x}{T_s}=\frac{2}{\gamma+1}
 \end{equation}
 which when compared to \ref{eq:1.25} it is seen that they are equal when 
-if $M=1$, and if $x=t$, then the optimum value for $P_t$ can be determined. When $M=1$ at the throat is not necessarily the only condition which maximizes $w$ but it is also a condition which satisfies maximum force production of the nozzle. This can be seen quite easily. If the assumption is made that the conglomorate of particles exiting the nozzle act as a rigid body with some collective velocity and momentum, then it can be said the force generatd by that body is
+if $M=1$, and if $x=t$, then the optimum value for $P_t$ can be determined. When $M=1$ at the throat is not necessarily the only condition which maximizes $w$ but it is also a condition which satisfies maximum force production of the nozzle. This can be seen quite easily. 
+\subsection{Force}\label{subsec:Force}
+If the assumption is made that the conglomerate of particles exiting the nozzle act as a rigid body with some collective velocity and momentum, then it can be said the force generated by that body is
 \begin{equation}
 F_{gas}=\frac{d(mv_e)}{dt}
 \end{equation}
@@ -251,10 +253,17 @@ F_{gas}&=\frac{dm}{dt}v_e\\
 &=wv_e
 \end{align}
 Other forces acting on the nozzle are due to the pressure differences of the exit plane and ambient pressures, where $P=F/A$,
-\begin{equation}
+\begin{equation}\label{eq:EffectiveVelocity}
 F=wv_e + (P_e-P_a)A_e
 \end{equation}
-Here it can be seen that maximizing $w$, maximizes the force produced by the nozzle. Substitutting \ref{eq:WforAll} and \ref{eq:GasVelocity}
+\begin{tcolorbox}[breakable,title=Unit Discrepancy, height fixed for=first and middle]
+Reference \cite{langton} discusses the discrepancy between the units typically displayed for the specific impulse values and the definition of the specific impulse. This slight commentary on the subject can be skipped without loss of understanding for the relevant theory. Quoted from N.H. Langton's Space Research and Technology Volume 2: Rocket Propulsion, ``Very frequently, rocket engineers quote specific impulse in units of `seconds', but it should be noted that this is rather a loose practice... A good deal of this confusion could have been avoided if the practice of the old rocket pioneers had been maintained, of using the `effective exhaust velocity' ($v_e^{'}$) as their basic parameter! If a consistent system of units of force and mass were employed, then the S.I. [specific impulse] would be numerically equal to $v_e^{'}$. In passing it may be observed that most rocket vehicle performance problems can be handled more easily in terms of momentum and impulse, rather than energy'' The effective velocity referred to is derived from Equation \ref{eq:EffectiveVelocity}.
+\begin{align*}
+F&=wv_e + (P_e-P_a)A_e\\
+&=wv_e^{'}
+\end{align*}
+\end{tcolorbox}
+Here it can be seen that maximizing $w$, maximizes the force produced by the nozzle. Substituting Equation \ref{eq:WforAll} and \ref{eq:GasVelocity}
 \begin{equation}\label{eq:TheoreticalForce}
 F= A_tP_s\sqrt{\frac{2\gamma^2}{\gamma-1}\left(\frac{2}{\gamma+1}\right)^{\frac{\gamma+1}{\gamma-1}}\left(1-\left(\frac{P_e}{P_s}\right)^{\frac{\gamma-1}{\gamma}}\right)}+\left(P_e-P_a\right)A_e
 \end{equation}
@@ -262,13 +271,13 @@ From this, the $I_{sp}$ can also be determined using \ref{eq:SpecificImpulse}. I
 \begin{equation}\label{eq:TheoreticalSpecificImpulse}
 I_{sp}=\left[\frac{2\gamma R T_s}{(\gamma-1)W}\left(1-\left(\frac{P_e}{P_s}\right)^{\frac{\gamma-1}{\gamma}}\right)\right]^{\frac{1}{2}}+\frac{(P_e-P_a)}{P_s}\frac{A_e}{A_t}\frac{1}{C_D}
 \end{equation}
-where $C_D$ is the discharge coefficient and is defined by equation \ref{eq:DischargeCoefficient}.
+where $C_D$ is the discharge coefficient and is defined by Equation \ref{eq:DischargeCoefficient}.
 \begin{equation}\label{eq:DischargeCoefficient}
 C_D=\sqrt{\frac{\gamma \rho_c}{P_s}}\left(\frac{2}{\gamma+1}\right)^{\frac{\gamma+1}{2(\gamma-1)}}
 \end{equation}%
 \nomenclature{$C_D$}{Discharge coefficient}
 \section{Relationships}\label{sec:Relationships}
-Looking at equations \ref{eq:TheoreticalSpecificImpulse} and \ref{eq:TheoreticalForce} it can be seen that the variables are not easily measured. It would be simpler to measure the temperature values instead. A change of variables can be performed plugging \ref{eq:adiabat} and \ref{eq:MachInTermsofT} into them. The following expressions are obtained:
+Looking at Equation \ref{eq:TheoreticalSpecificImpulse} and \ref{eq:TheoreticalForce} it can be seen that the variables are not easily measured. It would be simpler to measure the temperature values instead. A change of variables can be performed plugging \ref{eq:adiabat} and \ref{eq:MachInTermsofT} into them. The following expressions are obtained:
 \begin{equation}\label{eq:RelevantNozzleForce}
 F = A_t P_c \left(\sqrt{\frac{2\gamma^2}{\gamma-1}\left(\frac{2}{\gamma+1}\right)^{\frac{\gamma+1}{\gamma-1}}\left(1-\frac{T_e}{T_c}\right)}+\left(\left(\frac{T_e}{T_c}\right)^{\frac{\gamma}{\gamma-1}}-\frac{P_a}{P_c}\right)\epsilon\right)
 \end{equation}
