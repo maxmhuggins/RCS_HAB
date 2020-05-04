@@ -5,7 +5,7 @@ The next file, Analysis\_Class.py, is hosted at this \href{https://github.com/ma
 \lstinputlisting[language=Python]{Scripts/Analysis_Class.py}
 \section{Schematics}\label{sec:Schematics}
 Here, the most relevant circuit schematics are provided. Shown below is the entire circuit schematic used for interfacing the Raspberry Pi with the sensors, the power supply handling, and the push pull amplifier for the solenoid respectively.
-\begin{figure}[h!]
+\begin{figure}[!ht]
 \centering
 \includegraphics[width=6.5in]{Figures/DataCollection}
 \caption{Circuit diagram including the MCP3008 ADC, HX711 breakout board, AD8495 breakout boards, TXS0108E 8 Channel Logic Level Converter, and a representation fo the pressure transducer. Pin 13 of the level shifter goes to the solenoid amplifier circuit in Figure \ref{fig:SolenoidSchem}}
@@ -17,12 +17,12 @@ Here, the most relevant circuit schematics are provided. Shown below is the enti
 \caption{LM317 linear voltage regulators being used for 3 separate supply voltages, 12V, 5V, and 3.3V.}
 \label{fig:PowerSupplySchem}
 \end{figure}
-\begin{figure}[h!]
+\begin{figure}[!ht]
 \centering
-\includegraphics[width=4in]{Figures/Solenoid}
+\includegraphics[width=3.1in]{Figures/Solenoid}
 \caption{Solenoid amplifier circuit used for ensuring the solenoid switches on/off completely and the digital logic pin from the RPi is not damaged in an attempt to source too much current.}
 \label{fig:SolenoidSchem}
-\end{figure}\clearpage
+\end{figure}
 \section{Parts List}\label{sec:PartsList}
 Here a parts list is included of the purchased equipment for the project. Parts not shown here were available in the research lab at the university.
 \begin{table}[!h]

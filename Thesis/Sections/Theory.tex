@@ -1,4 +1,4 @@
-The objective of this section is to derive the relationships used for the analysis of the data collection. First, the general thermodynamic relationships will be established, then they will be applied to converging-diverging nozzle. At this point, the relevant relationships for the data will be established and the experimental design can be discussed in detail.
+The objective of this section is to derive the relationships used for the analysis of the data collection. First, the general thermodynamic relationships will be established, then they will be applied to a flowing gas. This, ultimately leads to the use of a converging-diverging nozzle. At this point, the relevant relationships for the data collection will be established and the experimental design can be discussed in detail.
 \section{General Thermodynamic Relationships}
 The theory used here is mostly taken from pre-existing nozzle theory. The source for this project is reference \cite{langton}. Much of the derivation for the equations to be used are based on the following assumptions and rely on Classical Thermodynamics:
 \begin{enumerate}
@@ -10,7 +10,7 @@ The theory used here is mostly taken from pre-existing nozzle theory. The source
 \item The propellant flow is stagnate in the nozzle chamber
 \item The propellant velocity is uniform arccos any cross-section normal to the nozzle axis
 \end{enumerate}
-Reference \cite{langton} refers to three other assumptions, but they either do not apply or are redundant for the CGTS. Additionally, all of the variables are clearly defined in the nomenclature section but will not be defined along the discussion here.\\
+Reference \cite{langton} refers to three other assumptions, but they either do not apply or are redundant for the CGTS. Additionally, all of the variables are clearly defined in the nomenclature section but will not be defined along the discussion in this section.\\
 Starting with the first law of thermodynamics (FLT),
 \begin{equation}\label{eq:FLT}
 dQ=dU+PdV
@@ -146,7 +146,7 @@ From \ref{eq:CasH} and \ref{eq:Adiabat} it can be found that
 An important parameter is the Mach number, which is defined as the ratio of the gas velocity at some point to the velocity of sound in the gas. Here, this will be manipulated to determine the parameter in terms of temperature variables.
 \begin{align}\label{eq:DefineMach}
 M_x&=\frac{v_x}{v_{sound}}\\
-&=\frac{v_x}{\sqrt{\gamma R T_x}}\\
+&=\frac{v_x}{\sqrt{\gamma R T_x}}
 \end{align}%
 \nomenclature{$M$}{Mach number}
 This can be substitutted into the previously defined relationships to find
@@ -173,7 +173,7 @@ Now, the velocity of the gas at any point x is in terms of variables in regions 
 \begin{equation}\label{eq:GasTemp}
 T_x=T_s-\frac{v_x^2}{2Jc_P}
 \end{equation}
-substituting \ref{eq:GasVelocity} and \ref{eq:GasTemp} into the mach number
+substituting \ref{eq:GasVelocity} and \ref{eq:GasTemp} into the Mach number
 \begin{equation}\label{eq:MachInTermsofT}
 M^2=\frac{2}{(\gamma-1)}\left(\frac{T_s}{T_x}-1\right)
 \end{equation}
@@ -204,7 +204,7 @@ The expansion ratio then can be expressed as
 \epsilon=\frac{A_e}{A_t}=\frac{M_t}{M_e}\left(\frac{T_t}{T_e}\right)^\frac{1}{2}\left(\frac{1+\frac{(\gamma-1)}{2}M_e^2}{1+\frac{(\gamma-1)}{2}M_t^2}\right)^{\frac{1}{\gamma-1}}
 \end{align}%
 \nomenclature{$\epsilon$}{Expansion ratio}
-To determine the best value for the expansion ratio, the mass flow rate will be maximized and using previously found relationships the value for the expansion ratio will be found. Starting with substituting \ref{eq:GasVelocity} into \ref{eq:MassFlowwDensity}.
+To determine the best value for the expansion ratio, the mass flow rate will be maximized and using previously found relationships the value for the expansion ratio will be found. It is here, that the converging-diverging nozzle is found to be the necessary geometry for the nozzle. Starting with substituting \ref{eq:GasVelocity} into \ref{eq:MassFlowwDensity}.
 \begin{equation}\label{eq:WforAll}
 w=\frac{A_x}{V_x}\sqrt{\frac{2\gamma RT_s}{(\gamma-1)W}\left(1-\left(\frac{P_x}{P_s}\right)^{\frac{\gamma-1}{\gamma}}\right)}
 \end{equation}

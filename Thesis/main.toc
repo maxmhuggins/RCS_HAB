@@ -32,4 +32,4 @@
 \contentsline {chapter}{\numberline {A}Appendix Title}{48}{appendix.A}
 \contentsline {section}{\numberline {A.1}Scripting}{48}{section.A.1}
 \contentsline {section}{\numberline {A.2}Schematics}{61}{section.A.2}
-\contentsline {section}{\numberline {A.3}Parts List}{65}{section.A.3}
+\contentsline {section}{\numberline {A.3}Parts List}{64}{section.A.3}
